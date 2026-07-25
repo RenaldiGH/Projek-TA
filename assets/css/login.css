@@ -1,0 +1,14 @@
+/* style halaman login */
+body {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    color: #fff;
+}
+
+.login-box {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background: white;
+    color: #333;
+    border-radius: 10px;
+}
