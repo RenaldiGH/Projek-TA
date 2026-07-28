@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../includes/sidebar.php';
 <div class="container">
     <h1>Dashboard</h1>
     <p>Halaman dashboard utama.</p>
+    
 </div>
 
 <?php require_once __DIR__ . '/../../includes/footer.php'; ?>

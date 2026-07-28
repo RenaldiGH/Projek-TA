@@ -1,3 +1,3 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Project TA siap digunakan');
+    console.log('Project TA ready');
 });
