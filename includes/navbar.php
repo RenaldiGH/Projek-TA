@@ -1,16 +1,58 @@
 <nav class="navbar">
-    <div class="logo">
-        🎁 SKARIGA Secret Santa
+
+    <div class="navbar-container">
+
+        <!-- LOGO -->
+        <a href="<?= base_url() ?>" class="logo">
+
+            <span>SKARIGA</span>
+
+            <strong>SECRET SANTA</strong>
+
+        </a>
+
+
+        <!-- MENU -->
+        <div class="nav-menu">
+
+            <a href="<?= base_url() ?>#beranda">
+                BERANDA
+            </a>
+
+            <a href="<?= base_url() ?>#cara-kerja">
+                CARA KERJA
+            </a>
+
+            <a href="<?= base_url() ?>#timeline">
+                TIMELINE
+            </a>
+
+            <a href="<?= base_url() ?>#tentang">
+                TENTANG
+            </a>
+
+        </div>
+
+
+        <!-- BUTTON -->
+        <div class="nav-buttons">
+
+            <a
+                href="<?= base_url('login.php') ?>"
+                class="nav-login"
+            >
+                LOGIN
+            </a>
+
+            <a
+                href="<?= base_url('register.php') ?>"
+                class="nav-register"
+            >
+                REGISTER
+            </a>
+
+        </div>
+
     </div>
-    <ul class="menu">
-        <li><a href="#">Beranda </a></li>
-        <li><a href="#">Cara Kerja</a></li>
-        <li><a href="#">Timeline</a></li>
-        <li><a href="#">Tentang</a></li>
-        
-    </ul>
-    <div class="auth">
-        <a href="login.php">Login </a>
-        <a href="register.php" class="btn-register">Register</a>
-    </div>
+
 </nav>
