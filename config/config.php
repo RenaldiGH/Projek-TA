@@ -2,7 +2,7 @@
 
 session_start();
 
-$base_url = 'http://localhost/Project-TA-rey-nesya-rendra/';
+$base_url = 'http://localhost:8080/Project-TA-rey-nesya-rendra/';
 
 function base_url($path = '')
 {

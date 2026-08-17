@@ -105,7 +105,7 @@ include 'includes/navbar.php';
         <div class="about-image">
 
             <img
-                src="<?= base_url('assets/img/gift.png') ?>"
+                src="<?= base_url('assets/img/santa1.png') ?>"
                 alt="Gift"
             >
 
