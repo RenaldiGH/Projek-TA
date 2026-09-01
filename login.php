@@ -1,7 +1,73 @@
 <?php
 require_once __DIR__ . '/config/config.php';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/config/database.php';
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Ambil data dari form
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    // Cek input kosong
+    if ($email === '' || $password === '') {
+
+        $error = 'Email dan password wajib diisi.';
+
+    } else {
+
+        // Cari user berdasarkan email
+        $stmt = $conn->prepare(
+            "SELECT id, nama, email, password, role
+             FROM users
+             WHERE email = ?"
+        );
+
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+exit;
+
+        // Cek email dan password
+        if ($user && password_verify($password, $user['password'])) {
+
+            // Buat session
+            session_regenerate_id(true);
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['nama'] = $user['nama'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['role'] = $user['role'];
+
+            // Redirect berdasarkan role
+            if ($user['role'] === 'admin') {
+
+                header('Location: ' . base_url('assets/pages/dashboard/menuadmin.php'));
+                exit;
+
+            } elseif ($user['role'] === 'peserta') {
+
+                header('Location: ' . base_url('assets/pages/dashboard/index.php'));
+                exit;
+
+            } else {
+
+                $error = 'Role tidak valid.';
+            }
+
+        } else {
+
+            $error = 'Email atau password salah.';
+        }
+
+        $stmt->close();
+    }
+}
 ?>
+
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/login.css">
 
@@ -13,19 +79,20 @@ require_once __DIR__ . '/includes/header.php';
         <div class="login-box">
             <p class="login-sub">selamat datang kembali</p>
             <h1>Login</h1>
-            <form>
+            <form method="POST" action="<?= base_url('login.php') ?>">
                 <div class="input-group">
-                    <input type="text" name="username" placeholder="Username">
+                    <input type="email" name="email" placeholder="Email" required>
                 </div>
 
                 <!-- <br> dihapus karena jarak sudah diatur oleh margin-bottom .input-group -->
 
                 <div class="input-group">
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" name="password" placeholder="Password" required>
                 </div>
 
                 <div class="input-login">
                     <button type="submit">Login</button>
+                    
                 </div>
             </form>
         </div>

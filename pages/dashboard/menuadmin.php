@@ -1,4 +1,14 @@
 <?php
+
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../includes/auth.php';
+
+require_login();
+
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ' . base_url('pages/dashboard/index.php'));
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -6,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
-    <link rel="stylesheet" href="assets/css/style_admin.css">
+   <link rel="stylesheet" href="../../assets/css/style_admin.css">
 </head>
 <body>
 
