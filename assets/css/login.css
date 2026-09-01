@@ -1,4 +1,4 @@
-/* Pembungkus utama untuk memaksa posisi ke tengah layar */
+
 .login-wrapper {
     position: fixed;
     top: 0;
@@ -12,7 +12,7 @@
     z-index: 9999; /* Memastikan berada di paling depan melewati elemen header */
 }
 
-/* Kotak login tetap berukuran tetap (tidak full screen) */
+
 .login-container {
     width: 90%;
     max-width: 900px;
