@@ -1,14 +1,21 @@
 /* style halaman login */
 body {
-    background: linear-gradient(135deg, #4e73df, #224abe);
+    background: linear-gradient(135deg, #031341, #031446);
     color: #fff;
 }
 
 .login-box {
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 30px;
-    background: white;
-    color: #333;
-    border-radius: 10px;
+    width: 50%;
+    height: 100vh;
+    background-image: url('../img/login.png');
+    background-size: cover;
+    background-position: center;
 }
+.login-image {
+        width : 505;
+        height :100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40o
+    }
