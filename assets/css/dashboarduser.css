@@ -1,0 +1,134 @@
+/* DASAR */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: white;
+}
+
+
+/* DASHBOARD */
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #05002b;
+    color: white;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    font-size: 14px;
+}
+
+.sidebar a:hover {
+    background: #d90032;
+}
+
+.sidebar a.active {
+    background: #d90032;
+}
+
+
+/* CONTENT */
+.content {
+    flex: 1;
+    padding: 25px 30px;
+}
+
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.header p {
+    font-size: 13px;
+}
+
+
+/* CARD */
+.cards {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 180px;
+    min-height: 160px;
+
+    background: #fafafa;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.card .icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 11px;
+    line-height: 16px;
+}
+
+
+/* PESAN */
+.pesan {
+    width: 80%;
+
+    margin: 50px auto;
+
+    padding: 15px;
+
+    background: #a9c7ed;
+
+    border: 1px solid #777;
+    border-radius: 8px;
+
+    text-align: center;
+
+    font-size: 12px;
+}
