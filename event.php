@@ -1,5 +1,6 @@
 <?php
 // event.php
+require_once __DIR__ . '/config/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -19,7 +20,7 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="menuadmin.php">Dashboard</a></li>
+                    <li><a href="<?= base_url('pages/dashboard/menuadmin.php') ?>">Dashboard</a></li>
                     <li class="active"><a href="event.php">Event</a></li>
                     <li><a href="#">Peserta</a></li>
                     <li><a href="#">Wishlist</a></li>
@@ -29,7 +30,7 @@
                     <li><a href="#">Penerima</a></li>
                     <li><a href="#">Laporan</a></li>
                     <li><a href="#">Pengaturan</a></li>
-                    <li><a href="index.php">Keluar</a></li>
+                    <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
                 </ul>
             </nav>
         </aside>

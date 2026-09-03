@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
-exit;
 
         // Cek email dan password
         if ($user && password_verify($password, $user['password'])) {
@@ -45,12 +44,12 @@ exit;
             // Redirect berdasarkan role
             if ($user['role'] === 'admin') {
 
-                header('Location: ' . base_url('assets/pages/dashboard/menuadmin.php'));
+                header('Location: ' . base_url('pages/dashboard/menuadmin.php'));
                 exit;
 
             } elseif ($user['role'] === 'peserta') {
 
-                header('Location: ' . base_url('assets/pages/dashboard/index.php'));
+                header('Location: ' . base_url('pages/dashboard/index.php'));
                 exit;
 
             } else {

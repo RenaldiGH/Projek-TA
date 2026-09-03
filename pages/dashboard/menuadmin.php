@@ -29,7 +29,7 @@ if ($_SESSION['role'] !== 'admin') {
             <nav>
                 <ul>
                     <li class="active"><a href="#">Dashboard</a></li>
-                    <li><a href="event.php">Event</a></li>
+                    <li><a href="<?= base_url('event.php') ?>">Event</a></li>
                     <li><a href="#">Peserta</a></li>
                     <li><a href="#">Wishlist</a></li>
                     <li><a href="#">Timeline</a></li>
@@ -38,7 +38,7 @@ if ($_SESSION['role'] !== 'admin') {
                     <li><a href="#">Penerima</a></li>
                     <li><a href="#">Laporan</a></li>
                     <li><a href="#">Pengaturan</a></li>
-                    <li><a href="index.php">Keluar</a></li>
+                    <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
                 </ul>
             </nav>
         </aside>

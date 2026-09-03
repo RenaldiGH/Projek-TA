@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $base_url = 'http://localhost:8080/Project-TA-rey-nesya-rendra/';
 
