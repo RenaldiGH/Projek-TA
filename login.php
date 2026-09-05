@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="login-image"></div>
         
         <div class="login-box">
-            <p class="login-sub">selamat datang kembali</p>
+            <p class="login-sub">Buat Akun Baru</p>
             <h1>Login</h1>
             <form method="POST" action="<?= base_url('login.php') ?>">
                 <div class="input-group">
