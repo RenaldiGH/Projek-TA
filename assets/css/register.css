@@ -1,21 +1,17 @@
 
 
-
-body {
-    margin: 0;
-    padding: 0;
-    background: 
-    linear-gradient(135deg, #031341, #031446); }
-
-
-
-
-
-
-
-
-
-
+.register-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #031341, #031446);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Memastikan berada di paling depan melewati elemen header */
+}
 
 
 .register-container {
@@ -29,22 +25,81 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-register-image {
+.register-image {
     width: 50%;
-    height: 100%; 
-    background-image:url ('../img/register.png');
+    height: 100%; /* Mengikuti tinggi kontainer (550px) */
+    background-image: url('../img/register.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-register-box {
-    width:50%;
-    height : 100%;
-    background:white;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:40px 
+.register-box {
+    width: 50%;
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.register-box h1 {
+    font-size: 30px;
+    font-weight: 900;
+    color: #050029;
+    margin: 0 0 20px 0; /* Diperbaiki jaraknya */
+}
+
+.register-sub {
+    font-size: 12px;
+    color: #050029;
+    margin: 0 0 5px 0;
+    text-align: center;
+}
+
+.register-box form { 
+    width: 100%;
+    max-width: 330px;
+}
+
+.input-group {
+    width: 100%; /* Diperbaiki dari yang sebelumnya angka 8 */
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group input {
+    width: 100%;
+    height: 44px;
+    padding: 0 15px;
+    border: 1px solid #d5d5d5;
+    border-radius: 7px;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    background: white;
+    box-sizing: border-box;
+}
+
+.input-register {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-register button {
+    width: 100%;
+    height: 44px;
+    background: #d90032;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 900;
 }

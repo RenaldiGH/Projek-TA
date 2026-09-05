@@ -14,29 +14,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $konfirmasi = $_POST['konfirmasi'] ?? '';
 
-    // 1. Cek data kosong
+    // Mengecek data kosong
     if ($nama === '' || $email === '' || $password === '' || $konfirmasi === '') {
 
         $error = 'Semua data wajib diisi.';
 
-    // 2. Cek format email
+    //  Cek format email
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
         $error = 'Email tidak valid.';
 
-    // 3. Cek panjang password
+    //  Cek panjang password
     } elseif (strlen($password) < 6) {
 
         $error = 'Password minimal 6 karakter.';
 
-    // 4. Cek konfirmasi password
+    //  Cek konfirmasi password
     } elseif ($password !== $konfirmasi) {
 
         $error = 'Konfirmasi password tidak sama.';
 
     } else {
 
-        // 5. Cek apakah email sudah terdaftar
+        //  Cek apakah email sudah terdaftar
         $stmt = $conn->prepare(
             "SELECT id FROM users WHERE email = ?"
         );
@@ -52,13 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } else {
 
-            // 6. Hash password
+            // Hash password
             $password_hash = password_hash(
                 $password,
                 PASSWORD_DEFAULT
             );
 
-            // 7. Masukkan data ke database
+            //  Masukkan data ke database
             $stmt = $conn->prepare(
                 "INSERT INTO users (nama, email, password, role)
                  VALUES (?, ?, ?, 'peserta')"
@@ -88,69 +88,111 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+
+    
+    <link rel="stylesheet" href="assets/css/register.css">
 </head>
 
 <body>
 
-<h2>Register</h2>
+    <div class="register-wrapper">
 
-<?php if ($error !== ''): ?>
-    <p><?= htmlspecialchars($error) ?></p>
-<?php endif; ?>
+        <div class="register-container">
 
-<?php if ($success !== ''): ?>
-    <p><?= htmlspecialchars($success) ?></p>
-<?php endif; ?>
+            
+            <div class="register-image"></div>
 
-<form method="POST">
 
-    <input
-        type="text"
-        name="nama"
-        placeholder="Nama Lengkap"
-        required
-    >
+            <div class="register-box">
 
-    <br><br>
+                <p class="register-sub">
+                    Buat Akun Baru
+                </p>
 
-    <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        required
-    >
+                <h1>Register</h1>
 
-    <br><br>
 
-    <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        required
-    >
+                
+                <?php if ($error !== ''): ?>
+                    <p>
+                        <?= htmlspecialchars($error) ?>
+                    </p>
+                <?php endif; ?>
 
-    <br><br>
 
-    <input
-        type="password"
-        name="konfirmasi"
-        placeholder="Konfirmasi Password"
-        required
-    >
+                <?php if ($success !== ''): ?>
+                    <p>
+                        <?= htmlspecialchars($success) ?>
+                    </p>
+                <?php endif; ?>
 
-    <br><br>
 
-    <button type="submit">Register</button>
+                <form method="POST">
 
-</form>
+                    
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            name="nama"
+                            placeholder="Nama Lengkap"
+                            required
+                        >
+                    </div>
 
-<br>
 
-<a href="login.php">Login</a>
+                    <div class="input-group">
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            required
+                        >
+                    </div>
+
+
+                    
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            name="konfirmasi"
+                            placeholder="Konfirmasi Password"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="input-register">
+                        <button type="submit">
+                            Register
+                        </button>
+                    </div>
+
+                </form>
+
+                <p class="register-link">
+                    Sudah punya akun?
+                    <a href="login.php">Login</a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </body>
 </html>
-
