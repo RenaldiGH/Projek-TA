@@ -1,6 +1,6 @@
 <?php
 // event.php
-require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -8,12 +8,12 @@ require_once __DIR__ . '/config/config.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Event - SKARIGA Secret Santa</title>
-    <link rel="stylesheet" href="assets/css/style_admin.css">
+    <link rel="stylesheet" href="../../assets/css/style_admin.css">
 </head>
 <body>
 
     <div class="dashboard-container">
-        <!-- Sidebar / Navigasi Samping -->
+      
         <aside>
             <div class="brand">
                 <h2>SKARIGA SECRET SANTA</h2>
@@ -35,15 +35,15 @@ require_once __DIR__ . '/config/config.php';
             </nav>
         </aside>
 
-        <!-- Konten Utama -->
+        
         <main>
-            <!-- Header Halaman -->
+          
             <header class="page-header">
                 <h2>Data Event</h2>
                 <p>Kelola Semua Event Secreet Santa Skariga</p>
             </header>
 
-            <!-- Tabel Data Event dalam Card -->
+            
             <section class="table-card">
                 <table class="data-table">
                     <thead>

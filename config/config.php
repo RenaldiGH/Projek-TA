@@ -9,4 +9,5 @@ function base_url($path = '')
 
     return $base_url . ltrim($path, '/');
 }
+require_once __DIR__ . '/database.php';
 ?>

@@ -9,4 +9,10 @@ function require_login() {
         exit;
     }
 }
+function require_admin() {
+    if (($session['role'] ?? '') !== 'admin') {
+        header('Location: ' . base_url('pages/dashboard/dashboarduser.php'));
+        exit;
+    }
+}
 ?>

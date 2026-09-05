@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/config/database.php';
 
@@ -49,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             } elseif ($user['role'] === 'peserta') {
 
-                header('Location: ' . base_url('pages/dashboard/index.php'));
+                header('Location: ' . base_url('pages/dashboard/dashboarduser.php'));
                 exit;
 
             } else {
@@ -70,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/login.css">
 
-<!-- TAMBAHKAN PEMBUNGKUS BARU INI -->
+
 <div class="login-wrapper">
     <div class="login-container">
         <div class="login-image"></div>
@@ -83,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="email" name="email" placeholder="Email" required>
                 </div>
 
-                <!-- <br> dihapus karena jarak sudah diatur oleh margin-bottom .input-group -->
+            
 
                 <div class="input-group">
                     <input type="password" name="password" placeholder="Password" required>
