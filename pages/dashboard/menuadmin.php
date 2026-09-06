@@ -48,7 +48,7 @@ $pengundian_terbaru = $conn->query(
             <nav>
                 <ul>
                     <li class="active"><a href="<?= base_url('pages/dashboard/menuadmin.php') ?>">Dashboard</a></li>
-                    <li><a href="<?= base_url('event.php') ?>">Event</a></li>
+                    <li><a href="<?= base_url('pages/event/event.php') ?>">Event</a></li>
                     <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
                     <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
                     <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
