@@ -33,10 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
-        // Cek email dan password
         if ($user && password_verify($password, $user['password'])) {
 
-            // Buat session
             session_regenerate_id(true);
 
             $_SESSION['user_id'] = $user['id'];
@@ -44,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['email'] = $user['email'];
             $_SESSION['role'] = $user['role'];
 
-            // Redirect berdasarkan role
+            // redirect berdasarkan role
             if ($user['role'] === 'admin') {
 
                 header('Location: ' . base_url('pages/dashboard/menuadmin.php'));

@@ -7,26 +7,25 @@ require_once __DIR__ . '/../../includes/header.php';
 
 <div class="dashboard">
 
-    <!-- SIDEBAR -->
+   
     <div class="sidebar">
 
         <h2>SECRET<br>SANTA</h2>
 
-        <a href="#" class="active">Dashboard</a>
+        <li class="active"><a href="<?= base_url('pages/dashboard/dashboarduser.php') ?>">Dashboard</a></li>
         <a href="#">Profil</a>
-        <a href="#">Wishlist</a>
-        <a href="#">Timeline</a>
+        <a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a>
+        <a href="">Timeline</a>
         <a href="#">Hasil Undian</a>
-        <a href="#">Pengaturan</a>
-        <a href="#">Keluar</a>
+        <a href="">Pengaturan</a>
+        <a href="<?= base_url('logout.php') ?>">Keluar</a>
 
     </div>
 
 
-    <!-- ISI DASHBOARD -->
+  
     <div class="content">
 
-        <!-- HEADER -->
         <div class="header">
 
             <div>
@@ -41,7 +40,7 @@ require_once __DIR__ . '/../../includes/header.php';
         </div>
 
 
-        <!-- CARD -->
+       
         <div class="cards">
 
             <div class="card">
@@ -76,7 +75,7 @@ require_once __DIR__ . '/../../includes/header.php';
         </div>
 
 
-        <!-- PESAN -->
+       
         <div class="pesan">
             Jangan lupa Siapkan Hadiah Terbaik Untuk Secret Santamu!
         </div>
