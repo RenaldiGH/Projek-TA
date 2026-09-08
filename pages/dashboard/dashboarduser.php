@@ -1,15 +1,9 @@
-<?php
-require_once __DIR__ . '/../../config/config.php';
-require_once __DIR__ . '/../../includes/header.php';
+<?php 
+require_once __DIR__ . '/../../config/config.php'; 
+require_once __DIR__ . '/../../includes/header.php'; 
 ?>
 
-<link rel="stylesheet" href="css/dashboard-user.css">
-
-<div class="dashboard">
-
-   
-    <div class="sidebar">
-
+<link rel="stylesheet" href="../../assets/css/dashboarduser.css">
         <h2>SECRET<br>SANTA</h2>
 
         <li class="active"><a href="<?= base_url('pages/dashboard/dashboarduser.php') ?>">Dashboard</a></li>
@@ -29,12 +23,12 @@ require_once __DIR__ . '/../../includes/header.php';
         <div class="header">
 
             <div>
-                <h1>Halo, Peserta! 👋</h1>
+                <h1>Halo, Peserta! </h1>
                 <p>Selamat datang di Secret Santa SKARIGA</p>
             </div>
 
             <div>
-                🔔 &nbsp; 👤 <b>Peserta</b>
+                 &nbsp;  <b>Peserta</b>
             </div>
 
         </div>
@@ -45,7 +39,7 @@ require_once __DIR__ . '/../../includes/header.php';
 
             <div class="card">
                 <h3>Status Saya</h3>
-                <div class="icon">🎁</div>
+                <div class="icon"></div>
                 <b>Terdaftar</b>
                 <p>Kamu sudah terdaftar di Secret Santa Skariga</p>
             </div>
@@ -53,14 +47,14 @@ require_once __DIR__ . '/../../includes/header.php';
 
             <div class="card">
                 <h3>Wishlist Saya</h3>
-                <div class="icon">❤️</div>
+                <div class="icon"></div>
                 <b>3 Barang</b>
             </div>
 
 
             <div class="card">
                 <h3>Timeline Terdekat</h3>
-                <div class="icon">📅</div>
+                <div class="icon"></div>
                 <p>11-16 Desember 2024</p>
                 <p>Pengisian Wishlist</p>
             </div>
@@ -68,12 +62,11 @@ require_once __DIR__ . '/../../includes/header.php';
 
             <div class="card">
                 <h3>Pengumuman Terbaru</h3>
-                <div class="icon">📢</div>
+                <div class="icon"></div>
                 <p>Pengundian akan dilakukan pada 16 Desember 2024</p>
             </div>
 
         </div>
-
 
        
         <div class="pesan">
