@@ -12,7 +12,6 @@ $total_peserta = (int) $conn->query("SELECT COUNT(*) AS total FROM peserta")->fe
 $total_pengundian = (int) $conn->query("SELECT COUNT(*) AS total FROM pengundian")->fetch_assoc()['total'];
 $total_timeline = (int) $conn->query("SELECT COUNT(*) AS total FROM timeline")->fetch_assoc()['total'];
 
-// Event Terbaru (5 baris terakhir)
 $event_terbaru = $conn->query(
     "SELECT nama_event, tanggal_event, status
      FROM events
@@ -20,7 +19,6 @@ $event_terbaru = $conn->query(
      LIMIT 5"
 );
 
-// Pengundian Terbaru (5 baris terakhir, join biar tau nama event-nya)
 $pengundian_terbaru = $conn->query(
     "SELECT e.nama_event, p.tanggal_undi, p.status
      FROM pengundian p
@@ -40,7 +38,7 @@ $pengundian_terbaru = $conn->query(
 <body>
 
     <div class="dashboard-container">
-        <!-- Sidebar / Navigasi Samping -->
+        
         <aside>
             <div class="brand">
                 <h2>SKARIGA SECRET SANTA</h2>
