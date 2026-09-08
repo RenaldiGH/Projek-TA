@@ -71,10 +71,14 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
         ?>
 
         <?php if (!$peserta_list): ?>
-            <div class="empty-state">
-                <h3>Belum Ada Peserta</h3>
-                <p>Silahkan tambahkan peserta terlebih dahulu.</p>
-            </div>
+           <div class="empty-state">
+    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="80" height="80">
+        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+    </svg>
+    <h3>Belum Ada Peserta</h3>
+    <p>Silahkan tambahkan peserta terlebih dahulu.</p>
+</div>
+
         <?php else: ?>
             <table class="data-table">
                 <thead>

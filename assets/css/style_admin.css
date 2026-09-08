@@ -437,6 +437,10 @@ table td {
     padding: 60px 20px;
     color: #555;
 }
+.empty-icon {
+    color: #1a1a1a;
+    margin-bottom: 16px;
+}
 
 .empty-state h3 {
     margin-bottom: 8px;
