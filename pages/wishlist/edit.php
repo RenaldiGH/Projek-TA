@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($nama_barang === '') {
         $error = 'Nama barang wajib diisi.';
-    } elseif (!is_numeric($estimasi_harga) || $estimasi_harga < 0) {
-        $error = 'Estimasi harga harus berupa angka.';
+    } elseif (!is_numeric($estimasi_harga) || $estimasi_harga <= 0) {
+        $error = 'Estimasi harga harus berupa angka dan tidak boleh nol.';
     } elseif (!in_array($status, ['belum_dipilih', 'dipilih'], true)) {
         $error = 'Status tidak valid.';
     } else {

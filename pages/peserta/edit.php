@@ -40,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Nama dan email wajib diisi.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Format email tidak valid.';
+        } elseif ($no_hp !== '' && !preg_match('/^[0-9]{9,15}$/', $no_hp)) {
+    $error = 'Nomor HP harus berupa angka, 9-15 digit.';
     } elseif (!in_array($status, ['aktif', 'nonaktif'], true)) {
         $error = 'Status tidak valid.';
     } else {

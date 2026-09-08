@@ -24,17 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $waktu = trim($_POST['waktu'] ?? '');
     $deskripsi = trim($_POST['deskripsi'] ?? '');
 
-    if ($judul === '') {
-        $error = 'Judul wajib diisi.';
-    } else {
-        $tanggal_db = $tanggal !== '' ? $tanggal : null;
-        $waktu_db = $waktu !== '' ? $waktu : null;
-
-        $insert = $conn->prepare(
-            "INSERT INTO timeline (event_id, judul, tanggal, waktu, deskripsi)
-             VALUES (?, ?, ?, ?, ?)"
-        );
-        $insert->bind_param('issss', $event_id, $judul, $tanggal_db, $waktu_db, $deskripsi);
+    if ($judul === '' || $tanggal === '' || $waktu === '') {
+    $error = 'Judul, tanggal, dan waktu wajib diisi.';
+} else {
+    $insert = $conn->prepare(
+        "INSERT INTO timeline (event_id, judul, tanggal, waktu, deskripsi)
+         VALUES (?, ?, ?, ?, ?)"
+    );
+    $insert->bind_param('issss', $event_id, $judul, $tanggal, $waktu, $deskripsi);
 
         if ($insert->execute()) {
             set_flash('success', 'Timeline berhasil ditambahkan.');

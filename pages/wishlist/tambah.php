@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$peserta_id || $nama_barang === '') {
         $error = 'Peserta dan nama barang wajib diisi.';
-    } elseif (!is_numeric($estimasi_harga) || $estimasi_harga < 0) {
-        $error = 'Estimasi harga harus berupa angka.';
+    } elseif (!is_numeric($estimasi_harga) || $estimasi_harga <= 0) {
+        $error = 'Estimasi harga harus berupa angka dan tidak boleh nol.';
     } else {
         $insert = $conn->prepare(
             "INSERT INTO wishlist (peserta_id, nama_barang, kategori, estimasi_harga, deskripsi, link_referensi)
