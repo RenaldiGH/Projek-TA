@@ -10,7 +10,10 @@ function require_login() {
     }
 }
 function require_admin() {
-    if (($session['role'] ?? '') !== 'admin') {
+
+require_login();
+
+    if (($_SESSION['role'] ?? '') !== 'admin') {
         header('Location: ' . base_url('pages/dashboard/dashboarduser.php'));
         exit;
     }

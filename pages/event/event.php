@@ -1,6 +1,8 @@
 <?php
-// event.php
 require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../includes/auth.php';
+
+require_admin();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -21,10 +23,10 @@ require_once __DIR__ . '/../../config/config.php';
             <nav>
                 <ul>
                     <li><a href="<?= base_url('pages/dashboard/menuadmin.php') ?>">Dashboard</a></li>
-                    <li class="active"><a href="event.php">Event</a></li>
-                    <li><a href="#">Peserta</a></li>
-                    <li><a href="#">Wishlist</a></li>
-                    <li><a href="#">Timeline</a></li>
+                    <li class="active"><a href="<?= base_url('pages/event/event.php') ?>">Event</a></li>
+                    <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
+                    <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
+                    <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
                     <li><a href="#">Pengundian</a></li>
                     <li><a href="#">Pemberi</a></li>
                     <li><a href="#">Penerima</a></li>
