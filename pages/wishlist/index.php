@@ -72,9 +72,15 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 
         <?php if (!$wishlist_list): ?>
             <div class="empty-state">
-                <h3>Belum Ada Wishlist</h3>
-                <p>Wishlist akan muncul setelah peserta mengisi, atau tambahkan manual di sini</p>
-            </div>
+    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+        <path d="M50 30 C40 10, 15 10, 22 25 C27 34, 42 32, 50 30 C58 32, 73 34, 78 25 C85 10, 60 10, 50 30 Z" fill="currentColor"/>
+        <rect x="15" y="32" width="70" height="16" rx="2" fill="currentColor"/>
+        <rect x="20" y="50" width="60" height="42" rx="2" fill="currentColor"/>
+        <rect x="45" y="32" width="10" height="60" fill="#ffffff"/>
+    </svg>
+    <h3>Belum Ada Wishlist</h3>
+    <p>Wishlist akan muncul setelah peserta mengisi, atau tambahkan manual di sini.</p>
+</div>
         <?php else: ?>
             <table class="data-table">
                 <thead>
