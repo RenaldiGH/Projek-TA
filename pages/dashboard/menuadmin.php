@@ -52,7 +52,7 @@ $pengundian_terbaru = $conn->query(
                     <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
                     <li><a href="#">Pengundian</a></li>
                     <li><a href="#">Pemberi</a></li>
-                    <li><a href="#">Penerima</a></li>
+                    <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
                     <li><a href="#">Laporan</a></li>
                     <li><a href="#">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
