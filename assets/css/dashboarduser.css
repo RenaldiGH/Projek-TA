@@ -1,86 +1,447 @@
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #031341, #031446);
-    min-height: 100vh;
+    background-color: #514f91;
 }
+
+
+
 .dashboard {
     width: 100%;
-    max-width: 1100px;
-    min-height: 650px;
-    margin: 30px auto;
+    min-height: 100vh;
+
     display: flex;
+
     background-color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
+
+
 
 .sidebar {
-    width: 125px;
-    min-height: 650px;
-    background-color: #05002b;
+    width: 220px;
+    min-height: 100vh;
+
+    flex-shrink: 0;
+
+    background-color: #07042f;
+
     color: white;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
-    overflow: hidden;
+
+    position: relative;
 }
 
-.sidebar h2 {
+
+.logo {
     width: 100%;
-    padding: 25px 10px 20px;
+    height: 150px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
-    font-size: 14px;
-    line-height: 1.2;
-    color: white;
 }
-.sidebar a {
-    width: 100%;
-    padding: 13px 10px;
-    text-decoration: none;
+
+.logo h2 {
     color: white;
-    font-size: 11px;
-    text-align: center;
+
+    font-size: 18px;
+
+    line-height: 1.3;
+
+    font-weight: bold;
+}
+
+
+
+.menu {
+    width: 100%;
+}
+
+.menu a {
     display: block;
+
+    width: 100%;
+
+    padding: 17px 25px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
     transition: 0.2s;
 }
-.sidebar li.active {
+
+
+.menu a.active {
+    background-color: #e00000;
+}
+
+
+.menu a:hover {
+    background-color: #292553;
+}
+
+
+.sidebar-decoration {
+    margin-top: auto;
+
     width: 100%;
-    list-style: none;
+
+    display: flex;
+
+    justify-content: center;
+
+    padding-bottom: 40px;
 }
 
-.sidebar li.active a {
-    background-color: #e50909;
-    color: white;
+.sidebar-decoration img {
+    width: 110px;
+    height: 110px;
+
+    object-fit: contain;
 }
 
-.sidebar li:hover {
-    background-color: #e50909;
-    color:white;
+.content {
+    flex: 1;
+
+    width: calc(100% - 220px);
+
+    min-height: 100vh;
+
+    padding: 40px 50px;
+
+    background-color: white;
 }
 
-.sidebar li:hover a{
-    color: white;
-}
-content {
-    flex:1;
-    padding: 20px;
-    overflow-y:auto;
-}
+
 .header {
     width: 100%;
-    height: 60px;
-    display : flex;
+
+    display: flex;
+
+    justify-content: space-between;
+
     align-items: center;
-    justify-content: space-around;
+
+    margin-bottom: 70px;
 }
-.header h1 {
-    font-size: 20px;
-    color:#031341;
-    font-weight:1000;
+
+
+
+.welcome h1 {
+    font-size: 28px;
+
+    color: #11152f;
+
+    margin-bottom: 10px;
 }
-.
+
+.welcome p {
+    font-size: 14px;
+
+    color: #555;
+}
+
+.profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #111;
+}
+
+
+
+.profile-circle {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background-color: #f4d43d;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-circle img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.cards {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 25px;
+
+    align-items: center;
+}
+
+
+
+.card {
+    width: 100%;
+
+    min-height: 190px;
+
+    padding: 20px 18px;
+
+    background-color: #fafafa;
+
+    border: 1px solid #d2d2d2;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+
+    text-align: center;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+
+
+.card h3 {
+    font-size: 14px;
+
+    color: #111;
+
+    margin-bottom: 15px;
+}
+
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+
+    margin-bottom: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.card-icon img {
+    width: 50px;
+    height: 50px;
+
+    object-fit: contain;
+}
+
+.card strong {
+    font-size: 14px;
+
+    color: #111;
+
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 11px;
+
+    line-height: 1.5;
+
+    color: #444;
+}
+
+
+.status-card {
+    transform: translateY(45px);
+}
+
+.wishlist-card {
+    transform: translateY(-45px);
+}
+
+.timeline-card {
+    transform: translateY(25px);
+}
+
+.announcement-card {
+    transform: translateY(-40px);
+}
+
+
+.pesan {
+    width: 100%;
+
+    min-height: 55px;
+
+    margin-top: 100px;
+
+    padding: 12px 20px;
+
+    background-color: #a9c5ee;
+
+    border: 1px solid #7899c7;
+
+    border-radius: 7px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+}
+
+.pesan-icon img {
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+}
+
+.pesan p {
+    font-size: 12px;
+
+    color: #111;
+
+    text-align: center;
+}
+
+
+@media (max-width: 1100px) {
+
+    .content {
+        padding: 35px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .status-card,
+    .wishlist-card,
+    .timeline-card,
+    .announcement-card {
+        transform: none;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .logo {
+        height: 90px;
+    }
+
+    .menu {
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .menu a {
+        min-width: 110px;
+        text-align: center;
+        padding: 14px 10px;
+    }
+
+    .sidebar-decoration {
+        display: none;
+    }
+
+    .content {
+        width: 100%;
+        min-height: auto;
+
+        padding: 30px 20px;
+    }
+
+    .header {
+        margin-bottom: 40px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .status-card,
+    .wishlist-card,
+    .timeline-card,
+    .announcement-card {
+        transform: none;
+    }
+
+    .pesan {
+        margin-top: 40px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .welcome h1 {
+        font-size: 23px;
+    }
+
+    .card {
+        min-height: 170px;
+    }
+}
