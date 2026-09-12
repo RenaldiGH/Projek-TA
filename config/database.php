@@ -6,5 +6,8 @@ $dbname = 'secret_santa';
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
-require_once __DIR__ . '/database.php';
+if ($conn->connect_error) {
+    die ('koneksi gagal :' .  $conn->connect_error);
+
+}
 ?>
