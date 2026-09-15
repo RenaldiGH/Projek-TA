@@ -107,7 +107,7 @@ $pengundian_terbaru = $conn->query(
                 <div class="card">
                     <div class="card-header">
                         <h3>Event Terbaru</h3>
-                        <a href="<?= base_url('event.php') ?>" class="btn-all">Lihat Semua</a>
+                        <a href="<?= base_url('pages/event/event.php') ?>" class="btn-all">Lihat Semua</a>
                     </div>
                     <table>
                         <thead>

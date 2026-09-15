@@ -3,6 +3,8 @@ require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../includes/auth.php';
 
 require_admin();
+$event_id = (int) ($_GET['event_id'] ?? 0);
+$event_query = $event_id ? ('?event_id=' . $event_id) : '';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -23,10 +25,12 @@ require_admin();
             <nav>
                 <ul>
                     <li><a href="<?= base_url('pages/dashboard/menuadmin.php') ?>">Dashboard</a></li>
-                    <li class="active"><a href="<?= base_url('pages/event/event.php') ?>">Event</a></li>
-                    <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
-                    <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
-                    <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
+                    <li class="active"><a href="<?= base_url('pages/event/event.php' 
+                    ) ?>">Event</a></li>
+
+                    <li><a href="<?= base_url('pages/peserta/index.php' . $event_query) ?>">Peserta</a></li>
+                    <li><a href="<?= base_url('pages/wishlist/index.php' . $event_query) ?>">Wishlist</a></li>
+                    <li><a href="<?= base_url('pages/timeline/index.php' . $event_query) ?>">Timeline</a></li>
                     <li><a href="#">Pengundian</a></li>
                     <li><a href="#">Pemberi</a></li>
                     <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
