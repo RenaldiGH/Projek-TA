@@ -9,7 +9,7 @@ require_admin();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penerima (Peserta) - SKARIGA Secret Santa</title>
+    <title>Pengundian - SKARIGA Secret Santa</title>
     <link rel="stylesheet" href="../../assets/css/style_admin.css">
 </head>
 <body>
@@ -27,9 +27,9 @@ require_admin();
                     <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
                     <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
                     <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
-                    <li><a href="<?= base_url('pages/pengudian/index.php') ?>">Pengundian</a></li>
+                    <li class="active"><a href="<?= base_url('pages/pengundian/index.php') ?>">Pengundian</a></li>
                     <li><a href="#">Pemberi</a></li>
-                    <li class="active"><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
+                    <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
                     <li><a href="#">Laporan</a></li>
                     <li><a href="#">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
@@ -42,8 +42,8 @@ require_admin();
             <!-- Page Header -->
             <header class="page-header">
                 <div class="header-title">
-                    <h2>Penerima(Peserta)</h2>
-                    <p>Daftar Peserta yang menerima hadiah</p>
+                    <h2>Data Peserta</h2>
+                    <p>Kelola Semua Event Secreet Santa Skariga</p>
                 </div>
                 <a href="#" class="btn-add" style="background-color: #2b0054;">+ Mulai Pengundian</a>
             </header>
@@ -60,24 +60,19 @@ require_admin();
                     </div>
                 </div>
 
-                <!-- Data Table Header -->
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 80px;">No.</th>
-                            <th>Nama Penerima</th>
-                            <th style="text-align: right; padding-right: 40px;">Aksi</th>
-                        </tr>
-                    </thead>
-                </table>
-
-                <!-- Empty State (Belum Ada Hasil Pengundian) -->
+                <!-- Empty State (Belum Ada Pengundian) -->
                 <div class="empty-state">
-                    <svg class="empty-state-icon" viewBox="0 0 24 24" fill="currentColor" width="90" height="90">
-                        <path d="M16.5 13c-1.2 0-3.07.34-4.5 1-1.43-.66-3.3-1-4.5-1C5.17 13 1 14.17 1 16.5V19h22v-2.5c0-2.33-4.17-3.5-7.5-3.5zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-4.5 0c1.93 0 3.5-1.57 3.5-3.5S9.43 5 7.5 5 4 6.57 4 8.5 5.57 12 7.5 12zm9 0c1.93 0 3.5-1.57 3.5-3.5S18.43 5 16.5 5 13 6.57 13 8.5s1.57 3.5 3.5 3.5z"/>
+                    <!-- Icon Dadu sesuai Figma -->
+                    <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="90" height="90" style="color: #000000; margin-bottom: 16px;">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"></circle>
+                        <circle cx="15.5" cy="8.5" r="1.5" fill="currentColor"></circle>
+                        <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+                        <circle cx="8.5" cy="15.5" r="1.5" fill="currentColor"></circle>
+                        <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
                     </svg>
-                    <h3>Belum Ada Hasil Pengundian</h3>
-                    <p>Lakukan pengundian terlebih dahulu</p>
+                    <h3>Belum Ada Pengundian</h3>
+                    <p>Klik "Mulai Pengundian" Untuk melakukan Undian Otomatis</p>
                 </div>
             </section>
         </main>
