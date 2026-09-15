@@ -41,8 +41,8 @@ require_once __DIR__ . '/../../includes/header.php';
                 Hasil Undian
             </a>
 
-            <a href="#">
-                Pengaturan
+            <a href="<?= base_url('pages/pengaturan/peserta.php') ?>">
+                 Pengaturan
             </a>
 
             <a href="<?= base_url('logout.php') ?>">

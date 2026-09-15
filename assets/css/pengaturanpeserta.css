@@ -1,0 +1,374 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f6fa;
+    color: #111827;
+}
+
+
+.dashboard {
+    min-height: 100vh;
+}
+
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 200px;
+    height: 100vh;
+
+    background: #08052f;
+    color: white;
+
+    z-index: 1000;
+}
+
+
+
+
+.logo {
+    height: 145px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.logo h2 {
+    font-size: 20px;
+    line-height: 1.25;
+    color: white;
+}
+
+.menu {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.menu a {
+    width: 100%;
+    height: 53px;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 34px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+.menu a:hover {
+    background: #292650;
+}
+
+.menu a.active {
+    background: #ed0000;
+    color: white;
+}
+
+
+.christmas-decoration {
+    position: absolute;
+
+    bottom: 35px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 50px;
+}
+
+
+.content {
+    margin-left: 200px;
+
+    min-height: 100vh;
+
+    padding: 45px 55px;
+
+    background: #f5f6fa;
+}
+
+.page-header {
+    margin-bottom: 28px;
+}
+
+.page-header h1 {
+    font-size: 30px;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+.message {
+    max-width: 900px;
+
+    padding: 13px 17px;
+
+    margin-bottom: 20px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+.message.success {
+    background: #dcfce7;
+    color: #166534;
+
+    border: 1px solid #bbf7d0;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #991b1b;
+
+    border: 1px solid #fecaca;
+}
+
+
+.password-card {
+    width: 100%;
+    max-width: 900px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    padding: 26px 28px 30px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.password-card h2 {
+    margin-bottom: 27px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+.form-group {
+    margin-bottom: 23px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
+
+    color: #111827;
+}
+
+
+.password-box {
+    position: relative;
+
+    width: 100%;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+
+    background: white;
+
+    border: 1px solid #777;
+
+    border-radius: 6px;
+
+    transition: 0.2s;
+}
+
+.password-box:focus-within {
+    border-color: #310078;
+
+    box-shadow: 0 0 0 2px rgba(49, 0, 120, 0.08);
+}
+
+
+.lock-icon {
+    width: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    flex-shrink: 0;
+}
+
+
+.password-box input {
+    width: 100%;
+    height: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    padding: 0 55px 0 4px;
+
+    font-size: 14px;
+
+    color: #111827;
+}
+
+
+.toggle-password {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 52px;
+    height: 42px;
+
+    border: none;
+
+    background: #fafafa;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s;
+}
+
+.toggle-password:hover {
+    background: #eeeeee;
+}
+
+
+.button-area {
+    width: 100%;
+    max-width: 900px;
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 62px;
+}
+
+.save-button {
+    width: 240px;
+    height: 42px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #310078;
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.save-button:hover {
+    background: #25005d;
+
+    transform: translateY(-1px);
+}
+
+.save-button:active {
+    transform: translateY(0);
+}
+
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .content {
+        margin-left: 180px;
+
+        padding: 30px;
+    }
+
+    .menu a {
+        padding-left: 25px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+    }
+
+    .logo {
+        height: 110px;
+    }
+
+    .menu a {
+        height: 48px;
+    }
+
+    .christmas-decoration {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0;
+
+        padding: 25px 20px;
+    }
+
+    .password-card {
+        padding: 22px 18px;
+    }
+
+    .button-area {
+        margin-top: 35px;
+    }
+
+    .save-button {
+        width: 100%;
+    }
+}
