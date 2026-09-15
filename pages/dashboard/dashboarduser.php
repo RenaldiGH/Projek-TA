@@ -1,6 +1,6 @@
-<?php 
-require_once __DIR__ . '/../../config/config.php'; 
-require_once __DIR__ . '/../../includes/header.php'; 
+<?php
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 
 <link rel="stylesheet" href="../../assets/css/dashboarduser.css">
@@ -10,7 +10,7 @@ require_once __DIR__ . '/../../includes/header.php';
 
     <aside class="sidebar">
 
-    
+
         <div class="logo">
             <h2>
                 SECRET<br>
@@ -18,14 +18,14 @@ require_once __DIR__ . '/../../includes/header.php';
             </h2>
         </div>
 
-    
+
         <nav class="menu">
 
             <a href="<?= base_url('pages/dashboard/dashboarduser.php') ?>" class="active">
                 Dashboard
             </a>
 
-            <a href="#">
+            <a href="<?= base_url('pages/profil/profiluser.php') ?>">
                 Profil
             </a>
 
@@ -57,7 +57,9 @@ require_once __DIR__ . '/../../includes/header.php';
 
     <main class="content">
 
+
         <header class="header">
+
 
             <div class="welcome">
 
@@ -74,7 +76,6 @@ require_once __DIR__ . '/../../includes/header.php';
 
             <div class="profile">
 
-              
 
                 <span>
                     Peserta
@@ -88,13 +89,11 @@ require_once __DIR__ . '/../../includes/header.php';
         <section class="cards">
 
 
-    
             <div class="card status-card">
 
                 <h3>
                     Status Saya
                 </h3>
-
 
 
                 <strong>
@@ -116,7 +115,6 @@ require_once __DIR__ . '/../../includes/header.php';
                 </h3>
 
 
-
                 <strong>
                     3 Barang
                 </strong>
@@ -129,7 +127,6 @@ require_once __DIR__ . '/../../includes/header.php';
                     Timeline Terdekat
                 </h3>
 
-    
 
                 <p>
                     11-16 Desember 2024
@@ -147,7 +144,6 @@ require_once __DIR__ . '/../../includes/header.php';
                     Pengumuman Terbaru
                 </h3>
 
-    
 
                 <p>
                     Pengundian akan dilakukan
@@ -170,4 +166,4 @@ require_once __DIR__ . '/../../includes/header.php';
 
     </main>
 
-</div> 
+</div>
