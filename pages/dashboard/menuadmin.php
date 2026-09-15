@@ -69,13 +69,13 @@ $pengundian_terbaru = $conn->query(
                     <h3>Selamat datang, <?= h($_SESSION['nama'] ?? 'Admin') ?>!</h3>
                     <p>Kelola Sistem Secret Santa SKARIGA</p>
                 </div>
-                <div class="user-profile">
-                    <div>
-                        <strong><?= h($_SESSION['nama'] ?? 'Admin') ?></strong><br>
-                        <small style="color: #666;">Administrator</small>
-                    </div>
-                    <div class="user-avatar"></div>
+                <a href="<?= base_url('pages/profiladmin/index.php') ?>" class="user-profile">
+                          <div style="text-align: right;">
+                         <strong><?= h($_SESSION['nama'] ?? 'Admin') ?></strong><br>
+                      <small style="color: #666;">Administrator</small>
                 </div>
+                    <div class="user-avatar"></div>
+                  </a>
             </header>
 
             
