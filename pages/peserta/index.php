@@ -16,7 +16,7 @@ if ($event_id) {
         $stmt = $conn->prepare(
             "SELECT id, nama, email, no_hp, status
              FROM peserta
-             WHERE event_id = ? AND (nama LIKE ? OR email LIKE ?)
+             `WHERE event_id = ?` AND (nama LIKE ? OR email LIKE ?)
              ORDER BY nama ASC"
         );
         $like = '%' . $search . '%';

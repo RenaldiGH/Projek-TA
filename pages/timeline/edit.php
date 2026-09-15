@@ -31,16 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $waktu = trim($_POST['waktu'] ?? '');
     $deskripsi = trim($_POST['deskripsi'] ?? '');
 
-    if ($judul === '') {
-        $error = 'Judul wajib diisi.';
-    } else {
-        $tanggal_db = $tanggal !== '' ? $tanggal : null;
-        $waktu_db = $waktu !== '' ? $waktu : null;
-
-        $update = $conn->prepare(
-            "UPDATE timeline SET judul = ?, tanggal = ?, waktu = ?, deskripsi = ? WHERE id = ?"
-        );
-        $update->bind_param('ssssi', $judul, $tanggal_db, $waktu_db, $deskripsi, $id);
+    if ($judul === '' || $tanggal === '' || $waktu === '') {
+    $error = 'Judul, tanggal, dan waktu wajib diisi.';
+} else {
+    $update = $conn->prepare(
+        "UPDATE timeline SET judul = ?, tanggal = ?, waktu = ?, deskripsi = ? WHERE id = ?"
+    );
+    $update->bind_param('ssssi', $judul, $tanggal, $waktu, $deskripsi, $id);
 
         if ($update->execute()) {
             set_flash('success', 'Timeline berhasil diperbarui.');

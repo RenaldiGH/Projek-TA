@@ -26,8 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Nama dan email wajib diisi.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Format email tidak valid.';
+        } elseif ($no_hp !== '' && !preg_match('/^[0-9]{9,15}$/', $no_hp)) {
+    $error = 'Nomor HP harus berupa angka, 9-15 digit.';
     } else {
-        // Cek apakah peserta dengan email ini sudah terdaftar di event yang sama
+        
         $cek = $conn->prepare("SELECT id FROM peserta WHERE event_id = ? AND email = ?");
         $cek->bind_param('is', $event_id, $email);
         $cek->execute();
@@ -37,9 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $cek->close();
 
-            // Setiap baris peserta wajib terhubung ke tabel users (foreign key).
-            // Kalau emailnya belum punya akun user, buatkan otomatis dengan role peserta,
-            // supaya nantinya peserta itu bisa login pakai email ini + password default.
             $user_stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
             $user_stmt->bind_param('s', $email);
             $user_stmt->execute();
