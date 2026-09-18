@@ -12,9 +12,6 @@ body {
 }
 
 
-/* =========================
-   DASHBOARD
-========================= */
 
 .dashboard {
     display: flex;
@@ -22,9 +19,6 @@ body {
 }
 
 
-/* =========================
-   SIDEBAR
-========================= */
 
 .sidebar {
     position: fixed;
@@ -42,8 +36,6 @@ body {
     z-index: 1000;
 }
 
-
-/* LOGO */
 
 .logo {
     height: 145px;
@@ -67,7 +59,6 @@ body {
 }
 
 
-/* MENU */
 
 .menu {
     display: flex;
@@ -110,11 +101,6 @@ body {
     color: white;
 }
 
-
-/* =========================
-   CONTENT
-========================= */
-
 .content {
     margin-left: 200px;
 
@@ -126,9 +112,6 @@ body {
 }
 
 
-/* =========================
-   HEADER
-========================= */
 
 .page-header {
     margin-bottom: 25px;
@@ -151,10 +134,6 @@ body {
 }
 
 
-/* =========================
-   SUCCESS
-========================= */
-
 .success-message {
     background: #dcfce7;
 
@@ -172,10 +151,6 @@ body {
 }
 
 
-/* =========================
-   PROFILE TOP
-========================= */
-
 .profile-top {
     display: grid;
 
@@ -184,10 +159,6 @@ body {
     gap: 22px;
 }
 
-
-/* =========================
-   PROFILE CARD
-========================= */
 
 .profile-card {
     background: white;
@@ -265,9 +236,6 @@ body {
 }
 
 
-/* =========================
-   INFORMATION CARD
-========================= */
 
 .information-card {
     background: white;
@@ -288,10 +256,6 @@ body {
     margin-bottom: 22px;
 }
 
-
-/* =========================
-   FORM
-========================= */
 
 .form-group {
     margin-bottom: 17px;
@@ -347,11 +311,6 @@ body {
     color: #94a3b8;
 }
 
-
-/* =========================
-   BUTTON
-========================= */
-
 .save-button {
     margin-top: 5px;
 
@@ -379,10 +338,6 @@ body {
     background: #3730a3;
 }
 
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 850px) {
 

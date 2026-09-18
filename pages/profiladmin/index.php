@@ -16,7 +16,6 @@ require_admin();
 <body>
 
     <div class="dashboard-container">
-        <!-- Sidebar Navigation -->
         <aside>
             <div class="brand">
                 <h2>SKARIGA SECRET SANTA</h2>
@@ -38,9 +37,7 @@ require_admin();
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main>
-            <!-- Page Header dengan Tombol Kembali -->
             <header class="page-header">
                 <div>
                     <h2>Profil Admin</h2>
@@ -49,9 +46,7 @@ require_admin();
                 <a href="<?= base_url('pages/dashboard/menuadmin.php') ?>" class="btn-back">← Kembali</a>
             </header>
 
-            <!-- Grid Layout Profil -->
             <div class="profile-container">
-                <!-- Card Kiri: Foto Profil & Informasi -->
                 <div class="profile-card">
                     <div class="avatar-box">
                         <div class="avatar-circle">
@@ -82,7 +77,6 @@ require_admin();
                     </div>
                 </div>
 
-                <!-- Card Kanan: Form Edit Profil -->
                 <div class="profile-card">
                     <form action="#" method="POST">
                         <div class="form-group">
