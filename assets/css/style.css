@@ -230,18 +230,22 @@ a {
 }
 
 .hero-image img {
-    width: 350px;
+    width: 550px;
 
     max-width: none;
 
     position: absolute;
 
     bottom: -5px;
-    right: -40px;
+    right: -75px;
 }
-
-
-
+.hero-image img:nth-child(2){
+    width: 400px;
+    max-width: none;
+    position:absolute;
+    bottom: 0px;
+    right: 60px;
+}
 
 .about {
     padding: 55px 0 35px;
