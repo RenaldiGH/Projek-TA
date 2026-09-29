@@ -47,4 +47,4 @@ $menu_items = [
                 <p><?= h($page_subtitle ?? '') ?></p>
             </header>
 
-            <?php render_flash(); ?>
+            <?php render_flash(); ?> 
