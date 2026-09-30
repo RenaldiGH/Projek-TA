@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Jakarta');
 
 $base_url = 'http://localhost:8080/Project-TA-rey-nesya-rendra/';
 

@@ -18,4 +18,14 @@ require_login();
         exit;
     }
 }
+
+function require_peserta() {
+
+    require_login();
+
+    if (($_SESSION['role'] ?? '') === 'admin') {
+        header('Location: ' . base_url('pages/dashboard/menuadmin.php'));
+        exit;
+    }
+}
 ?>
