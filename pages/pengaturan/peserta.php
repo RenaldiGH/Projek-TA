@@ -1,7 +1,9 @@
 <?php
 
 require_once __DIR__ . '/../../config/config.php';
-require_once __DIR__ . '/../../includes/header.php';
+require_once __DIR__ . '/../../includes/auth.php';
+
+require_peserta();
 
 $pesan = '';
 $tipe_pesan = '';
@@ -103,12 +105,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
 
 
-            <a href="<?= base_url('pages/wishlist/index.php') ?>">
+            <a href="<?= base_url('pages/wishlist/saya.php') ?>">
                 Wishlist
             </a>
 
 
-            <a href="#">
+            <a href="<?= base_url('pages/timeline/saya.php') ?>">
                 Timeline
             </a>
 
@@ -118,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
 
 
-            <a href="<?= base_url('pages/pengaturan/pengaturan.php') ?>"
+            <a href="<?= base_url('pages/pengaturan/peserta.php') ?>"
                class="active">
                 Pengaturan
             </a>
