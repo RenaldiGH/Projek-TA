@@ -49,4 +49,74 @@ function render_flash(): void
         unset($_SESSION['flash_error']);
     }
 }
+
+function tanggal_id($date, bool $short = false): string
+{
+    if (!$date) {
+        return '-';
+    }
+
+    $bulan = $short
+        ? ['', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
+        : ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    $ts = strtotime($date);
+
+    return date('j', $ts) . ' ' . $bulan[(int) date('n', $ts)] . ' ' . date('Y', $ts);
+}
+
+function rupiah($angka): string
+{
+    return 'Rp ' . number_format((float) $angka, 0, ',', '.');
+}
+
+function get_max_peserta(mysqli $conn): int
+{
+    $row = $conn->query("SELECT max_peserta FROM pengaturan LIMIT 1")->fetch_assoc();
+
+    return $row ? (int) $row['max_peserta'] : 10;
+}
+
+function get_events_for_user(mysqli $conn, int $user_id): array
+{
+    $stmt = $conn->prepare(
+        "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.tanggal_event, e.status,
+                (SELECT COUNT(*) FROM peserta px WHERE px.event_id = e.id AND px.status = 'aktif') AS jumlah,
+                (SELECT px.id FROM peserta px WHERE px.event_id = e.id AND px.user_id = ? LIMIT 1) AS peserta_id
+         FROM events e
+         WHERE e.status <> 'draft'
+         ORDER BY (e.status = 'selesai') ASC, e.tanggal_event ASC, e.id DESC"
+    );
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    return $rows;
+}
+
+function get_user_events(mysqli $conn, int $user_id): array
+{
+    $stmt = $conn->prepare(
+        "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.tanggal_event, e.status,
+                p.id AS peserta_id, p.created_at AS tanggal_ikut
+         FROM peserta p
+         JOIN events e ON e.id = p.event_id
+         WHERE p.user_id = ?
+         ORDER BY (e.status = 'selesai') ASC, e.tanggal_event ASC, e.id DESC"
+    );
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    return $rows;
+}
+
+function event_palette(int $id): string
+{
+    $palettes = ['pal-merah', 'pal-biru', 'pal-hijau', 'pal-ungu', 'pal-emas'];
+
+    return $palettes[$id % count($palettes)];
+}
 ?>
