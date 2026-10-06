@@ -33,6 +33,7 @@ require_admin();
                     <li><a href="#">Laporan</a></li>
                     <li><a href="#">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
+                    <li><a href="<?= base_url('pages/user/index.php') ?>">User</a></li>
                 </ul>
             </nav>
         </aside>

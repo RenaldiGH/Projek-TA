@@ -36,7 +36,6 @@ function set_flash(string $type, string $message): void
     $_SESSION['flash_' . $type] = $message;
 }
 
-// Tampilkan & langsung hapus flash message yang ada.
 function render_flash(): void
 {
     if (!empty($_SESSION['flash_success'])) {
@@ -118,5 +117,45 @@ function event_palette(int $id): string
     $palettes = ['pal-merah', 'pal-biru', 'pal-hijau', 'pal-ungu', 'pal-emas'];
 
     return $palettes[$id % count($palettes)];
+}
+function validasi_user(mysqli $conn, string $nama, string $email, string $password, string $role, int $ignore_id = 0, bool $password_wajib = true): string
+{
+    if ($nama === '' || $email === '') {
+        return 'Nama dan email wajib diisi.';
+    }
+
+    if (mb_strlen($nama) < 2 || mb_strlen($nama) > 100) {
+        return 'Nama harus 2 sampai 100 karakter.';
+    }
+
+    if (mb_strlen($email) > 100 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return 'Format email tidak valid (maksimal 100 karakter).';
+    }
+
+    if (!in_array($role, ['peserta', 'admin'], true)) {
+        return 'Role tidak valid.';
+    }
+
+    if ($password_wajib || $password !== '') {
+        if (strlen($password) < 6) {
+            return 'Password minimal 6 karakter.';
+        }
+
+        if (strlen($password) > 72) {
+            return 'Password maksimal 72 karakter.';
+        }
+    }
+
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? AND id <> ?");
+    $stmt->bind_param('si', $email, $ignore_id);
+    $stmt->execute();
+    $dobel = $stmt->get_result()->num_rows > 0;
+    $stmt->close();
+
+    if ($dobel) {
+        return 'Email sudah dipakai akun lain.';
+    }
+
+    return '';
 }
 ?>

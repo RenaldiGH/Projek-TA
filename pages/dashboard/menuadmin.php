@@ -11,6 +11,7 @@ $total_event = (int) $conn->query("SELECT COUNT(*) AS total FROM events")->fetch
 $total_peserta = (int) $conn->query("SELECT COUNT(*) AS total FROM peserta")->fetch_assoc()['total'];
 $total_pengundian = (int) $conn->query("SELECT COUNT(*) AS total FROM pengundian")->fetch_assoc()['total'];
 $total_timeline = (int) $conn->query("SELECT COUNT(*) AS total FROM timeline")->fetch_assoc()['total'];
+$total_user = (int) $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'peserta'")->fetch_assoc()['total'];
 
 $event_terbaru = $conn->query(
     "SELECT nama_event, tanggal_event, status
@@ -50,12 +51,13 @@ $pengundian_terbaru = $conn->query(
                     <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
                     <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
                     <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
-                    <li><a href="<?= base_url('pages/pengudian/index.php') ?>">Pengudian</a></li>
+                    <li><a href="<?= base_url('pages/pengundian/index.php') ?>">Pengundian</a></li>
                     <li><a href="#">Pemberi</a></li>
                     <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
                     <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
                     <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
+                    <li><a href="<?= base_url('pages/user/index.php') ?>">User</a></li>
                 </ul>
             </nav>
         </aside>
@@ -80,6 +82,7 @@ $pengundian_terbaru = $conn->query(
 
             
             <section class="grid-4">
+
                <div class="card banner-card" style="position: relative; overflow: hidden;">
     <h3 style="position: relative; z-index: 2;">
         SKARIGA<br>
@@ -101,6 +104,10 @@ $pengundian_terbaru = $conn->query(
                     <p>Total Event</p>
                     <h3><?= $total_event ?></h3>
                 </div>
+                <div class="card stat-card">
+                    <p>Total User</p>
+                   <h3><?= $total_user ?></h3>
+               </div>
                 <div class="card stat-card">
                     <p>Total Peserta</p>
                     <h3><?= $total_peserta ?></h3>
