@@ -7,11 +7,11 @@ $menu_items = [
     'peserta'    => ['label' => 'Peserta',    'url' => base_url('pages/peserta/index.php' . $event_query)],
     'wishlist'   => ['label' => 'Wishlist',   'url' => base_url('pages/wishlist/index.php' . $event_query)],
     'timeline'   => ['label' => 'Timeline',   'url' => base_url('pages/timeline/index.php' . $event_query)],
-    'pengundian' => ['label' => 'Pengundian', 'url' => '#'],
+    'pengundian' => ['label' => 'Pengundian', 'url' => base_url('pages/pengudian/index.php' . $event_query)],
     'pemberi'    => ['label' => 'Pemberi',    'url' => '#'],
-    'penerima'   => ['label' => 'Penerima',   'url' => '#'],
-    'laporan'    => ['label' => 'Laporan',    'url' => '#'],
-    'pengaturan' => ['label' => 'Pengaturan', 'url' => '#'],
+    'penerima'   => ['label' => 'Penerima',   'url' => base_url('pages/penerima/index.php' . $event_query)],
+    'laporan'    => ['label' => 'Laporan',    'url' => base_url('pages/laporan/index.php' . $event_query)],
+    'pengaturan' => ['label' => 'Pengaturan', 'url' => base_url('pages/adminpengaturan/index.php' . $event_query)],
 ];
 ?>
 <!DOCTYPE html>
