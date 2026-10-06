@@ -30,8 +30,8 @@ require_admin();
                     <li><a href="<?= base_url('pages/pengudian/index.php') ?>">Pengundian</a></li>
                     <li><a href="#">Pemberi</a></li>
                     <li class="active"><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
-                    <li><a href="#">Laporan</a></li>
-                    <li><a href="#">Pengaturan</a></li>
+                    <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
+                    <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
                 </ul>
             </nav>

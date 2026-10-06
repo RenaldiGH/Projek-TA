@@ -50,11 +50,11 @@ $pengundian_terbaru = $conn->query(
                     <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
                     <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
                     <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
-                    <li><a href="<?= base_url('pages/pengudian/index.php') ?>">Pengundian</a></li>
+                    <li><a href="<?= base_url('pages/pengudian/index.php') ?>">Pengudian</a></li>
                     <li><a href="#">Pemberi</a></li>
                     <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
-                    <li><a href="#">Laporan</a></li>
-                    <li><a href="#">Pengaturan</a></li>
+                    <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
+                    <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
                 </ul>
             </nav>
@@ -80,9 +80,23 @@ $pengundian_terbaru = $conn->query(
 
             
             <section class="grid-4">
-                <div class="card banner-card">
-                    <h3>SKARIGA<br>SECRET<br>SANTA</h3>
-                </div>
+               <div class="card banner-card" style="position: relative; overflow: hidden;">
+    <h3 style="position: relative; z-index: 2;">
+        SKARIGA<br>
+        SECRET<br>
+        SANTA
+    </h3>
+
+    <img src="<?= base_url('assets/img/dasbor.png') ?>"
+         alt="santa"
+         style="
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            width: 180px;
+            z-index: 1;
+         ">
+</div>
                 <div class="card stat-card">
                     <p>Total Event</p>
                     <h3><?= $total_event ?></h3>
