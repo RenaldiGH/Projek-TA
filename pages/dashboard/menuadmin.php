@@ -50,11 +50,11 @@ $pengundian_terbaru = $conn->query(
                     <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
                     <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
                     <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
-                    <li><a href="<?= base_url('pages/pengudian/index.php') ?>">Pengundian</a></li>
+                    <li><a href="<?= base_url('pages/pengudian/index.php') ?>">Pengudian</a></li>
                     <li><a href="#">Pemberi</a></li>
                     <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
                     <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
-                    <li><a href="#">Pengaturan</a></li>
+                    <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
                 </ul>
             </nav>
