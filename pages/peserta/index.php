@@ -106,8 +106,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                             <td class="action-buttons">
                                 <a href="<?= base_url('pages/peserta/detail.php?id=' . $p['id'] . '&event_id=' . $event_id) ?>" title="Detail">👁️</a>
                                 <a href="<?= base_url('pages/peserta/edit.php?id=' . $p['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit">✏️</a>
-                                <a
-                                    href="<?= base_url('pages/peserta/hapus.php?id=' . $p['id'] . '&event_id=' . $event_id) ?>"
+                                <a href="<?= base_url('pages/peserta/hapus.php?id=' . $p['id'] . '&event_id=' . $event_id) ?>"
                                     class="btn-delete"
                                     title="Hapus"
                                     onclick="return confirm('Yakin ingin menghapus peserta ini?');"
