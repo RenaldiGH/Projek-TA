@@ -1,87 +1,118 @@
 <?php
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/functions.php';
 
 require_admin();
+
+$events   = get_events($conn);
+$event_id = resolve_event_id($conn, $_GET['event_id'] ?? null);
+
+$penerima_list = [];
+
+if ($event_id) {
+    $stmt = $conn->prepare(
+        "SELECT pg.id, p.nama AS penerima_nama
+         FROM pengundian pg
+         JOIN peserta p ON p.id = pg.penerima_id
+         WHERE pg.event_id = ?
+         ORDER BY p.nama ASC"
+    );
+    $stmt->bind_param('i', $event_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        $penerima_list[] = $row;
+    }
+
+    $stmt->close();
+}
+
+$page_title    = 'Penerima(Peserta)';
+$page_subtitle = 'Daftar Peserta yang menerima hadiah';
+$active_menu   = 'penerima';
+
+require_once __DIR__ . '/../../includes/admin_layout_top.php';
 ?>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penerima (Peserta) - SKARIGA Secret Santa</title>
-    <link rel="stylesheet" href="../../assets/css/style_admin.css">
-</head>
-<body>
 
-    <div class="dashboard-container">
-        <!-- Sidebar Navigation -->
-        <aside>
-            <div class="brand">
-                <h2>SKARIGA SECRET SANTA</h2>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="<?= base_url('pages/dashboard/menuadmin.php') ?>">Dashboard</a></li>
-                    <li><a href="<?= base_url('pages/event/event.php') ?>">Event</a></li>
-                    <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
-                    <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
-                    <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
-                    <li><a href="<?= base_url('pages/pengudian/index.php') ?>">Pengundian</a></li>
-                    <li><a href="#">Pemberi</a></li>
-                    <li class="active"><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
-                    <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
-                    <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
-                    <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
-                </ul>
-            </nav>
-        </aside>
+<?php if (!$events): ?>
 
-        <!-- Main Content -->
-        <main>
-            <!-- Page Header -->
-            <header class="page-header">
-                <div class="header-title">
-                    <h2>Penerima(Peserta)</h2>
-                    <p>Daftar Peserta yang menerima hadiah</p>
-                </div>
-                <a href="#" class="btn-add" style="background-color: #2b0054;">+ Mulai Pengundian</a>
-            </header>
-
-            <!-- Card Container -->
-            <section class="table-card">
-                <!-- Dropdown Select Event -->
-                <div class="filter-bar">
-                    <div class="form-group">
-                        <label for="event">Pilih Event</label>
-                        <select id="event" class="select-input">
-                            <option value="">Sistem Secreet Santa SKARIGA 2025</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Data Table Header -->
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 80px;">No.</th>
-                            <th>Nama Penerima</th>
-                            <th style="text-align: right; padding-right: 40px;">Aksi</th>
-                        </tr>
-                    </thead>
-                </table>
-
-                <!-- Empty State (Belum Ada Hasil Pengundian) -->
-                <div class="empty-state">
-                    <svg class="empty-state-icon" viewBox="0 0 24 24" fill="currentColor" width="90" height="90">
-                        <path d="M16.5 13c-1.2 0-3.07.34-4.5 1-1.43-.66-3.3-1-4.5-1C5.17 13 1 14.17 1 16.5V19h22v-2.5c0-2.33-4.17-3.5-7.5-3.5zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-4.5 0c1.93 0 3.5-1.57 3.5-3.5S9.43 5 7.5 5 4 6.57 4 8.5 5.57 12 7.5 12zm9 0c1.93 0 3.5-1.57 3.5-3.5S18.43 5 16.5 5 13 6.57 13 8.5s1.57 3.5 3.5 3.5z"/>
-                    </svg>
-                    <h3>Belum Ada Hasil Pengundian</h3>
-                    <p>Lakukan pengundian terlebih dahulu</p>
-                </div>
-            </section>
-        </main>
+    <div class="table-card">
+        <div class="empty-state">
+            <h3>Belum Ada Event</h3>
+            <p>Buat event terlebih dahulu sebelum melihat penerima.</p>
+        </div>
     </div>
 
-</body>
-</html>
+<?php else: ?>
+
+    <!-- Tombol Mulai Pengundian -->
+    <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+        <a href="<?= base_url('pages/pengundian/index.php?event_id=' . (int) $event_id) ?>"
+           style="background:#1a0066; color:#fff; font-size:12px; font-weight:600; padding:8px 14px; border-radius:6px; text-decoration:none;">
+            + Mulai Pengundian
+        </a>
+    </div>
+
+    <!-- Pilih Event -->
+    <form method="GET" style="margin-bottom:18px;">
+        <label for="event_id" style="display:block; font-size:12px; margin-bottom:4px;">Pilih Event</label>
+        <select name="event_id" id="event_id" onchange="this.form.submit()"
+                style="width:170px; height:34px; padding:0 10px; font-size:12px; background:#fff; border:1px solid #ccc; border-radius:10px;">
+            <?php foreach ($events as $e): ?>
+                <option value="<?= (int) $e['id'] ?>" <?= (int) $e['id'] === (int) $event_id ? 'selected' : '' ?>>
+                    <?= h($e['nama_event']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </form>
+
+    <!-- Kartu Tabel -->
+    <div style="background:#fff; border:1px solid #ddd; border-radius:12px; overflow:hidden;">
+
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr style="border-bottom:1px solid #ddd;">
+                    <th style="width:20%; text-align:left; padding:16px 20px; font-size:17px; font-weight:700;">No.</th>
+                    <th style="text-align:center; padding:16px 20px; font-size:17px; font-weight:700;">Nama Penerima</th>
+                    <th style="width:20%; text-align:center; padding:16px 20px; font-size:17px; font-weight:700;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($penerima_list as $i => $pn): ?>
+                    <tr style="border-bottom:1px solid #eee;">
+                        <td style="padding:14px 20px;"><?= $i + 1 ?>.</td>
+                        <td style="padding:14px 20px; text-align:center;"><?= h($pn['penerima_nama']) ?></td>
+                        <td style="padding:14px 20px; text-align:center;">
+                            <a href="<?= base_url('pages/laporan/index.php?event_id=' . (int) $event_id) ?>" title="Lihat Laporan">👁️</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <?php if (!$penerima_list): ?>
+            <!-- Empty State -->
+            <div style="text-align:center; padding:50px 20px 60px;">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 110" width="130" height="102" style="color:#000;">
+                    <circle cx="30" cy="38" r="16" fill="currentColor"/>
+                    <path d="M4 98 C4 74 16 62 30 62 C44 62 56 74 56 98 Z" fill="currentColor"/>
+                    <circle cx="110" cy="38" r="16" fill="currentColor"/>
+                    <path d="M84 98 C84 74 96 62 110 62 C124 62 136 74 136 98 Z" fill="currentColor"/>
+                    <circle cx="70" cy="44" r="18" fill="currentColor" stroke="#fff" stroke-width="3"/>
+                    <path d="M38 108 C38 82 52 68 70 68 C88 68 102 82 102 108 Z" fill="currentColor" stroke="#fff" stroke-width="3"/>
+                </svg>
+
+                <h3 style="margin:28px 0 4px; font-size:16px; font-weight:700;">Belum Ada Hasil Pengundian</h3>
+                <p style="margin:0; font-size:16px;">Lakukan pengundian terlebih dahulu</p>
+
+            </div>
+        <?php endif; ?>
+
+    </div>
+
+<?php endif; ?>
+
+<?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

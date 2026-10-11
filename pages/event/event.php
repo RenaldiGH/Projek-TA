@@ -45,7 +45,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
     <a href="<?= base_url('pages/event/tambah.php') ?>" class="btn-add">+ Tambah Event</a>
 </div>
 
-<div class="table-card">
+<div class="table-card" style="min-height:0; display:block;">
     <form method="GET" class="filter-bar">
         <div class="filter-group">
             <label for="q">&nbsp;</label>

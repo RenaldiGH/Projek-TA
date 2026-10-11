@@ -8,7 +8,7 @@ $menu_items = [
     'wishlist'   => ['label' => 'Wishlist',   'url' => base_url('pages/wishlist/index.php' . $event_query)],
     'timeline'   => ['label' => 'Timeline',   'url' => base_url('pages/timeline/index.php' . $event_query)],
     'pengundian' => ['label' => 'Pengundian', 'url' => base_url('pages/pengudian/index.php' . $event_query)],
-    'pemberi'    => ['label' => 'Pemberi',    'url' => '#'],
+    'pemberi'    => ['label' => 'Pemberi',    'url' => base_url('pages/pemberi/index.php' . $event_query)],
     'penerima'   => ['label' => 'Penerima',   'url' => base_url('pages/penerima/index.php' . $event_query)],
     'laporan'    => ['label' => 'Laporan',    'url' => base_url('pages/laporan/index.php' . $event_query)],
     'pengaturan' => ['label' => 'Pengaturan', 'url' => base_url('pages/adminpengaturan/index.php' . $event_query)],
