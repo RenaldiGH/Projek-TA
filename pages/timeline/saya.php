@@ -47,20 +47,6 @@ if ($my_events) {
     }
     $stmt->close();
 
-    //tanggal pelaksanaan
-    foreach ($my_events as $e) {
-        if ($e['tanggal_event']) {
-            $jadwal[] = [
-                'event_id'  => (int) $e['id'],
-                'judul'     => 'Hari Pelaksanaan: ' . $e['nama_event'],
-                'tanggal'   => $e['tanggal_event'],
-                'waktu'     => null,
-                'deskripsi' => null,
-                'event'     => $e['nama_event'],
-                'hari_h'    => true,
-            ];
-        }
-    }
 
     if ($filter) {
         $jadwal = array_values(array_filter($jadwal, fn($j) => $j['event_id'] === $filter));
