@@ -36,37 +36,15 @@ $active_menu   = 'penerima';
 require_once __DIR__ . '/../../includes/admin_layout_top.php';
 ?>
 
-    <div class="dashboard-container">
-        <!-- Sidebar Navigation -->
-        <aside>
-            <div class="brand">
-                <h2>SKARIGA SECRET SANTA</h2>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="<?= base_url('pages/dashboard/menuadmin.php') ?>">Dashboard</a></li>
-                    <li><a href="<?= base_url('pages/event/event.php') ?>">Event</a></li>
-                    <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
-                    <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
-                    <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
-                    <li><a href="<?= base_url('pages/pengundian/index.php') ?>">Pengundian</a></li>
-                    <li><a href="#">Pemberi</a></li>
-                    <li class="active"><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
-                    <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
-                    <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
-                    <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
-                    <li><a href="<?= base_url('pages/user/index.php') ?>">User</a></li>
-                </ul>
-            </nav>
-        </aside>
+<?php if (!$events): ?>
 
-<?php if (empty($events)): ?>
     <div class="table-card">
         <div class="empty-state">
             <h3>Belum Ada Event</h3>
             <p>Buat event terlebih dahulu sebelum melihat penerima.</p>
         </div>
     </div>
+
 <?php else: ?>
 
     <!-- Tombol Mulai Pengundian -->
@@ -134,6 +112,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
         <?php endif; ?>
 
     </div>
+
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>
