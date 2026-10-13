@@ -61,13 +61,17 @@ include __DIR__ . '/includes/navbar.php';
                 src="<?= base_url('assets/img/santalandingpage.png') ?>"
                 alt="Santa Secret Santa"
             >
+         
+        
+        </div>
+
+        <div class="hero-image2">
+
             <img
            
                 src="<?= base_url('assets/img/kadonatal.png') ?>"
                 alt="Foto Secret Santa"
             >
-        
-        </div>
 
     </div>
 
