@@ -237,15 +237,11 @@ a {
     position: absolute;
 
     bottom: -5px;
-    right: -75px;
+    right: -40px;
 }
-.hero-image img:nth-child(2){
-    width: 400px;
-    max-width: none;
-    position:absolute;
-    bottom: 0px;
-    right: 60px;
-}
+
+
+
 
 .about {
     padding: 55px 0 35px;
