@@ -11,7 +11,6 @@ $total_event = (int) $conn->query("SELECT COUNT(*) AS total FROM events")->fetch
 $total_peserta = (int) $conn->query("SELECT COUNT(*) AS total FROM peserta")->fetch_assoc()['total'];
 $total_pengundian = (int) $conn->query("SELECT COUNT(*) AS total FROM pengundian")->fetch_assoc()['total'];
 $total_timeline = (int) $conn->query("SELECT COUNT(*) AS total FROM timeline")->fetch_assoc()['total'];
-$total_user = (int) $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'peserta'")->fetch_assoc()['total'];
 
 $event_terbaru = $conn->query(
     "SELECT nama_event, tanggal_event, status
@@ -30,16 +29,18 @@ $pengundian_terbaru = $conn->query(
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/style_admin.css') ?>">
 </head>
+
 <body>
 
     <div class="dashboard-container">
-        
+
         <aside>
             <div class="brand">
                 <h2>SKARIGA SECRET SANTA</h2>
@@ -52,62 +53,62 @@ $pengundian_terbaru = $conn->query(
                     <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
                     <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
                     <li><a href="<?= base_url('pages/pengundian/index.php') ?>">Pengundian</a></li>
-                    <li><a href="#">Pemberi</a></li>
+                    <li><a href="<?= base_url('pages/pemberi/index.php') ?>">Pemberi</a></li>
                     <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
                     <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
                     <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
-                    <li><a href="<?= base_url('pages/user/index.php') ?>">User</a></li>
                 </ul>
             </nav>
         </aside>
 
-       
+
         <main>
-            
+
             <header>
                 <div class="header-title">
                     <h2>Dashboard Admin</h2>
                     <h3>Selamat datang, <?= h($_SESSION['nama'] ?? 'Admin') ?>!</h3>
                     <p>Kelola Sistem Secret Santa SKARIGA</p>
                 </div>
-                <a href="<?= base_url('pages/profiladmin/index.php') ?>" class="user-profile">
-                          <div style="text-align: right;">
-                         <strong><?= h($_SESSION['nama'] ?? 'Admin') ?></strong><br>
-                      <small style="color: #666;">Administrator</small>
-                </div>
+
+                <a href="<?= base_url('pages/profiladmin/index.php') ?>"
+                    class="user-profile"
+                    style="text-decoration: none; color: inherit;">
+
+                    <div style="text-align: right;">
+                        <strong><?= h($_SESSION['nama'] ?? 'Admin') ?></strong><br>
+                        <small style="color: #666;">Administrator</small>
+                    </div>
+
                     <div class="user-avatar"></div>
-                  </a>
+
+                </a>
             </header>
 
-            
+
             <section class="grid-4">
+                <div class="card banner-card" style="position: relative; overflow: hidden;">
+                    <h3 style="position: relative; z-index: 2;">
+                        SKARIGA<br>
+                        SECRET<br>
+                        SANTA
+                    </h3>
 
-               <div class="card banner-card" style="position: relative; overflow: hidden;">
-    <h3 style="position: relative; z-index: 2;">
-        SKARIGA<br>
-        SECRET<br>
-        SANTA
-    </h3>
-
-    <img src="<?= base_url('assets/img/dasbor.png') ?>"
-         alt="santa"
-         style="
+                    <img src="<?= base_url('assets/img/dasbor.png') ?>"
+                        alt="santa"
+                        style="
             position: absolute;
             right: -10px;
             top: 20px;
             width: 180px;
             z-index: 1;
          ">
-</div>
+                </div>
                 <div class="card stat-card">
                     <p>Total Event</p>
                     <h3><?= $total_event ?></h3>
                 </div>
-                <div class="card stat-card">
-                    <p>Total User</p>
-                   <h3><?= $total_user ?></h3>
-               </div>
                 <div class="card stat-card">
                     <p>Total Peserta</p>
                     <h3><?= $total_peserta ?></h3>
@@ -122,7 +123,7 @@ $pengundian_terbaru = $conn->query(
                 </div>
             </section>
 
-            
+
             <section class="grid-2">
                 <!-- Event Terbaru -->
                 <div class="card">
@@ -140,7 +141,9 @@ $pengundian_terbaru = $conn->query(
                         </thead>
                         <tbody>
                             <?php if ($event_terbaru->num_rows === 0): ?>
-                                <tr><td colspan="3" style="text-align:center; color:#666;">Belum ada event</td></tr>
+                                <tr>
+                                    <td colspan="3" style="text-align:center; color:#666;">Belum ada event</td>
+                                </tr>
                             <?php else: ?>
                                 <?php while ($e = $event_terbaru->fetch_assoc()): ?>
                                     <tr>
@@ -156,7 +159,7 @@ $pengundian_terbaru = $conn->query(
                     </table>
                 </div>
 
-                
+
                 <div class="card">
                     <div class="card-header">
                         <h3>Pengundian Terbaru</h3>
@@ -172,7 +175,9 @@ $pengundian_terbaru = $conn->query(
                         </thead>
                         <tbody>
                             <?php if ($pengundian_terbaru->num_rows === 0): ?>
-                                <tr><td colspan="3" style="text-align:center; color:#666;">Belum ada pengundian</td></tr>
+                                <tr>
+                                    <td colspan="3" style="text-align:center; color:#666;">Belum ada pengundian</td>
+                                </tr>
                             <?php else: ?>
                                 <?php while ($p = $pengundian_terbaru->fetch_assoc()): ?>
                                     <tr>
@@ -189,9 +194,9 @@ $pengundian_terbaru = $conn->query(
                 </div>
             </section>
 
-           
+
             <section class="grid-2">
-                
+
                 <div class="card quick-draw">
                     <h3>Pengundian Cepat</h3>
                     <p>Lakukan pengundian acak secara otomatis</p>
@@ -211,4 +216,5 @@ $pengundian_terbaru = $conn->query(
     </div>
 
 </body>
+
 </html>

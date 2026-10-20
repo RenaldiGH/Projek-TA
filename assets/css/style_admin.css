@@ -207,7 +207,7 @@ header {
     min-height: 480px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 /* Tabel Ringkas (Dashboard Utama) */
