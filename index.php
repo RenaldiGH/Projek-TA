@@ -75,6 +75,12 @@ include __DIR__ . '/includes/navbar.php';
                 <br>
                 Yuk, ikut berpartisipasi dan sebarkan kebahagiaan!
             </p>
+                <div class="about-image">
+                <img
+                    src="<?= base_url('assets/img/santalanding.png') ?>"
+                    alt="Santa membawa kado"
+            >
+        </div>
 
         </div>
 
@@ -93,9 +99,19 @@ include __DIR__ . '/includes/navbar.php';
 </section>
 
 
+        <div class="about-image">
+            <img
+                src="<?= base_url('assets/img/Kadolanding.png') ?>"
+                alt="Tumpukan kado Secret Santa"
+            >
+        </div>
 
+        <div class="about-message">
+        </div>
+
+    </div>
+</section>
 <section class="work" id="cara-kerja">
-
     <div class="work-box">
 
         <h2>Cara Kerja</h2>
@@ -103,90 +119,56 @@ include __DIR__ . '/includes/navbar.php';
         <div class="work-items">
 
             <div class="work-item">
-
-                <div class="work-number">
-                    1
+                <div class="work-image">
+                    <img src="<?= base_url('assets/img/fotoprofile.png') ?>"
+                         alt="Daftar akun">
                 </div>
 
                 <div class="work-content">
-
-                    <h3>Daftar</h3>
-
-                    <p>
-                        Buat akun &<br>
-                        daftarkan dirimu
-                    </p>
-
+                    <h3>1. Daftar</h3>
+                    <p>Buat akun <br>daftarkan dirimu</p>
                 </div>
-
             </div>
 
-
             <div class="work-item">
-
-                <div class="work-number">
-                    2
+                <div class="work-image">
+                    <img src="<?= base_url('assets/img/emotlovemerah.jpg') ?>"
+                         alt="Mengisi wishlist">
                 </div>
 
                 <div class="work-content">
-
-                    <h3>Isi Wishlist</h3>
-
-                    <p>
-                        Daftar kado yang<br>
-                        kamu inginkan
-                    </p>
-
+                    <h3>2. Isi Wishlist</h3>
+                    <p>Daftar kado yang<br>kamu inginkan</p>
                 </div>
-
             </div>
 
-
             <div class="work-item">
-
-                <div class="work-number">
-                    3
+                <div class="work-image">
+                    <img src="<?= base_url('assets/img/pengundian.png') ?>"
+                         alt="Pengundian otomatis">
                 </div>
 
                 <div class="work-content">
-
-                    <h3>Pengundian</h3>
-
-                    <p>
-                        Admin melakukan<br>
-                        pengundian otomatis
-                    </p>
-
+                    <h3>3. Pengundian</h3>
+                    <p>Admin melakukan<br>pengundian otomatis</p>
                 </div>
-
             </div>
 
-
             <div class="work-item">
-
-                <div class="work-number">
-                    4
+                <div class="work-image">
+                    <img src="<?= base_url('assets/img/surprise.png') ?>"
+                         alt="Tukar kado">
                 </div>
 
                 <div class="work-content">
-
-                    <h3>Tukar Kado</h3>
-
-                    <p>
-                        Berikan kado dengan<br>
-                        pasanganmu!
-                    </p>
-
+                    <h3>4. Tukar Kado</h3>
+                    <p>Berikan kado dengan<br>pasanganmu!</p>
                 </div>
-
             </div>
 
         </div>
-
     </div>
-
 </section>
-
 
 
 <section class="timeline" id="timeline">
@@ -194,114 +176,78 @@ include __DIR__ . '/includes/navbar.php';
     <div class="timeline-container">
 
         <div class="timeline-item">
-
             <div class="timeline-date">
-                10
+                <img src="<?= base_url('assets/img/kalender.png') ?>"
+                     alt="Kalender pendaftaran">
             </div>
 
             <div class="timeline-content">
-
-                <h3>
-                    10 des<br>
-                    Pendaftaran
-                </h3>
-
-                <p>
-                    Waktu pendaftaran<br>
-                    secret santa
-                </p>
-
+                <h3>1–10 Des<br>Pendaftaran</h3>
+                <p>Waktu pendaftaran<br>Secret Santa</p>
             </div>
-
         </div>
 
-
         <div class="timeline-item">
-
             <div class="timeline-date">
-                15
+                <img src="<?= base_url('assets/img/pengundian.png') ?>"
+                     alt="Kado wishlist">
             </div>
 
             <div class="timeline-content">
-
-                <h3>
-                    15 des<br>
-                    Pengisian Wishlist
-                </h3>
-
-                <p>
-                    Isi daftar kado yang<br>
-                    kamu inginkan
-                </p>
-
+                <h3>11–15 Des<br>Pengisian Wishlist</h3>
+                <p>Isi daftar kado yang<br>kamu inginkan</p>
             </div>
-
         </div>
 
-
         <div class="timeline-item">
-
             <div class="timeline-date">
-                16
+                <img src="<?= base_url('assets/img/dadu1.png') ?>"
+                     alt="Dadu pengundian">
             </div>
 
             <div class="timeline-content">
-
-                <h3>
-                    16 des<br>
-                    Pengundian
-                </h3>
-
-                <p>
-                    Pengundian<br>
-                    pasangan otomatis
-                </p>
-
+                <h3>16 Desember<br>Pengundian</h3>
+                <p>Pengundian<br>pasangan otomatis</p>
             </div>
-
         </div>
 
-
         <div class="timeline-item">
-
             <div class="timeline-date">
-                20
+                <img src="<?= base_url('assets/img/pohonnatal.png') ?>"
+                     alt="Pohon Natal tukar kado">
             </div>
 
             <div class="timeline-content">
-
-                <h3>
-                    20 des<br>
-                    Tukar Kado
-                </h3>
-
-                <p>
-                    Saatnya bertukar kado<br>
-                    dengan pasanganmu!
-                </p>
-
+                <h3>20 Desember<br>Tukar Kado</h3>
+                <p>Saatnya bertukar kado<br>dengan pasanganmu!</p>
             </div>
-
         </div>
 
     </div>
-
 </section>
 
 
-<footer class="footer">
 
-    <div class="footer-left">
-        SKARIGA SECRET SANTA 2026
-    </div>
+    <footer class="footer">
+        <div class="footer-container">
 
-    <div class="footer-center">
-        MARI RAYAKAN KEBERSAMAAN DENGAN<br>
-        TUKAR KADO YG BERKESAN
-    </div>
+            <div class="footer-left">
+                SKARIGA SECRET SANTA 2026
+            </div>
 
-    <div class="footer-right">
-        IKUTI KAMI DI
-    </div>
+            <div class="footer-center">
+                MARI RAYAKAN KEBERSAMAAN DENGAN<br>
+                TUKAR KADO YANG BERKESAN
+            </div>
 
-</footer>
+            <div class="footer-right">
+                <span>IKUTI KAMI DI</span>
+
+                <a href="#" aria-label="Instagram Secret Santa">
+                    <img src="<?= base_url('assets/img/instagram.png') ?>"
+                        alt="Instagram">
+                </a>
+            </div>
+
+        </div>
+    </footer>

@@ -15,7 +15,7 @@ require_admin();
 <body>
 
     <div class="dashboard-container">
-        <!-- Sidebar Navigation -->
+        
         <aside>
             <div class="brand">
                 <h2>SKARIGA SECRET SANTA</h2>
