@@ -75,14 +75,13 @@ include __DIR__ . '/includes/navbar.php';
                 <br>
                 Yuk, ikut berpartisipasi dan sebarkan kebahagiaan!
             </p>
-
+                <div class="about-image">
+                <img
+                    src="<?= base_url('assets/img/santalanding.png') ?>"
+                    alt="Santa membawa kado"
+            >
         </div>
 
-        <div class="about-image">
-            <img
-                src="<?= base_url('assets/img/santalanding.png') ?>"
-                alt="Santa membawa kado"
-            >
         </div>
 
         <div class="about-message">
@@ -99,11 +98,18 @@ include __DIR__ . '/includes/navbar.php';
 
 </section>
 
-<section class="about-gifts" aria-label="Tumpukan kado Secret Santa">
-    <img
-        src="<?= base_url('assets/img/Kadolanding.png') ?>"
-        alt="Tumpukan kado Secret Santa"
-    >
+
+        <div class="about-image">
+            <img
+                src="<?= base_url('assets/img/Kadolanding.png') ?>"
+                alt="Tumpukan kado Secret Santa"
+            >
+        </div>
+
+        <div class="about-message">
+        </div>
+
+    </div>
 </section>
 <section class="work" id="cara-kerja">
     <div class="work-box">
