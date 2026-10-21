@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Sep 2026 pada 04.20
+-- Waktu pembuatan: 21 Okt 2026 pada 06.16
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -37,6 +37,7 @@ CREATE TABLE `events` (
   `status` enum('draft','aktif','selesai') DEFAULT 'draft',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 
@@ -105,6 +106,7 @@ CREATE TABLE `peserta` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -143,7 +145,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `nama`, `email`, `password`, `role`, `foto`, `created_at`) VALUES
 (8, 'user', '123@gmail.com', '$2y$10$UkEiuncHpKnHBDM76j1QfOQOQitkqmOK2wWbqBdUdRHXHs3hKR.Oe', 'peserta', NULL, '2026-09-05 02:18:23'),
-(9, 'admin', '1234@gmail.com', '$2y$10$EAZZ/0Ps7ZRivz.A/3fMgeNCpPJ98wRV01s3sOq.Kx3yucc/LMC8i', 'admin', NULL, '2026-09-05 02:19:31');
+(9, 'admin', '1234@gmail.com', '$2y$10$EAZZ/0Ps7ZRivz.A/3fMgeNCpPJ98wRV01s3sOq.Kx3yucc/LMC8i', 'admin', NULL, '2026-09-05 02:19:31'),
+
 
 -- --------------------------------------------------------
 
@@ -162,6 +165,13 @@ CREATE TABLE `wishlist` (
   `status` enum('belum_dipilih','dipilih') DEFAULT 'belum_dipilih',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `wishlist`
+--
+
+INSERT INTO `wishlist` (`id`, `peserta_id`, `nama_barang`, `kategori`, `estimasi_harga`, `deskripsi`, `link_referensi`, `status`, `created_at`) VALUES
+(5, 10, 'roti', 'food', 2000.00, '', '', 'belum_dipilih', '2026-09-30 07:58:22');
 
 --
 -- Indexes for dumped tables
@@ -202,7 +212,7 @@ ALTER TABLE `pengundian`
 --
 ALTER TABLE `peserta`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `event_id` (`event_id`),
+  ADD UNIQUE KEY `uniq_event_user` (`event_id`,`user_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -234,7 +244,7 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT untuk tabel `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `notifikasi`
@@ -258,25 +268,25 @@ ALTER TABLE `pengundian`
 -- AUTO_INCREMENT untuk tabel `peserta`
 --
 ALTER TABLE `peserta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `timeline`
 --
 ALTER TABLE `timeline`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -322,6 +332,23 @@ ALTER TABLE `timeline`
 ALTER TABLE `wishlist`
   ADD CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`peserta_id`) REFERENCES `peserta` (`id`) ON DELETE CASCADE;
 COMMIT;
+
+
+--- riwayat
+CREATE TABLE `riwayat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `event_id` int(11) DEFAULT NULL,
+  `modul` enum('peserta','wishlist','timeline') NOT NULL,
+  `aksi` enum('tambah','ubah','hapus') NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `event_id` (`event_id`),
+  CONSTRAINT `riwayat_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `riwayat_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
