@@ -158,4 +158,23 @@ function validasi_user(mysqli $conn, string $nama, string $email, string $passwo
 
     return '';
 }
+
+
+function catat_riwayat(mysqli $conn, string $modul, string $aksi, string $keterangan, ?int $event_id = null): void
+{
+    $user_id = (int) ($_SESSION['user_id'] ?? 0) ?: null;
+    $event_id = $event_id ?: null;
+    $keterangan = mb_substr($keterangan, 0, 255);
+
+    try {
+        $stmt = $conn->prepare(
+            "INSERT INTO riwayat (user_id, event_id, modul, aksi, keterangan) VALUES (?, ?, ?, ?, ?)"
+        );
+        $stmt->bind_param('iisss', $user_id, $event_id, $modul, $aksi, $keterangan);
+        $stmt->execute();
+        $stmt->close();
+    } catch (mysqli_sql_exception $e) {
+        
+    }
+}
 ?>

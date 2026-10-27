@@ -3,6 +3,7 @@ $event_query = (!empty($event_id)) ? ('?event_id=' . (int) $event_id) : '';
 
 $menu_items = [
     'dashboard'  => ['label' => 'Dashboard',  'url' => base_url('pages/dashboard/menuadmin.php')],
+    'riwayat'    => ['label' => 'Riwayat',    'url' => base_url('pages/riwayat/index.php' . $event_query)],
     'event'      => ['label' => 'Event', 'url' => base_url('pages/event/event.php' . $event_query)],
     'peserta'    => ['label' => 'Peserta',    'url' => base_url('pages/peserta/index.php' . $event_query)],
     'wishlist'   => ['label' => 'Wishlist',   'url' => base_url('pages/wishlist/index.php' . $event_query)],
@@ -13,6 +14,7 @@ $menu_items = [
     'laporan'    => ['label' => 'Laporan',    'url' => base_url('pages/laporan/index.php' . $event_query)],
     'pengaturan' => ['label' => 'Pengaturan', 'url' => base_url('pages/adminpengaturan/index.php' . $event_query)],
 ];
+
 ?>
 <!DOCTYPE html>
 <html lang="id">

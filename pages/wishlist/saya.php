@@ -69,6 +69,7 @@ if ($peserta_id && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $stmt->close();
             set_flash('success', 'Wishlist berhasil dihapus.');
+            catat_riwayat($conn, 'wishlist', 'hapus', 'Menghapus wishlist "' . $item['nama_barang'] . '"', $event_id);
         }
 
         header('Location: ' . $self);
@@ -111,6 +112,7 @@ if ($peserta_id && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->close();
 
             set_flash('success', 'Wishlist berhasil ditambahkan.');
+            catat_riwayat($conn, 'wishlist', 'tambah', 'Menambah wishlist "' . $form['nama_barang'] . '"', $event_id);
             header('Location: ' . $self);
             exit;
 
@@ -141,6 +143,7 @@ if ($peserta_id && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute();
                 $stmt->close();
                 set_flash('success', 'Wishlist berhasil diperbarui.');
+                catat_riwayat($conn, 'wishlist', 'ubah', 'Mengubah wishlist "' . $form['nama_barang'] . '"', $event_id);
             }
 
             header('Location: ' . $self);

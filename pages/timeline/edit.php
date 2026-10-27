@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($update->execute()) {
             set_flash('success', 'Timeline berhasil diperbarui.');
+            catat_riwayat($conn, 'timeline', 'ubah', 'Mengubah jadwal "' . $judul . '"', (int) $timeline['event_id']);
             header('Location: ' . base_url('pages/timeline/index.php?event_id=' . $event_id));
             exit;
         } else {

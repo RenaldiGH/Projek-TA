@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($insert->execute()) {
             set_flash('success', 'Timeline berhasil ditambahkan.');
+            catat_riwayat($conn, 'timeline', 'tambah', 'Menambah jadwal "' . $judul . '"', $event_id);
             header('Location: ' . base_url('pages/timeline/index.php?event_id=' . $event_id));
             exit;
         } else {
