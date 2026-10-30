@@ -254,34 +254,43 @@ $fotoUrl = (!empty($user['foto']) && is_file($uploadDir . basename($user['foto']
     <style>
         /* ===== Layout halaman profil admin (mengikuti desain) ===== */
         body { margin: 0; }
-        body .dashboard-container { display: flex !important; min-height: 100vh; background: #0a0a3d; }
+        body .dashboard-container { display: flex !important; min-height: 100vh; }
 
         /* Sidebar */
+        body .dashboard-container { background: #0a0a2e; }
         body .dashboard-container aside {
             display: flex !important; flex-direction: column;
-            width: 210px !important; min-width: 210px; flex-shrink: 0;
-            height: 100vh; position: sticky; top: 0; overflow-y: auto;
-            background: #0a0a3d; color: #fff;
+            width: 240px !important; min-width: 240px; flex-shrink: 0;
+            height: auto; position: static; overflow: visible; align-self: stretch;
+            background: #0a0a2e; color: #fff;
         }
-        body .dashboard-container aside .brand { padding: 22px 12px; text-align: center; background: none; }
-        body .dashboard-container aside .brand h2 { margin: 0; font-size: 13px; line-height: 1.35; color: #fff; letter-spacing: .5px; }
-        body .dashboard-container aside nav ul { list-style: none; margin: 0; padding: 0; }
+        body .dashboard-container aside .brand {
+            padding: 24px 20px 22px; text-align: left; background: none;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+        }
+        body .dashboard-container aside .brand h2 {
+            margin: 0; font-size: 20px; font-weight: 700; line-height: 1.3; color: #fff; letter-spacing: 0;
+        }
+        body .dashboard-container aside nav ul { list-style: none; margin: 0; padding: 15px 0 20px; }
         body .dashboard-container aside nav li a {
-            display: block; padding: 13px 10px; text-align: center;
-            color: #fff; text-decoration: none; font-size: 13px; background: transparent;
+            display: block; padding: 13px 20px; text-align: left;
+            color: #b9bdd3; text-decoration: none; font-size: 14px; background: transparent;
         }
-        body .dashboard-container aside nav li a:hover { background: rgba(255,255,255,.1); }
+        body .dashboard-container aside nav li a:hover { background: rgba(255,255,255,.07); color: #fff; }
         body .dashboard-container aside nav li.active a,
-        body .dashboard-container aside nav li.active a:hover { background: #ff0000; }
+        body .dashboard-container aside nav li.active a:hover {
+            background: #e60000; color: #fff; font-weight: 700;
+        }
 
         /* Konten utama */
         body .dashboard-container main {
             flex: 1; min-width: 0; box-sizing: border-box;
-            background: #fff; border-radius: 24px 0 0 24px; padding: 24px 28px;
+            background: #fff; border-radius: 0; padding: 38px 45px 40px;
         }
-        .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+        .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; }
         .page-header h2 { margin: 0; font-size: 22px; font-weight: 700; color: #111; }
-        .page-header p { margin: 4px 0 0; font-size: 13px; color: #444; }
+        .page-header p { margin: 6px 0 0; font-size: 13px; color: #333; }
+        .header-right { display: flex; align-items: center; gap: 22px; }
         .btn-back {
             display: inline-block; padding: 8px 16px; border: 1px solid #d5d5d5; border-radius: 8px;
             background: #fff; color: #222; font-size: 13px; text-decoration: none;
@@ -290,7 +299,7 @@ $fotoUrl = (!empty($user['foto']) && is_file($uploadDir . basename($user['foto']
 
         /* Dua kartu */
         .profile-container { display: grid; grid-template-columns: 300px 1fr; gap: 16px; align-items: start; }
-        .profile-card { background: #fff; border: 1px solid #e3e3e3; border-radius: 14px; padding: 24px 28px; box-sizing: border-box; }
+        .profile-card { background: #fff; border: 1px solid #e4e6f4; border-radius: 16px; padding: 24px 28px; box-sizing: border-box; }
         .profile-card:first-child { padding: 0; }
 
         /* Kartu kiri */
@@ -318,7 +327,7 @@ $fotoUrl = (!empty($user['foto']) && is_file($uploadDir . basename($user['foto']
         }
         .btn-hapus-foto:hover { background: #d32f2f; color: #fff; }
 
-        .info-list { border-top: 1px solid #e3e3e3; padding: 22px 24px 8px; }
+        .info-list { border-top: 1px solid #e4e6f4; padding: 22px 24px 8px; }
         .info-item { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; font-size: 13px; line-height: 1.45; color: #111; }
         .info-item > span { font-size: 24px; }
         .info-item div span { font-size: 12px; }
@@ -333,13 +342,13 @@ $fotoUrl = (!empty($user['foto']) && is_file($uploadDir . basename($user['foto']
             font-family: inherit; font-size: 13px; color: #222;
         }
         .form-group input.select-input[readonly] { background: #fafafa; color: #777; }
-        .form-group input.select-input:focus { outline: none; border-color: #1b0a5c; }
+        .form-group input.select-input:focus { outline: none; border-color: #2a0a5c; }
         .form-actions { display: flex; justify-content: flex-end; margin-top: 24px; }
         .btn-add {
-            background: #1b0a5c; color: #fff; border: none; border-radius: 10px;
+            background: #2a0a5c; color: #fff; border: none; border-radius: 10px;
             padding: 14px 40px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
         }
-        .btn-add:hover { background: #2b1480; }
+        .btn-add:hover { background: #3b1480; }
 
         /* Pesan */
         .alert { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; }
@@ -385,7 +394,9 @@ $fotoUrl = (!empty($user['foto']) && is_file($uploadDir . basename($user['foto']
                     <h2>Profil Admin</h2>
                     <p>Kelola informasi akun admin.</p>
                 </div>
-                <a href="<?= base_url('pages/dashboard/menuadmin.php') ?>" class="btn-back">← Kembali</a>
+                <div class="header-right">
+                    <a href="<?= base_url('pages/dashboard/menuadmin.php') ?>" class="btn-back">← Kembali</a>
+                </div>
             </header>
 
             <?php if ($success): ?>
