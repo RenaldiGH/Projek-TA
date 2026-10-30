@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($update->execute()) {
             set_flash('success', 'Data peserta berhasil diperbarui.');
+            catat_riwayat($conn, 'peserta', 'ubah', 'Mengubah data peserta "' . $nama . '"', (int) $peserta['event_id']);
             header('Location: ' . base_url('pages/peserta/index.php?event_id=' . $event_id));
             exit;
         } else {

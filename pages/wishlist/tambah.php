@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($insert->execute()) {
             set_flash('success', 'Wishlist berhasil ditambahkan.');
+            catat_riwayat($conn, 'wishlist', 'tambah', 'Menambah wishlist "' . $nama_barang . '"', $event_id);
             header('Location: ' . base_url('pages/wishlist/index.php?event_id=' . $event_id));
             exit;
         } else {

@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($insert->execute()) {
                 set_flash('success', 'Peserta berhasil ditambahkan.');
+                catat_riwayat($conn, 'peserta', 'tambah', 'Menambah peserta "' . $nama . '"', $event_id);
                 header('Location: ' . base_url('pages/peserta/index.php?event_id=' . $event_id));
                 exit;
             } else {

@@ -56,6 +56,8 @@ $pengundian_terbaru = $conn->query(
                     <li><a href="<?= base_url('pages/pemberi/index.php') ?>">Pemberi</a></li>
                     <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
                     <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
+                    <li><a href="<?= base_url('pages/riwayat/index.php') ?>">Riwayat</a></li>   
+                    <li><a href="<?= base_url('pages/user/index.php') ?>">User</a></li>
                     <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
                 </ul>

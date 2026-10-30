@@ -80,6 +80,7 @@ if ($aksi === 'ikut') {
         $insert->close();
 
         set_flash('success', 'Berhasil ikut event "' . $event['nama_event'] . '".');
+        catat_riwayat($conn, 'peserta', 'tambah', 'Mengikuti event "' . $event['nama_event'] . '"', $event_id);
     } catch (mysqli_sql_exception $e) {
         set_flash('error', 'Gagal mendaftar ke event. Coba lagi.');
     }
@@ -111,6 +112,7 @@ if ($aksi === 'ikut') {
     $stmt->close();
 
     set_flash('success', 'Kamu batal ikut event "' . $event['nama_event'] . '".');
+    catat_riwayat($conn, 'peserta', 'hapus', 'Menghapus keikutsertaan di event "' . $event['nama_event'] . '"', $event_id);
 
 } else {
     set_flash('error', 'Aksi tidak dikenal.');
