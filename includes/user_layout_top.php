@@ -7,7 +7,7 @@ $user_menu = [
     'profil'    => ['label' => 'Profil',       'url' => base_url('pages/profil/profiluser.php')],
     'wishlist'  => ['label' => 'Wishlist',     'url' => base_url('pages/wishlist/saya.php')],
     'timeline'  => ['label' => 'Timeline',     'url' => base_url('pages/timeline/saya.php')],
-    'undian'    => ['label' => 'Hasil Undian', 'url' => '#'],
+    'undian'    => ['label' => 'Hasil Undian', 'url' => base_url('pages/hasilundian/hasil_undian.php')],
     'pengaturan'=> ['label' => 'Pengaturan',   'url' => base_url('pages/pengaturan/peserta.php')],
 ];
 

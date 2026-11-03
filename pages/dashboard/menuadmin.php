@@ -33,6 +33,12 @@ $event_terbaru = $conn->query(
      LIMIT 5"
 );
 
+$daftar_event = [];
+$resDaftar = $conn->query("SELECT id, nama_event FROM events ORDER BY created_at DESC");
+while ($resDaftar && ($ev = $resDaftar->fetch_assoc())) {
+    $daftar_event[] = $ev;
+}
+
 $pengundian_terbaru = $conn->query(
     "SELECT e.nama_event, p.tanggal_undi, p.status
      FROM pengundian p
@@ -184,7 +190,7 @@ $pengundian_terbaru = $conn->query(
                 <div class="card">
                     <div class="card-header">
                         <h3>Pengundian Terbaru</h3>
-                        <a href="#" class="btn-all">Lihat Semua</a>
+                        <a href="<?= base_url('pages/pengundian/index.php') ?>" class="btn-all">Lihat Semua</a>
                     </div>
                     <table>
                         <thead>
@@ -221,9 +227,20 @@ $pengundian_terbaru = $conn->query(
                 <div class="card quick-draw">
                     <h3>Pengundian Cepat</h3>
                     <p>Lakukan pengundian acak secara otomatis</p>
-                    <form action="" method="POST">
-                        <button type="submit" name="acak" class="btn-primary">Lakukan Pengacakan Otomatis</button>
-                    </form>
+                    <?php if (!$daftar_event): ?>
+                        <p style="color:#666; font-size:13px;">Belum ada event. Buat event terlebih dahulu.</p>
+                    <?php else: ?>
+                        <form action="<?= base_url('pages/pengundian/index.php') ?>" method="GET">
+                            <input type="hidden" name="auto" value="1">
+                            <select name="event_id" aria-label="Pilih event"
+                                    style="width:100%; height:36px; padding:0 10px; margin-bottom:10px; font-size:13px; background:#fff; border:1px solid #ccc; border-radius:10px;">
+                                <?php foreach ($daftar_event as $ev): ?>
+                                    <option value="<?= (int) $ev['id'] ?>"><?= h($ev['nama_event']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <button type="submit" class="btn-primary">Lakukan Pengacakan Otomatis</button>
+                        </form>
+                    <?php endif; ?>
                 </div>
                 <div class="card">
                     <h3>Log aktivitas Terbaru</h3>
