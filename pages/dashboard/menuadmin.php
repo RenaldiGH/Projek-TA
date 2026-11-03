@@ -6,6 +6,20 @@ require_once __DIR__ . '/../../includes/functions.php';
 
 require_admin();
 
+// ---------- Foto profil admin (untuk avatar di header) ----------
+$userId = (int)($_SESSION['user_id'] ?? 0);
+$fotoAdmin = '';
+
+$stmt = $conn->prepare("SELECT foto FROM users WHERE id = ? LIMIT 1");
+$stmt->bind_param('i', $userId);
+$stmt->execute();
+$rowFoto = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+
+if (!empty($rowFoto['foto'])
+    && is_file(__DIR__ . '/../../assets/uploads/profile/' . basename($rowFoto['foto']))) {
+    $fotoAdmin = base_url('assets/uploads/profile/' . rawurlencode($rowFoto['foto']));
+}
 
 $total_event = (int) $conn->query("SELECT COUNT(*) AS total FROM events")->fetch_assoc()['total'];
 $total_peserta = (int) $conn->query("SELECT COUNT(*) AS total FROM peserta")->fetch_assoc()['total'];
@@ -56,7 +70,7 @@ $pengundian_terbaru = $conn->query(
                     <li><a href="<?= base_url('pages/pemberi/index.php') ?>">Pemberi</a></li>
                     <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
                     <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
-                    <li><a href="<?= base_url('pages/riwayat/index.php') ?>">Riwayat</a></li>   
+                    <li><a href="<?= base_url('pages/riwayat/index.php') ?>">Riwayat</a></li>
                     <li><a href="<?= base_url('pages/user/index.php') ?>">User</a></li>
                     <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
                     <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
@@ -83,7 +97,12 @@ $pengundian_terbaru = $conn->query(
                         <small style="color: #666;">Administrator</small>
                     </div>
 
-                    <div class="user-avatar"></div>
+                    <div class="user-avatar" style="overflow:hidden;">
+                        <?php if ($fotoAdmin): ?>
+                            <img src="<?= h($fotoAdmin) ?>" alt="Foto profil"
+                                style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:block;">
+                        <?php endif; ?>
+                    </div>
 
                 </a>
             </header>
