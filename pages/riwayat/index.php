@@ -13,7 +13,7 @@ $search = trim($_GET['q'] ?? '');
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $per_page = 20;
 
-$from = " FROM riwayat_aktivitas r
+$from = " FROM riwayat r
           LEFT JOIN users u ON u.id = r.user_id
           LEFT JOIN events e ON e.id = r.event_id";
 $where = " WHERE 1 = 1";
