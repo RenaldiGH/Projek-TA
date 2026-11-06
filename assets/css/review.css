@@ -1,0 +1,318 @@
+
+/* FORM REVIEW SECRET SANTA */
+
+.review-form-container {
+    width: 90%;
+    max-width: 620px;
+    margin: 45px auto;
+    padding: 35px 40px;
+    background: #ffffff;
+    border: 1px solid #e4eaf5;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(38, 59, 100, 0.09);
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.review-form-container h3 {
+    text-align: center;
+    color: #172b59;
+    font-size: 23px;
+    margin: 0 0 28px;
+}
+
+.review-form-container .review-name,
+.review-form-container .review-rating,
+.review-form-container .review-message-input {
+    margin-bottom: 22px;
+}
+
+.review-form-container label {
+    display: block !important;
+    color: #263b64;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+.review-form-container .review-name input,
+.review-form-container .review-message-input textarea {
+    display: block;
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #d8e0ef;
+    border-radius: 10px;
+    background: #fbfcff;
+    color: #263b64;
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.review-form-container .review-name input:focus,
+.review-form-container .review-message-input textarea:focus {
+    border-color: #7898d5;
+    box-shadow: 0 0 0 3px rgba(120, 152, 213, 0.12);
+}
+
+.review-form-container .review-message-input textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.review-form-container .rating-input {
+    display: flex !important;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+    width: fit-content;
+}
+
+.review-form-container .rating-input input {
+    display: none !important;
+}
+
+.review-form-container .rating-input label {
+    display: inline-block !important;
+    font-size: 32px;
+    color: #d5d9e2;
+    cursor: pointer;
+    margin: 0;
+    transition: color 0.2s;
+}
+
+.review-form-container .rating-input label:hover,
+.review-form-container .rating-input label:hover ~ label,
+.review-form-container .rating-input input:checked ~ label {
+    color: #f5b323;
+}
+
+.review-form-container button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: #263b64;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.review-form-container button:hover {
+    background: #405b8d;
+    transform: translateY(-2px);
+}
+
+.review-alert {
+    padding: 13px;
+    background: #e8f5e9;
+    color: #28733b;
+    border-radius: 9px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .review-form-container {
+        padding: 25px 20px;
+    }
+
+    .review-form-container h3 {
+        font-size: 20px;
+    }
+}
+
+/* ===== PERAPIAN SECTION REVIEW ===== */
+
+.review-section {
+    width: 100%;
+    padding: 70px 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.review-heading {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 35px;
+}
+
+/* FORM REVIEW */
+
+.review-form-container {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    margin: 40px auto 55px;
+    padding: 35px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #e4eaf5;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(38, 59, 100, 0.08);
+}
+
+.review-form-container h3 {
+    text-align: center;
+    color: #172b59;
+    margin-bottom: 25px;
+}
+
+.review-form-container form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+
+.review-form-container .review-name,
+.review-form-container .review-rating,
+.review-form-container .review-message-input {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.review-form-container .review-name input,
+.review-form-container .review-message-input textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.review-form-container .review-message-input textarea {
+    min-height: 110px;
+}
+
+.review-form-container button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+/* TEMPAT KARTU REVIEW */
+
+.review-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+    align-items: stretch;
+}
+
+/* KARTU REVIEW */
+
+.review-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e4eaf5;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(38, 59, 100, 0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.review-top {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.review-avatar {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    border-radius: 50%;
+    background: #e5edff;
+    color: #263b64;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.review-user h3 {
+    margin: 0 0 4px;
+    color: #263b64;
+    font-size: 17px;
+    overflow-wrap: anywhere;
+}
+
+.review-status {
+    font-size: 13px;
+    color: #8290a8;
+}
+
+.review-stars {
+    color: #f5b323;
+    font-size: 20px;
+    letter-spacing: 3px;
+}
+
+.review-message {
+    color: #52617a;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    margin: 0;
+}
+
+.review-decoration {
+    margin-top: auto;
+}
+
+/* BAGIAN PENUTUP */
+
+.review-footer {
+    text-align: center;
+    margin: 55px auto 0;
+    max-width: 850px;
+}
+
+.review-footer h3 {
+    color: #172b59;
+    line-height: 1.5;
+}
+
+.review-footer p {
+    color: #52617a;
+    line-height: 1.6;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+    .review-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .review-section {
+        padding: 45px 15px;
+    }
+
+    .review-form-container {
+        padding: 25px 20px;
+    }
+
+    .review-container {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .review-card {
+        padding: 20px;
+    }
+}
