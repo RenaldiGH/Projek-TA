@@ -16,6 +16,11 @@ $user_id  = (int) $_SESSION['user_id'];
 $event_id = (int) ($_POST['event_id'] ?? 0);
 $aksi     = $_POST['aksi'] ?? '';
 
+// Kalau aksi dilakukan dari halaman review, kembali ke halaman review
+if (($_POST['kembali'] ?? '') === 'review' && $event_id > 0) {
+    $back = base_url('pages/event/review.php?id=' . $event_id);
+}
+
 // Ambil event
 $stmt = $conn->prepare("SELECT id, nama_event, status FROM events WHERE id = ?");
 $stmt->bind_param('i', $event_id);
