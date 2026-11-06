@@ -1,6 +1,46 @@
+
 <?php
 
 require_once __DIR__ . '/config/config.php';
+
+// Memulai session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Menyiapkan penyimpanan review
+if (!isset($_SESSION['user_reviews'])) {
+    $_SESSION['user_reviews'] = [];
+}
+
+// Memproses review dari pengguna
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['kirim_review'])) {
+
+    $nama = trim($_POST['nama'] ?? '');
+    $pesan = trim($_POST['pesan'] ?? '');
+    $rating = (int) ($_POST['rating'] ?? 0);
+
+    if ($nama === '' || $pesan === '' || $rating < 1 || $rating > 5) {
+
+        $_SESSION['review_message'] = 'Semua kolom wajib diisi!';
+
+    } else {
+
+        $_SESSION['user_reviews'][] = [
+            'nama' => $nama,
+            'pesan' => $pesan,
+            'rating' => $rating
+        ];
+
+        $_SESSION['review_message'] = 'Review berhasil dikirim. Terima kasih!';
+    }
+
+    header('Location: ' . base_url('index.php') . '#pesan-kesan');
+    exit;
+}
+
+$review_message = $_SESSION['review_message'] ?? '';
+unset($_SESSION['review_message']);
 
 include __DIR__ . '/includes/header.php';
 include __DIR__ . '/includes/navbar.php';
@@ -225,6 +265,167 @@ include __DIR__ . '/includes/navbar.php';
 
     </div>
 </section>
+    
+<!-- SECTION PESAN DAN KESAN -->
+
+<?php
+// Mengambil review dari session pengguna
+$reviews = $_SESSION['user_reviews'] ?? [];
+?>
+
+<section class="review-section" id="pesan-kesan">
+
+    <div class="review-heading">
+
+        <span class="review-label">PESAN DAN KESAN</span>
+
+        <h2>Apa Kata Mereka?</h2>
+
+        <p>
+            Terima kasih atas partisipasi dan kesan baik dari seluruh
+            peserta Secret Santa SKARIGA. Yuk, simak pesan dan kesan mereka!
+        </p>
+
+    </div>
+
+    <!-- FORM TAMBAH REVIEW -->
+
+    <div class="review-form-container">
+
+        <h3>Bagikan Pesan dan Kesanmu!</h3>
+
+        <?php if ($review_message !== ''): ?>
+            <div class="review-alert">
+                <?= htmlspecialchars($review_message) ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" action="<?= base_url('index.php#pesan-kesan') ?>">
+
+            <div class="review-name">
+
+                <label>Nama Pengguna</label>
+
+                <input
+                    type="text"
+                    name="nama"
+                    placeholder="Masukkan nama kamu"
+                    maxlength="100"
+                    required
+                >
+
+            </div>
+
+            <div class="review-rating">
+
+                <label>Berikan Rating</label>
+
+                <div class="rating-input">
+
+                    <input type="radio" name="rating" id="star5" value="5" required>
+                    <label for="star5">★</label>
+
+                    <input type="radio" name="rating" id="star4" value="4">
+                    <label for="star4">★</label>
+
+                    <input type="radio" name="rating" id="star3" value="3">
+                    <label for="star3">★</label>
+
+                    <input type="radio" name="rating" id="star2" value="2">
+                    <label for="star2">★</label>
+
+                    <input type="radio" name="rating" id="star1" value="1">
+                    <label for="star1">★</label>
+
+                </div>
+
+            </div>
+
+            <div class="review-message-input">
+
+                <label>Pesan dan Kesan</label>
+
+                <textarea
+                    name="pesan"
+                    rows="4"
+                    placeholder="Tuliskan pesan dan kesan kamu..."
+                    maxlength="1000"
+                    required
+                ></textarea>
+
+            </div>
+
+            <button type="submit" name="kirim_review">
+                Kirim Review
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- AKHIR FORM TAMBAH REVIEW -->
+
+    <div class="review-container">
+
+        <?php foreach ($reviews as $review): ?>
+
+        <div class="review-card">
+
+            <div class="review-top">
+
+                <div class="review-avatar">
+                    <?= strtoupper(substr($review['nama'], 0, 1)) ?>
+                </div>
+
+                <div class="review-user">
+
+                    <h3>
+                        <?= htmlspecialchars($review['nama']) ?>
+                    </h3>
+
+                    <span class="review-status">Peserta</span>
+
+                </div>
+
+            </div>
+
+            <div class="review-stars">
+
+                <?php for ($i = 0; $i < $review['rating']; $i++): ?>
+                    <span>★</span>
+                <?php endfor; ?>
+
+            </div>
+
+            <p class="review-message">
+                "<?= htmlspecialchars($review['pesan']) ?>"
+            </p>
+
+            <div class="review-decoration"></div>
+
+        </div>
+
+        <?php endforeach; ?>
+
+    </div>
+
+    <div class="review-footer">
+
+        <h3>
+            Terima Kasih Telah Menjadi Bagian dari
+            Secret Santa SKARIGA!
+        </h3>
+
+        <p>
+            Berbagi kado, berbagi cerita, berbagi kebahagiaan.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- AKHIR SECTION PESAN DAN KESAN -->
+
 
 
 

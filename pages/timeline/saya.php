@@ -48,9 +48,11 @@ if ($my_events) {
     $stmt->close();
 
 
-    if ($filter) {
-        $jadwal = array_values(array_filter($jadwal, fn($j) => $j['event_id'] === $filter));
-    }
+if ($filter) {
+    $jadwal = array_values(array_filter($jadwal, function ($j) use ($filter) {
+        return $j['event_id'] === $filter;
+    }));
+}
 //urutan jadwal
     usort($jadwal, function ($a, $b) {
         return [$a['tanggal'] ?? '9999-12-31', $a['waktu'] ?? '00:00:00']

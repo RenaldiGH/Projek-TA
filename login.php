@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/login.css">
-
+<link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/login.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/review.css') ?>">
 
 <div class="login-wrapper">
     <div class="login-container">
