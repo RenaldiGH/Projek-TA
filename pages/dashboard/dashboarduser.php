@@ -1,4 +1,4 @@
-
+```php
 <?php
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../includes/auth.php';
@@ -188,7 +188,11 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
                     <div class="event-body">
 
-                        <h3><?= h($e['nama_event']) ?></h3>
+                        <h3>
+                            <a class="event-link" href="<?= base_url('pages/event/review.php?id=' . (int) $e['id']) ?>">
+                                <?= h($e['nama_event']) ?>
+                            </a>
+                        </h3>
 
                         <div class="event-date">
                             <?= h(tanggal_id($e['tanggal_event'])) ?>
@@ -212,6 +216,8 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
                         <div class="event-quota">
                             <?= (int) $e['jumlah'] ?> /
                             <?= $max_peserta ?> peserta
+                            &middot;
+                            <span class="event-more">Lihat detail &rarr;</span>
                         </div>
 
 
@@ -362,9 +368,7 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 </section>
 
 
-<!-- ================================= -->
-<!-- MODAL DETAIL EVENT -->
-<!-- ================================= -->
+
 
 <div id="modalDetailEvent" class="modal-detail-event">
 
@@ -429,10 +433,6 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 </div>
 
 
-<!-- ================================= -->
-<!-- JAVASCRIPT DETAIL EVENT -->
-<!-- ================================= -->
-
 <script>
 
 function bukaDetailEvent(button) {
@@ -482,3 +482,4 @@ document.addEventListener('keydown', function(e) {
 
 
 <?php require_once __DIR__ . '/../../includes/user_layout_bottom.php'; ?>
+```
