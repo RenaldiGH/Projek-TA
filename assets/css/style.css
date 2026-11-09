@@ -733,4 +733,102 @@ a {
 
 }
 
+/* =====================================
+   FOOTER SOCIAL MEDIA DAN KONTAK
+===================================== */
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+/* Tulisan Ikuti Kami dan Kontak Us */
+.footer-follow-title,
+.footer-contact-title {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Ikon Instagram */
+.footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.footer-social-icon img {
+    width: 25px !important;
+    height: 25px !important;
+    object-fit: contain;
+    display: block;
+}
+
+/* Garis pemisah ungu */
+.footer-divider {
+    width: 2px;
+    height: 30px;
+    background-color: #7925c9;
+    margin: 0 8px;
+    flex-shrink: 0;
+}
+
+/* Kontak Email */
+.footer-contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.footer-contact-link svg {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+}
+
+.footer-contact-link:hover {
+    color: #a855f7;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+
+    .footer-right {
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .footer-follow-title,
+    .footer-contact-title {
+        font-size: 14px;
+    }
+
+    .footer-social-icon img {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .footer-contact-link {
+        font-size: 13px;
+    }
+
+    .footer-contact-link svg {
+        width: 21px;
+        height: 21px;
+    }
+
+}
+
 

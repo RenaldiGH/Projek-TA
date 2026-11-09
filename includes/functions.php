@@ -79,7 +79,7 @@ function get_max_peserta(mysqli $conn): int
 function get_events_for_user(mysqli $conn, int $user_id): array
 {
     $stmt = $conn->prepare(
-        "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.tanggal_event, e.status,
+        "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.biaya_pendaftaran, e.tanggal_event, e.status,
                 (SELECT COUNT(*) FROM peserta px WHERE px.event_id = e.id AND px.status = 'aktif') AS jumlah,
                 (SELECT px.id FROM peserta px WHERE px.event_id = e.id AND px.user_id = ? LIMIT 1) AS peserta_id
          FROM events e
