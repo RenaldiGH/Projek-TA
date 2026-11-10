@@ -222,19 +222,19 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
 
                         <!-- INFORMASI BIAYA PENDAFTARAN -->
-                        <?php if (isset($e['biaya']) && is_numeric($e['biaya'])): ?>
+                        <?php if (isset($e['biaya_pendaftaran']) && is_numeric($e['biaya_pendaftaran'])): ?>
 
                             <div class="event-quota">
                                 Biaya pendaftaran:
 
-                                <?php if ((float) $e['biaya'] == 0): ?>
+                                <?php if ((float) $e['biaya_pendaftaran'] == 0): ?>
 
                                     <strong>Gratis</strong>
 
                                 <?php else: ?>
 
                                     <strong>
-                                        <?= h(rupiah($e['biaya'])) ?>
+                                        <?= h(rupiah($e['biaya_pendaftaran'])) ?>
                                     </strong>
 
                                 <?php endif; ?>
@@ -244,17 +244,7 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
 
                         <!-- TOMBOL LIHAT DETAIL EVENT -->
-                        <button type="button"
-                                class="btn-detail-event"
-                                data-nama="<?= h($e['nama_event']) ?>"
-                                data-deskripsi="<?= h($e['deskripsi'] ?? 'Belum ada deskripsi event.') ?>"
-                                data-tanggal="<?= h(tanggal_id($e['tanggal_event'])) ?>"
-                                data-budget="<?= h(rupiah($e['budget'])) ?>"
-                                onclick="bukaDetailEvent(this)">
-
-                            Lihat Detail Event
-
-                        </button>
+                       
 
 
                         <!-- DAFTAR PESERTA EVENT -->

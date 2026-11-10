@@ -27,6 +27,7 @@ $error = '';
 $nama_event = $event['nama_event'];
 $deskripsi = $event['deskripsi'];
 $budget = $event['budget'];
+$biaya_pendaftaran = $event['biaya_pendaftaran'] ?? '0';
 $tanggal_event = $event['tanggal_event'];
 $status = $event['status'];
 
@@ -34,6 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_event = trim($_POST['nama_event'] ?? '');
     $deskripsi = trim($_POST['deskripsi'] ?? '');
     $budget = trim($_POST['budget'] ?? '0');
+    $biaya_pendaftaran = trim($_POST['biaya_pendaftaran'] ?? '');
+if ($biaya_pendaftaran === '') {
+    $biaya_pendaftaran = '0';
+}
     $tanggal_event = trim($_POST['tanggal_event'] ?? '');
     $status_baru = $_POST['status'] ?? 'draft';
 
@@ -41,6 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Nama event dan tanggal wajib diisi.';
     } elseif (!is_numeric($budget) || $budget < 0) {
         $error = 'Budget harus berupa angka dan tidak boleh minus.';
+        } elseif (!is_numeric($biaya_pendaftaran) || $biaya_pendaftaran < 0) {
+    $error = 'Biaya pendaftaran harus berupa angka dan tidak boleh minus.';
     } elseif (!in_array($status_baru, ['draft', 'aktif', 'selesai'], true)) {
         $error = 'Status tidak valid.';
     } elseif ($status === 'selesai' && $status_baru !== 'selesai') {
@@ -49,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $status = $status_baru;
 
         $update = $conn->prepare(
-            "UPDATE events SET nama_event = ?, deskripsi = ?, budget = ?, tanggal_event = ?, status = ? WHERE id = ?"
-        );
-        $update->bind_param('ssdssi', $nama_event, $deskripsi, $budget, $tanggal_event, $status, $id);
+    "UPDATE events SET nama_event = ?, deskripsi = ?, budget = ?, biaya_pendaftaran = ?, tanggal_event = ?, status = ? WHERE id = ?"
+);
+$update->bind_param('ssddssi', $nama_event, $deskripsi, $budget, $biaya_pendaftaran, $tanggal_event, $status, $id);
 
         if ($update->execute()) {
             set_flash('success', 'Event berhasil diperbarui.');

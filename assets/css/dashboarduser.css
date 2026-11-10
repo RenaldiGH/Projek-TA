@@ -451,33 +451,7 @@ body {
    TOMBOL LIHAT DETAIL EVENT
 ========================================= */
 
-.event-card .btn-detail-event {
-    display: block !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 12px 15px !important;
-    margin: 15px 0 !important;
 
-    background: #ffffff !important;
-    color: #e60000 !important;
-    border: 1.5px solid #e60000 !important;
-    border-radius: 9px !important;
-
-    font-family: inherit !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    text-align: center !important;
-
-    cursor: pointer !important;
-    transition: all 0.25s ease !important;
-}
-
-.event-card .btn-detail-event:hover {
-    background: #e60000 !important;
-    color: #ffffff !important;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 12px rgba(230, 0, 0, 0.15);
-}
 
 
 

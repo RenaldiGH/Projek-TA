@@ -12,7 +12,7 @@ $back     = base_url('pages/dashboard/dashboarduser.php');
 
 /* ---------- Data event (draft tidak boleh dilihat peserta) ---------- */
 $stmt = $conn->prepare(
-    "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.tanggal_event, e.status, u.nama AS penyelenggara
+    "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.biaya_pendaftaran, e.tanggal_event, e.status, u.nama AS penyelenggara
      FROM events e
      LEFT JOIN users u ON u.id = e.user_id
      WHERE e.id = ? AND e.status <> 'draft'"
@@ -128,6 +128,11 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
                 <dt>Budget Kado</dt>
                 <dd class="rv-price"><?= h(rupiah($event['budget'])) ?></dd>
             </div>
+
+            <div>
+    <dt>Biaya Pendaftaran</dt>
+    <dd><?= (float) $event['biaya_pendaftaran'] == 0 ? 'Gratis' : h(rupiah($event['biaya_pendaftaran'])) ?></dd>
+</div>
             <div>
                 <dt>Penyelenggara</dt>
                 <dd><?= h($event['penyelenggara'] ?? '-') ?></dd>

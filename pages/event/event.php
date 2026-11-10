@@ -21,7 +21,7 @@ if ($search !== '') {
     $stmt->bind_param('s', $like);
 } else {
     $stmt = $conn->prepare(
-        "SELECT id, nama_event, deskripsi, budget, tanggal_event, status
+        "SELECT id, nama_event, deskripsi, budget, biaya_pendaftaran, tanggal_event, status
          FROM events
          ORDER BY tanggal_event DESC, id DESC"
     );
@@ -68,6 +68,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                     <th>Budget</th>
                     <th>Deskripsi</th>
                     <th>Status</th>
+                    <th>Biaya Daftar</th>
                     <th style="text-align:center;">Aksi</th>
                 </tr>
             </thead>
@@ -84,6 +85,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                                 <?= h(ucfirst($e['status'])) ?>
                             </span>
                         </td>
+                        <td><?= (float) $e['biaya_pendaftaran'] == 0 ? 'Gratis' : 'Rp' . number_format((float) $e['biaya_pendaftaran'], 0, ',', '.') ?></td>
                         <td class="action-buttons">
                             <a href="<?= base_url('pages/peserta/index.php?event_id=' . $e['id']) ?>" title="Lihat Peserta">👁️</a>
                             <a href="<?= base_url('pages/event/edit.php?id=' . $e['id']) ?>" class="btn-edit" title="Edit">✏️</a>
