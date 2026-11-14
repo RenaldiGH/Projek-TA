@@ -97,6 +97,8 @@ include __DIR__ . '/includes/navbar.php';
 
 </section>
 
+<?php include __DIR__ . '/includes/hero_lights.php'; ?>
+
 
 <section class="about" id="tentang">
 

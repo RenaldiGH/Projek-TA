@@ -1247,3 +1247,8 @@ a {
     }
 }
 
+.rich-content ul, .rich-content ol { margin: 4px 0 4px 22px; padding: 0; }
+.rich-content ul { list-style: disc; }
+.rich-content ol { list-style: decimal; }
+.rich-content li { margin: 2px 0; }
+.event-desc.rich-content { display: block; -webkit-line-clamp: unset; overflow: visible; }

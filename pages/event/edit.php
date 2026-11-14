@@ -33,7 +33,7 @@ $status = $event['status'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_event = trim($_POST['nama_event'] ?? '');
-    $deskripsi = trim($_POST['deskripsi'] ?? '');
+    $deskripsi = bersihkan_html_rich(trim($_POST['deskripsi'] ?? ''));
     $budget = trim($_POST['budget'] ?? '0');
     $biaya_pendaftaran = trim($_POST['biaya_pendaftaran'] ?? '');
 if ($biaya_pendaftaran === '') {
@@ -76,9 +76,10 @@ $page_title = 'Edit Event';
 $page_subtitle = 'Perbarui data event';
 $active_menu = 'event';
 
+
 require_once __DIR__ . '/../../includes/admin_layout_top.php';
 ?>
-
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
 <?php if ($error !== ''): ?>
     <div class="alert alert-error"><?= h($error) ?></div>
 <?php endif; ?>
@@ -94,7 +95,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 
         <div class="form-group">
             <label for="deskripsi">Deskripsi</label>
-            <textarea id="deskripsi" name="deskripsi" rows="3"><?= h($deskripsi) ?></textarea>
+           <textarea id="deskripsi" name="deskripsi" rows="3" class="rich-field"><?= h(tampilkan_rich($deskripsi)) ?></textarea>
         </div>
 
         <div class="form-group">
@@ -126,5 +127,5 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
         </div>
     </form>
 </div>
-
+<script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

@@ -200,9 +200,11 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
                         <?php if (!empty($e['deskripsi'])): ?>
 
-                            <p class="event-desc">
-                                <?= h($e['deskripsi']) ?>
-                            </p>
+                             
+                        <div class="event-desc rich-content">
+                         <?= tampilkan_rich($e['deskripsi']) ?>
+                     </div>
+
 
                         <?php endif; ?>
 

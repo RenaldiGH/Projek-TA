@@ -177,4 +177,149 @@ function catat_riwayat(mysqli $conn, string $modul, string $aksi, string $ketera
         
     }
 }
+
+/* ---------- Teks kaya (deskripsi event) ---------- */
+
+function rich_style_aman(string $tag, string $style): string
+{
+    $hasil = [];
+
+    foreach (explode(';', $style) as $deklarasi) {
+        $bagian = explode(':', $deklarasi, 2);
+        if (count($bagian) < 2) {
+            continue;
+        }
+
+        $prop  = strtolower(trim($bagian[0]));
+        $nilai = strtolower(trim($bagian[1]));
+
+        if ($prop === 'background-color'
+            && preg_match('/^(transparent|#[0-9a-f]{3,8}|rgba?\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*[0-9.]+\s*)?\))$/', $nilai)) {
+            $hasil[] = 'background-color: ' . $nilai;
+        } elseif ($prop === 'list-style-type'
+            && in_array($tag, ['ul', 'ol'], true)
+            && in_array($nilai, ['disc', 'circle', 'square', 'decimal', 'lower-alpha', 'upper-alpha', 'lower-roman', 'upper-roman'], true)) {
+            $hasil[] = 'list-style-type: ' . $nilai;
+        }
+    }
+
+    return implode('; ', $hasil);
+}
+
+function rich_bersihkan_node(DOMNode $induk): void
+{
+    $boleh = ['b', 'strong', 'i', 'em', 'u', 'ul', 'ol', 'li', 'br', 'p', 'div', 'span', 'mark'];
+    $buang = ['script', 'style', 'iframe', 'object', 'embed', 'link', 'meta', 'svg', 'math'];
+
+    foreach (iterator_to_array($induk->childNodes) as $anak) {
+        if ($anak->nodeType === XML_TEXT_NODE) {
+            continue;
+        }
+        if ($anak->nodeType !== XML_ELEMENT_NODE) {
+            $induk->removeChild($anak);
+            continue;
+        }
+
+        $tag = strtolower($anak->nodeName);
+
+        if (in_array($tag, $buang, true)) {
+            $induk->removeChild($anak);
+            continue;
+        }
+
+        rich_bersihkan_node($anak);
+
+        // tag di luar daftar aman: buang tag-nya, isinya dipertahankan
+        if (!in_array($tag, $boleh, true)) {
+            while ($anak->firstChild) {
+                $induk->insertBefore($anak->firstChild, $anak);
+            }
+            $induk->removeChild($anak);
+            continue;
+        }
+
+        // semua atribut dibuang, kecuali style yang lolos daftar aman
+        $style     = $anak->getAttribute('style');
+        $nama_attr = [];
+        foreach ($anak->attributes as $attr) {
+            $nama_attr[] = $attr->nodeName;
+        }
+        foreach ($nama_attr as $nama) {
+            $anak->removeAttribute($nama);
+        }
+
+        $aman = rich_style_aman($tag, $style);
+        if ($aman !== '') {
+            $anak->setAttribute('style', $aman);
+        }
+    }
+}
+
+// Bersihkan HTML dari editor sebelum disimpan / ditampilkan
+function bersihkan_html_rich(?string $html): string
+{
+    $html = trim(str_replace("\u{200B}", '', (string) $html));
+    if ($html === '') {
+        return '';
+    }
+
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML('<?xml encoding="utf-8" ?><div>' . $html . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors();
+
+    $akar = $dom->getElementsByTagName('div')->item(0);
+    if (!$akar) {
+        return '';
+    }
+
+    rich_bersihkan_node($akar);
+
+    $hasil = '';
+    foreach ($akar->childNodes as $anak) {
+        $hasil .= $dom->saveHTML($anak);
+    }
+    $hasil = trim($hasil);
+
+    // isinya kosong (hanya <br>/<div> kosong) -> simpan sebagai string kosong
+    if (trim(strip_tags($hasil)) === '' && stripos($hasil, '<li') === false) {
+        return '';
+    }
+
+    return $hasil;
+}
+
+// Untuk ditampilkan penuh (halaman review). Teks lama tanpa tag tetap aman.
+function tampilkan_rich(?string $teks): string
+{
+    $teks = trim((string) $teks);
+    if ($teks === '') {
+        return '';
+    }
+
+    if (!preg_match('/<(?:b|strong|i|em|u|ul|ol|li|br|p|div|span|mark)\b/i', $teks)) {
+        return nl2br(h($teks));
+    }
+
+    return bersihkan_html_rich($teks);
+}
+
+// Ringkasan teks polos untuk tabel dan kartu (tanpa format)
+function rich_ringkas(?string $teks, int $maks = 80): string
+{
+    $teks = (string) $teks;
+    $teks = preg_replace('/<\/(p|div|li)>|<br\s*\/?>/i', ' ', $teks);
+    $teks = html_entity_decode(strip_tags($teks), ENT_QUOTES, 'UTF-8');
+    $teks = trim(preg_replace('/\s+/u', ' ', $teks));
+
+    return mb_strimwidth($teks, 0, $maks, '…', 'UTF-8');
+}
+
+// Deskripsi berformat untuk sel tabel: format tetap, baris dilebur jadi satu alur
+function rich_ringkas_html(?string $teks): string
+{
+    $html = tampilkan_rich($teks);
+    return preg_replace('/<br\s*\/?>/i', ' ', $html);
+}
+
 ?>

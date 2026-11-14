@@ -150,7 +150,7 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
         </dl>
 
         <?php if (!empty($event['deskripsi'])): ?>
-            <p class="rv-desc"><?= nl2br(h($event['deskripsi'])) ?></p>
+            <div class="rv-desc rich-content"><?= tampilkan_rich($event['deskripsi']) ?></div>
         <?php endif; ?>
 
         <div class="rv-quota">
