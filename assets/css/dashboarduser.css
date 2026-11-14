@@ -445,3 +445,358 @@ body {
         min-height: 170px;
     }
 }
+
+
+/* =========================================
+   TOMBOL LIHAT DETAIL EVENT
+========================================= */
+
+
+
+
+
+/* ======================================
+   TOMBOL DETAIL EVENT
+====================================== */
+
+.event-card .btn-detail-event {
+    width: 100%;
+    padding: 12px 16px;
+    margin: 15px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background: #ffffff;
+    color: #e60000;
+
+    border: 1.5px solid #e60000;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+
+    cursor: pointer;
+    transition: .25s;
+    box-sizing: border-box;
+}
+
+.event-card .btn-detail-event:hover {
+    background: #e60000;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(230,0,0,.15);
+}
+
+.detail-arrow {
+    font-size: 18px;
+}
+
+
+/* ======================================
+   MODAL DETAIL EVENT
+====================================== */
+
+#modalDetailEvent.modal-detail-event {
+    display: none !important;
+
+    position: fixed !important;
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    padding: 20px;
+    box-sizing: border-box;
+
+    background: rgba(5, 8, 35, .72) !important;
+
+    justify-content: center !important;
+    align-items: center !important;
+
+    z-index: 99999 !important;
+    overflow-y: auto;
+}
+
+#modalDetailEvent.modal-detail-event.show {
+    display: flex !important;
+}
+
+
+/* ======================================
+   KOTAK MODAL
+====================================== */
+
+#modalDetailEvent .modal-detail-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 550px;
+
+    max-height: 88vh;
+    overflow-y: auto;
+
+    background: #ffffff;
+    border-radius: 18px;
+
+    box-shadow: 0 15px 50px rgba(0,0,0,.25);
+
+    margin: auto;
+    animation: modalMasuk .25s ease;
+}
+
+@keyframes modalMasuk {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ======================================
+   HEADER MODAL
+====================================== */
+
+#modalDetailEvent .modal-detail-header {
+    position: relative;
+
+    padding: 30px 25px;
+
+    text-align: center;
+
+    background: linear-gradient(135deg, #07894b, #07552f);
+
+    color: white;
+
+    border-radius: 18px 18px 0 0;
+}
+
+#modalDetailEvent .modal-detail-header h3 {
+    margin: 8px 0 5px;
+    font-size: 17px;
+    color: white;
+}
+
+#modalDetailEvent .modal-detail-header p {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255,255,255,.85);
+}
+
+#modalDetailEvent .modal-gift {
+    font-size: 42px;
+}
+
+
+/* ======================================
+   TOMBOL CLOSE
+====================================== */
+
+#modalDetailEvent .modal-detail-close {
+    position: absolute;
+
+    top: 14px;
+    right: 15px;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: white;
+    color: #08052d;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ======================================
+   BODY MODAL
+====================================== */
+
+#modalDetailEvent .modal-detail-body {
+    padding: 25px;
+}
+
+#modalDetailEvent .modal-detail-body h2 {
+    margin: 0 0 10px;
+
+    color: #08052d;
+
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+#modalDetailEvent .detail-tanggal {
+    margin: 0 0 22px;
+
+    color: #777777;
+    font-size: 14px;
+}
+
+
+/* ======================================
+   DESKRIPSI
+====================================== */
+
+#modalDetailEvent .detail-info-box {
+    padding: 20px;
+
+    background: #f5f6fa;
+
+    border-left: 4px solid #e60000;
+    border-radius: 10px;
+
+    margin-bottom: 15px;
+}
+
+#modalDetailEvent .detail-info-box h3 {
+    margin: 0 0 12px;
+
+    color: #08052d;
+    font-size: 16px;
+}
+
+#modalDetailEvent .detail-info-box p {
+    margin: 0;
+
+    color: #555555;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+
+/* ======================================
+   BUDGET KADO
+====================================== */
+
+#modalDetailEvent .detail-budget-box,
+#modalDetailEvent .detail-biaya-box {
+    padding: 17px 18px;
+
+    margin-bottom: 12px;
+
+    border-radius: 10px;
+
+    box-sizing: border-box;
+}
+
+#modalDetailEvent .detail-budget-box {
+    background: #fff5eb;
+    border: 1px solid #ffe1c7;
+}
+
+#modalDetailEvent .detail-biaya-box {
+    background: #effaf3;
+    border: 1px solid #ccebd7;
+}
+
+#modalDetailEvent .detail-budget-box div,
+#modalDetailEvent .detail-biaya-box div {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#modalDetailEvent .detail-budget-box span,
+#modalDetailEvent .detail-biaya-box span {
+    font-size: 14px;
+    color: #555555;
+}
+
+#modalDetailEvent .detail-budget-box strong {
+    color: #f26a16;
+    font-size: 17px;
+}
+
+#modalDetailEvent .detail-biaya-box strong {
+    color: #16834b;
+    font-size: 16px;
+}
+
+
+/* ======================================
+   FOOTER MODAL
+====================================== */
+
+#modalDetailEvent .modal-detail-footer {
+    padding: 0 25px 25px;
+}
+
+#modalDetailEvent .btn-tutup-detail {
+    width: 100%;
+
+    padding: 13px;
+
+    background: #e60000;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: .25s;
+}
+
+#modalDetailEvent .btn-tutup-detail:hover {
+    background: #bd0000;
+}
+
+
+/* ======================================
+   RESPONSIVE
+====================================== */
+
+@media (max-width: 600px) {
+
+    #modalDetailEvent.modal-detail-event {
+        padding: 12px;
+    }
+
+    #modalDetailEvent .modal-detail-content {
+        max-height: 92vh;
+    }
+
+    #modalDetailEvent .modal-detail-body {
+        padding: 20px;
+    }
+
+    #modalDetailEvent .modal-detail-body h2 {
+        font-size: 20px;
+    }
+
+    #modalDetailEvent .detail-budget-box div,
+    #modalDetailEvent .detail-biaya-box div {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}

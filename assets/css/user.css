@@ -727,7 +727,296 @@ a {
         grid-template-columns: 1fr;
     }
 }
-/* ---------- Kartu event yang bisa diklik ---------- */
+
+/* =========================================
+   PERBAIKAN TAMPILAN DETAIL EVENT
+========================================= */
+
+/* Tombol lihat detail */
+.event-card .btn-detail-event {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 15px;
+    margin: 12px 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    background: #fff;
+    color: #d90000;
+    border: 1.5px solid #d90000;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.event-card .btn-detail-event:hover {
+    background: #d90000;
+    color: white;
+}
+
+.detail-arrow {
+    font-size: 18px;
+}
+
+
+/* =========================================
+   MODAL DETAIL EVENT
+========================================= */
+
+#modalDetailEvent.modal-detail-event {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 20px;
+    background: rgba(7, 4, 47, .72);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 99999;
+    overflow-y: auto;
+}
+
+#modalDetailEvent.modal-detail-event.show {
+    display: flex;
+}
+
+
+/* Kotak modal */
+#modalDetailEvent .modal-detail-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+    border-radius: 16px;
+
+    box-shadow: 0 15px 45px rgba(0,0,0,.2);
+
+    margin: auto;
+    animation: detailMasuk .25s ease;
+}
+
+@keyframes detailMasuk {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Header modal */
+#modalDetailEvent .modal-detail-header {
+    position: relative;
+    padding: 28px 20px;
+
+    text-align: center;
+
+    background: linear-gradient(135deg, #087a43, #064d2e);
+    color: white;
+
+    border-radius: 16px 16px 0 0;
+}
+
+#modalDetailEvent .modal-detail-header h3 {
+    font-size: 17px;
+    margin: 8px 0 5px;
+    color: white;
+}
+
+#modalDetailEvent .modal-detail-header p {
+    font-size: 13px;
+    color: #e5f5eb;
+}
+
+#modalDetailEvent .modal-gift {
+    font-size: 40px;
+}
+
+
+/* Tombol close */
+#modalDetailEvent .modal-detail-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: white;
+    color: #222;
+
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+/* Isi modal */
+#modalDetailEvent .modal-detail-body {
+    padding: 25px;
+}
+
+#modalDetailEvent .modal-detail-body h2 {
+    color: #07042f;
+    font-size: 23px;
+    line-height: 1.4;
+
+    margin-bottom: 10px;
+    overflow-wrap: anywhere;
+}
+
+#modalDetailEvent .detail-tanggal {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+
+/* Deskripsi lengkap */
+#modalDetailEvent .detail-info-box {
+    padding: 20px;
+    margin-bottom: 15px;
+
+    background: #f5f6fa;
+
+    border-left: 4px solid #e00000;
+    border-radius: 9px;
+}
+
+#modalDetailEvent .detail-info-box h3 {
+    font-size: 16px;
+    color: #07042f;
+    margin-bottom: 12px;
+}
+
+#modalDetailEvent .detail-info-box p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #4b5563;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+
+/* Informasi budget dan biaya */
+#modalDetailEvent .detail-budget-box,
+#modalDetailEvent .detail-biaya-box {
+    padding: 17px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+}
+
+#modalDetailEvent .detail-budget-box {
+    background: #fff5e9;
+    border: 1px solid #ffe0bd;
+}
+
+#modalDetailEvent .detail-biaya-box {
+    background: #eaf8ef;
+    border: 1px solid #c9ebd4;
+}
+
+#modalDetailEvent .detail-budget-box div,
+#modalDetailEvent .detail-biaya-box div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#modalDetailEvent .detail-budget-box span,
+#modalDetailEvent .detail-biaya-box span {
+    font-size: 14px;
+    color: #555;
+}
+
+#modalDetailEvent .detail-budget-box strong {
+    color: #ed781b;
+    font-size: 17px;
+}
+
+#modalDetailEvent .detail-biaya-box strong {
+    color: #168348;
+    font-size: 16px;
+}
+
+
+/* Footer modal */
+#modalDetailEvent .modal-detail-footer {
+    padding: 0 25px 25px;
+}
+
+#modalDetailEvent .btn-tutup-detail {
+    width: 100%;
+    padding: 13px;
+
+    background: #e00000;
+    color: white;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#modalDetailEvent .btn-tutup-detail:hover {
+    background: #b90000;
+}
+
+
+/* Tampilan HP */
+@media (max-width: 600px) {
+
+    #modalDetailEvent.modal-detail-event {
+        padding: 12px;
+    }
+
+    #modalDetailEvent .modal-detail-content {
+        max-height: 94vh;
+    }
+
+    #modalDetailEvent .modal-detail-body {
+        padding: 18px;
+    }
+
+    #modalDetailEvent .modal-detail-body h2 {
+        font-size: 20px;
+    }
+
+    #modalDetailEvent .detail-budget-box div,
+    #modalDetailEvent .detail-biaya-box div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+/* Kartu event yang bisa diklik*/
 .event-card {
     cursor: pointer;
 }
@@ -957,3 +1246,9 @@ a {
         min-height: 150px;
     }
 }
+
+.rich-content ul, .rich-content ol { margin: 4px 0 4px 22px; padding: 0; }
+.rich-content ul { list-style: disc; }
+.rich-content ol { list-style: decimal; }
+.rich-content li { margin: 2px 0; }
+.event-desc.rich-content { display: block; -webkit-line-clamp: unset; overflow: visible; }

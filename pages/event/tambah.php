@@ -9,30 +9,38 @@ $error = '';
 $nama_event = '';
 $deskripsi = '';
 $budget = '';
+$biaya_pendaftaran = '';
 $tanggal_event = '';
 $status = 'draft';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_event = trim($_POST['nama_event'] ?? '');
-    $deskripsi = trim($_POST['deskripsi'] ?? '');
+    $deskripsi = bersihkan_html_rich(trim($_POST['deskripsi'] ?? ''));
     $budget = trim($_POST['budget'] ?? '0');
+    $biaya_pendaftaran = trim($_POST['biaya_pendaftaran'] ?? '');
+if ($biaya_pendaftaran === '') {
+    $biaya_pendaftaran = '0';
+}
     $tanggal_event = trim($_POST['tanggal_event'] ?? '');
     $status = $_POST['status'] ?? 'draft';
 
+    
     if ($nama_event === '' || $tanggal_event === '') {
         $error = 'Nama event dan tanggal wajib diisi.';
     } elseif (!is_numeric($budget) || $budget < 0) {
         $error = 'Budget harus berupa angka dan tidak boleh minus.';
     } elseif (!in_array($status, ['draft', 'aktif', 'selesai'], true)) {
         $error = 'Status tidak valid.';
+        } elseif (!is_numeric($biaya_pendaftaran) || $biaya_pendaftaran < 0) {
+    $error = 'Biaya pendaftaran harus berupa angka dan tidak boleh minus.';
     } else {
         $user_id = (int) $_SESSION['user_id'];
 
-        $insert = $conn->prepare(
-            "INSERT INTO events (user_id, nama_event, deskripsi, budget, tanggal_event, status)
-             VALUES (?, ?, ?, ?, ?, ?)"
-        );
-        $insert->bind_param('issdss', $user_id, $nama_event, $deskripsi, $budget, $tanggal_event, $status);
+       $insert = $conn->prepare(
+    "INSERT INTO events (user_id, nama_event, deskripsi, budget, biaya_pendaftaran, tanggal_event, status)
+     VALUES (?, ?, ?, ?, ?, ?, ?)"
+);
+$insert->bind_param('issddss', $user_id, $nama_event, $deskripsi, $budget, $biaya_pendaftaran, $tanggal_event, $status);
 
         if ($insert->execute()) {
             set_flash('success', 'Event berhasil ditambahkan.');
@@ -52,7 +60,7 @@ $active_menu = 'event';
 
 require_once __DIR__ . '/../../includes/admin_layout_top.php';
 ?>
-
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
 <?php if ($error !== ''): ?>
     <div class="alert alert-error"><?= h($error) ?></div>
 <?php endif; ?>
@@ -66,13 +74,18 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 
         <div class="form-group">
             <label for="deskripsi">Deskripsi</label>
-            <textarea id="deskripsi" name="deskripsi" rows="3"><?= h($deskripsi) ?></textarea>
+           <textarea id="deskripsi" name="deskripsi" rows="3" class="rich-field"><?= h($deskripsi) ?></textarea>
         </div>
 
         <div class="form-group">
             <label for="budget">Budget (Rp)</label>
             <input type="number" id="budget" name="budget" value="<?= h($budget) ?>" min="0" step="1000">
         </div>
+
+        <div class="form-group">
+    <label for="biaya_pendaftaran">Biaya Pendaftaran (Rp)</label>
+    <input type="number" id="biaya_pendaftaran" name="biaya_pendaftaran" value="<?= h($biaya_pendaftaran) ?>" min="0" step="1000" placeholder="0 = gratis">
+</div>
 
         <div class="form-group">
             <label for="tanggal_event">Tanggal Event</label>
@@ -94,5 +107,5 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
         </div>
     </form>
 </div>
-
+<script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

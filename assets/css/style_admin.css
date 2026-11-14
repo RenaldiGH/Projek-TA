@@ -527,3 +527,12 @@ table td {
     font-size: 13px;
     color: #666666;
 }
+
+.desc-ringkas * { display: inline; }
+.desc-ringkas ul, .desc-ringkas ol { margin: 0; padding: 0; }
+.desc-ringkas ol { counter-reset: n; }
+.desc-ringkas ul li::before { content: "\2022\00a0"; }
+.desc-ringkas ol li::before { counter-increment: n; content: counter(n) ".\00a0"; }
+.desc-ringkas li::after,
+.desc-ringkas div::after,
+.desc-ringkas p::after { content: " "; }

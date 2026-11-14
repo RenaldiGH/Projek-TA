@@ -97,6 +97,8 @@ include __DIR__ . '/includes/navbar.php';
 
 </section>
 
+<?php include __DIR__ . '/includes/hero_lights.php'; ?>
+
 
 <section class="about" id="tentang">
 
@@ -115,12 +117,13 @@ include __DIR__ . '/includes/navbar.php';
                 <br>
                 Yuk, ikut berpartisipasi dan sebarkan kebahagiaan!
             </p>
-                <div class="about-image">
+
+            <div class="about-image">
                 <img
                     src="<?= base_url('assets/img/santalanding.png') ?>"
                     alt="Santa membawa kado"
-            >
-        </div>
+                >
+            </div>
 
         </div>
 
@@ -139,19 +142,22 @@ include __DIR__ . '/includes/navbar.php';
 </section>
 
 
-        <div class="about-image">
-            <img
-                src="<?= base_url('assets/img/Kadolanding.png') ?>"
-                alt="Tumpukan kado Secret Santa"
-            >
-        </div>
+<div class="about-image">
+    <img
+        src="<?= base_url('assets/img/Kadolanding.png') ?>"
+        alt="Tumpukan kado Secret Santa"
+    >
+</div>
 
-        <div class="about-message">
-        </div>
+<div class="about-message">
+</div>
 
-    </div>
+</div>
 </section>
+
+
 <section class="work" id="cara-kerja">
+
     <div class="work-box">
 
         <h2>Cara Kerja</h2>
@@ -159,6 +165,7 @@ include __DIR__ . '/includes/navbar.php';
         <div class="work-items">
 
             <div class="work-item">
+
                 <div class="work-image">
                     <img src="<?= base_url('assets/img/fotoprofile.png') ?>"
                          alt="Daftar akun">
@@ -168,11 +175,13 @@ include __DIR__ . '/includes/navbar.php';
                     <h3>1. Daftar</h3>
                     <p>Buat akun <br>daftarkan dirimu</p>
                 </div>
+
             </div>
 
             <div class="work-item">
+
                 <div class="work-image">
-                    <img src="<?= base_url('assets/img/emotlovemerah.jpg') ?>"
+                    <img src="<?= base_url('assets/img/emotlove.png') ?>"
                          alt="Mengisi wishlist">
                 </div>
 
@@ -180,9 +189,11 @@ include __DIR__ . '/includes/navbar.php';
                     <h3>2. Isi Wishlist</h3>
                     <p>Daftar kado yang<br>kamu inginkan</p>
                 </div>
+
             </div>
 
             <div class="work-item">
+
                 <div class="work-image">
                     <img src="<?= base_url('assets/img/pengundian.png') ?>"
                          alt="Pengundian otomatis">
@@ -192,9 +203,11 @@ include __DIR__ . '/includes/navbar.php';
                     <h3>3. Pengundian</h3>
                     <p>Admin melakukan<br>pengundian otomatis</p>
                 </div>
+
             </div>
 
             <div class="work-item">
+
                 <div class="work-image">
                     <img src="<?= base_url('assets/img/surprise.png') ?>"
                          alt="Tukar kado">
@@ -204,10 +217,13 @@ include __DIR__ . '/includes/navbar.php';
                     <h3>4. Tukar Kado</h3>
                     <p>Berikan kado dengan<br>pasanganmu!</p>
                 </div>
+
             </div>
 
         </div>
+
     </div>
+
 </section>
 
 
@@ -216,6 +232,7 @@ include __DIR__ . '/includes/navbar.php';
     <div class="timeline-container">
 
         <div class="timeline-item">
+
             <div class="timeline-date">
                 <img src="<?= base_url('assets/img/kalender.png') ?>"
                      alt="Kalender pendaftaran">
@@ -225,9 +242,11 @@ include __DIR__ . '/includes/navbar.php';
                 <h3>1–10 Des<br>Pendaftaran</h3>
                 <p>Waktu pendaftaran<br>Secret Santa</p>
             </div>
+
         </div>
 
         <div class="timeline-item">
+
             <div class="timeline-date">
                 <img src="<?= base_url('assets/img/pengundian.png') ?>"
                      alt="Kado wishlist">
@@ -237,9 +256,11 @@ include __DIR__ . '/includes/navbar.php';
                 <h3>11–15 Des<br>Pengisian Wishlist</h3>
                 <p>Isi daftar kado yang<br>kamu inginkan</p>
             </div>
+
         </div>
 
         <div class="timeline-item">
+
             <div class="timeline-date">
                 <img src="<?= base_url('assets/img/dadu1.png') ?>"
                      alt="Dadu pengundian">
@@ -249,9 +270,11 @@ include __DIR__ . '/includes/navbar.php';
                 <h3>16 Desember<br>Pengundian</h3>
                 <p>Pengundian<br>pasangan otomatis</p>
             </div>
+
         </div>
 
         <div class="timeline-item">
+
             <div class="timeline-date">
                 <img src="<?= base_url('assets/img/pohonnatal.png') ?>"
                      alt="Pohon Natal tukar kado">
@@ -261,11 +284,14 @@ include __DIR__ . '/includes/navbar.php';
                 <h3>20 Desember<br>Tukar Kado</h3>
                 <p>Saatnya bertukar kado<br>dengan pasanganmu!</p>
             </div>
+
         </div>
 
     </div>
+
 </section>
-    
+
+
 <!-- SECTION PESAN DAN KESAN -->
 
 <?php
@@ -288,6 +314,7 @@ $reviews = $_SESSION['user_reviews'] ?? [];
 
     </div>
 
+
     <!-- FORM TAMBAH REVIEW -->
 
     <div class="review-form-container">
@@ -295,10 +322,13 @@ $reviews = $_SESSION['user_reviews'] ?? [];
         <h3>Bagikan Pesan dan Kesanmu!</h3>
 
         <?php if ($review_message !== ''): ?>
+
             <div class="review-alert">
                 <?= htmlspecialchars($review_message) ?>
             </div>
+
         <?php endif; ?>
+
 
         <form method="POST" action="<?= base_url('index.php#pesan-kesan') ?>">
 
@@ -315,6 +345,7 @@ $reviews = $_SESSION['user_reviews'] ?? [];
                 >
 
             </div>
+
 
             <div class="review-rating">
 
@@ -341,6 +372,7 @@ $reviews = $_SESSION['user_reviews'] ?? [];
 
             </div>
 
+
             <div class="review-message-input">
 
                 <label>Pesan dan Kesan</label>
@@ -355,6 +387,7 @@ $reviews = $_SESSION['user_reviews'] ?? [];
 
             </div>
 
+
             <button type="submit" name="kirim_review">
                 Kirim Review
             </button>
@@ -365,49 +398,53 @@ $reviews = $_SESSION['user_reviews'] ?? [];
 
     <!-- AKHIR FORM TAMBAH REVIEW -->
 
+
     <div class="review-container">
 
         <?php foreach ($reviews as $review): ?>
 
-        <div class="review-card">
+            <div class="review-card">
 
-            <div class="review-top">
+                <div class="review-top">
 
-                <div class="review-avatar">
-                    <?= strtoupper(substr($review['nama'], 0, 1)) ?>
+                    <div class="review-avatar">
+                        <?= strtoupper(substr($review['nama'], 0, 1)) ?>
+                    </div>
+
+                    <div class="review-user">
+
+                        <h3>
+                            <?= htmlspecialchars($review['nama']) ?>
+                        </h3>
+
+                        <span class="review-status">Peserta</span>
+
+                    </div>
+
                 </div>
 
-                <div class="review-user">
 
-                    <h3>
-                        <?= htmlspecialchars($review['nama']) ?>
-                    </h3>
+                <div class="review-stars">
 
-                    <span class="review-status">Peserta</span>
+                    <?php for ($i = 0; $i < $review['rating']; $i++): ?>
+                        <span>★</span>
+                    <?php endfor; ?>
 
                 </div>
 
+
+                <p class="review-message">
+                    "<?= htmlspecialchars($review['pesan']) ?>"
+                </p>
+
+                <div class="review-decoration"></div>
+
             </div>
-
-            <div class="review-stars">
-
-                <?php for ($i = 0; $i < $review['rating']; $i++): ?>
-                    <span>★</span>
-                <?php endfor; ?>
-
-            </div>
-
-            <p class="review-message">
-                "<?= htmlspecialchars($review['pesan']) ?>"
-            </p>
-
-            <div class="review-decoration"></div>
-
-        </div>
 
         <?php endforeach; ?>
 
     </div>
+
 
     <div class="review-footer">
 
@@ -427,28 +464,65 @@ $reviews = $_SESSION['user_reviews'] ?? [];
 <!-- AKHIR SECTION PESAN DAN KESAN -->
 
 
+<footer class="footer">
 
+    <div class="footer-container">
 
-    <footer class="footer">
-        <div class="footer-container">
+        <div class="footer-left">
+            SKARIGA SECRET SANTA 2026
+        </div>
 
-            <div class="footer-left">
-                SKARIGA SECRET SANTA 2026
-            </div>
+        <div class="footer-center">
+            MARI RAYAKAN KEBERSAMAAN DENGAN<br>
+            TUKAR KADO YANG BERKESAN
+        </div>
 
-            <div class="footer-center">
-                MARI RAYAKAN KEBERSAMAAN DENGAN<br>
-                TUKAR KADO YANG BERKESAN
-            </div>
+        <div class="footer-right">
 
-            <div class="footer-right">
-                <span>IKUTI KAMI DI</span>
+            <span class="footer-follow-title">IKUTI KAMI DI</span>
 
-                <a href="#" aria-label="Instagram Secret Santa">
-                    <img src="<?= base_url('assets/img/instagram.png') ?>"
-                        alt="Instagram">
-                </a>
-            </div>
+            <!-- Instagram -->
+            <a href="#"
+               class="footer-social-icon"
+               aria-label="Instagram Secret Santa">
+
+                <img
+                    src="<?= base_url('assets/img/instagram.webp') ?>"
+                    alt="Instagram"
+                >
+
+            </a>
+
+            <!-- Garis pemisah -->
+            <div class="footer-divider"></div>
+
+            <!-- Kontak Us -->
+            <span class="footer-contact-title">KONTAK US</span>
+
+            <a href="mailto:secret.santa@gmail.com"
+               class="footer-contact-link">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="25"
+                     height="25"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                    <path d="m3 7 9 6 9-6"/>
+
+                </svg>
+
+                <span>secret.santa@gmail.com</span>
+
+            </a>
 
         </div>
-    </footer>
+
+    </div>
+
+</footer>

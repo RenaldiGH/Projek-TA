@@ -733,4 +733,181 @@ a {
 
 }
 
+/* =====================================
+   FOOTER SOCIAL MEDIA DAN KONTAK
+===================================== */
 
+.footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+/* Tulisan Ikuti Kami dan Kontak Us */
+.footer-follow-title,
+.footer-contact-title {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Ikon Instagram */
+.footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.footer-social-icon img {
+    width: 25px !important;
+    height: 25px !important;
+    object-fit: contain;
+    display: block;
+}
+
+/* Garis pemisah ungu */
+.footer-divider {
+    width: 2px;
+    height: 30px;
+    background-color: #7925c9;
+    margin: 0 8px;
+    flex-shrink: 0;
+}
+
+/* Kontak Email */
+.footer-contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.footer-contact-link svg {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+}
+
+.footer-contact-link:hover {
+    color: #a855f7;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+
+    .footer-right {
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .footer-follow-title,
+    .footer-contact-title {
+        font-size: 14px;
+    }
+
+    .footer-social-icon img {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .footer-contact-link {
+        font-size: 13px;
+    }
+
+    .footer-contact-link svg {
+        width: 21px;
+        height: 21px;
+    }
+
+}
+
+
+
+
+/* =========================
+   PEMBATAS HERO + LAMPU BOHLAM
+========================= */
+
+.hero-divider {
+    position: relative;
+    width: 100%;
+    height: 84px;
+    margin-top: -1px;
+    margin-bottom: -10px;
+    background: transparent;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.hero-divider svg {
+    display: block;
+    width: 100%;
+    height: 84px;
+}
+
+.hero-bulb {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fffdf2 25%, #ffe08a 65%, #f2b03a 100%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 6px 2px rgba(255, 214, 120, 0.9),
+                0 0 14px 5px rgba(255, 190, 70, 0.45);
+    animation: bulb-glow 3s ease-in-out infinite;
+}
+
+@keyframes bulb-glow {
+    0%, 100% { opacity: 1;    transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 0.82; transform: translate(-50%, -50%) scale(0.88); }
+}
+
+/* kilau bintang kecil */
+.hero-sparkle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #fff3c4;
+    clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+    transform: translate(-50%, -50%);
+    animation: sparkle 3s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 0;   transform: translate(-50%, -50%) scale(0.3); }
+    50%      { opacity: 0.95; transform: translate(-50%, -50%) scale(1); }
+}
+
+@media (max-width: 768px) {
+    .hero-bulb {
+        width: 9px;
+        height: 9px;
+    }
+
+    .hero-sparkle {
+        width: 9px;
+        height: 9px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-bulb,
+    .hero-sparkle {
+        animation: none;
+    }
+
+    .hero-sparkle {
+        opacity: 0.8;
+    }
+}
