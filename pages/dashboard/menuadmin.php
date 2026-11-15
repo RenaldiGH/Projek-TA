@@ -116,7 +116,7 @@ $pengundian_terbaru = $conn->query(
 
             <section class="grid-4">
                 <div class="card banner-card" style="position: relative; overflow: hidden;">
-                    <h3 style="position: relative; z-index: 2;">
+                    <h3 style="position: relative; z-index: 2; max-width: 55%; font-size: 20px; line-height: 1.2;">
                         SKARIGA<br>
                         SECRET<br>
                         SANTA
@@ -125,12 +125,13 @@ $pengundian_terbaru = $conn->query(
                     <img src="<?= base_url('assets/img/dasbor.png') ?>"
                         alt="santa"
                         style="
-            position: absolute;
-            right: -10px;
-            top: 20px;
-            width: 180px;
-            z-index: 1;
-         ">
+                  position: absolute;
+                  right: -10px;
+                  bottom: 0;
+                  width: 130px;
+                  z-index: 1;
+
+            ">
                 </div>
                 <div class="card stat-card">
                     <p>Total Event</p>
