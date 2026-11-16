@@ -1252,3 +1252,229 @@ a {
 .rich-content ol { list-style: decimal; }
 .rich-content li { margin: 2px 0; }
 .event-desc.rich-content { display: block; -webkit-line-clamp: unset; overflow: visible; }
+
+/* =========================================
+   SIDEBAR USER - SERAGAM DENGAN ADMIN
+========================================= */
+
+/* Font mengikuti Admin */
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar utama */
+.user-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+    min-height: 100vh;
+    padding: 20px 0;
+    background: #0b0c2a;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 100;
+}
+
+/* Logo */
+.user-logo {
+    height: auto;
+    min-height: 65px;
+    padding: 0 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.user-logo h2 {
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: .4px;
+}
+
+/* Navigasi */
+.user-menu {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 15px;
+    gap: 20px;
+}
+
+/* Kelompok menu */
+.user-menu-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Judul kelompok */
+.user-menu-heading {
+    display: block;
+    padding: 0 20px;
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #777d9e;
+}
+
+/* Link menu */
+.user-menu .user-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 20px;
+    margin: 0;
+    color: #a0a5ba;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    border-radius: 0;
+    transition: all .25s ease;
+}
+
+/* Ikon */
+.user-menu-link svg,
+.user-sidebar-bottom .user-menu-link svg {
+    width: 19px;
+    height: 19px;
+    min-width: 19px;
+    flex-shrink: 0;
+}
+
+/* Hover */
+.user-menu .user-menu-link:hover,
+.user-sidebar-bottom .user-menu-link:hover {
+    background: #e60000;
+    color: #fff;
+}
+
+/* Menu aktif */
+.user-menu .user-menu-link.active {
+    background: #e60000;
+    color: #fff;
+    font-weight: 700;
+}
+
+/* Bagian bawah sidebar */
+.user-sidebar-bottom {
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+/* Garis pemisah */
+.user-sidebar-divider {
+    height: 1px;
+    background: rgba(255,255,255,.12);
+    margin: 0 20px 18px;
+}
+
+/* Menu keluar */
+.user-sidebar-bottom .user-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 44px;
+    padding: 12px 20px;
+    color: #a0a5ba;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all .25s ease;
+}
+
+/* Konten utama */
+.user-content {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    min-width: 0;
+}
+
+/* Header */
+.user-header h1 {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-weight: 700;
+}
+
+/* =========================================
+   RESPONSIVE SIDEBAR
+========================================= */
+
+@media (max-width: 860px) {
+
+    .user-sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        padding: 15px 0;
+    }
+
+    .user-logo {
+        min-height: 60px;
+        padding: 0 20px 15px;
+    }
+
+    .user-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .user-menu-group {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .user-menu-heading {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .user-menu .user-menu-link,
+    .user-sidebar-bottom .user-menu-link {
+        width: auto;
+        min-height: 42px;
+        padding: 10px 16px;
+    }
+
+    .user-sidebar-bottom {
+        margin-top: 10px;
+    }
+
+    .user-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .user-menu .user-menu-link,
+    .user-sidebar-bottom .user-menu-link {
+        font-size: 13px;
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .user-menu-link svg,
+    .user-sidebar-bottom .user-menu-link svg {
+        width: 17px;
+        height: 17px;
+        min-width: 17px;
+    }
+
+}
