@@ -1,4 +1,3 @@
-```php
 <?php
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../includes/auth.php';
@@ -162,7 +161,8 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
                 <article class="event-card">
 
-                    <div class="event-cover <?= event_palette((int) $e['id']) ?>">
+                    <?php $cover_url = event_gambar_url($e['gambar'] ?? null); ?>
+                    <div class="event-cover <?= event_palette((int) $e['id']) ?><?= $cover_url ? ' has-foto' : '' ?>"<?= $cover_url ? ' style="background-image:url(\'' . h($cover_url) . '\')"' : '' ?>>
 
                         <span class="event-badge <?= $badge[0] ?>">
                             <?= h($badge[1]) ?>
@@ -197,6 +197,10 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
                         <div class="event-date">
                             <?= h(tanggal_id($e['tanggal_event'])) ?>
                         </div>
+
+                        <?php if (!empty($e['tema'])): ?>
+                            <div class="event-tema">Tema: <?= h($e['tema']) ?></div>
+                        <?php endif; ?>
 
                         <?php if (!empty($e['deskripsi'])): ?>
 
@@ -474,4 +478,3 @@ document.addEventListener('keydown', function(e) {
 
 
 <?php require_once __DIR__ . '/../../includes/user_layout_bottom.php'; ?>
-```

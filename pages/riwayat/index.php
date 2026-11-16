@@ -135,7 +135,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 
     <?php else: ?>
 
-        <table class="data-table">
+        <table class="data-table table-grid">
             <thead>
                 <tr>
                     <th>Waktu</th>
@@ -186,4 +186,3 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 </div>
 
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>
-

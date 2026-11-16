@@ -36,7 +36,6 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 ?>
 
 <?php if (!$events): ?>
-
     <div class="table-card">
         <div class="empty-state">
             <h3>Belum Ada Event</h3>
@@ -47,7 +46,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 <?php else: ?>
 
     <div style="display:flex; justify-content:flex-end; margin-bottom:16px;">
-        <a href="<?= base_url('pages/timeline/tambah.php?event_id=' . $event_id) ?>" class="btn-add">+ Tambah Timeline</a>
+      <a href="<?= base_url('pages/timeline/tambah.php?event_id=' . $event_id) ?>" class="btn-add" data-modal-event>+ Tambah Timeline</a>
     </div>
 
     <div class="table-card">
@@ -70,7 +69,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                 <p>Silahkan tambahkan timeline untuk event ini.</p>
             </div>
         <?php else: ?>
-            <table class="data-table">
+            <table class="data-table table-grid">
                 <thead>
                     <tr>
                         <th style="width: 50px;">NO</th>
@@ -88,9 +87,11 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                             <td><?= h($t['judul']) ?></td>
                             <td><?= $t['tanggal'] ? date('d M Y', strtotime($t['tanggal'])) : '-' ?></td>
                             <td><?= $t['waktu'] ? substr($t['waktu'], 0, 5) : '-' ?></td>
-                            <td><?= h($t['deskripsi']) ?></td>
+                            <td class="col-deskripsi">
+                                <div class="rich-content"><?= rich_ringkas_html($t['deskripsi']) ?></div>
+                            </td>
                             <td class="action-buttons">
-                                <a href="<?= base_url('pages/timeline/edit.php?id=' . $t['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit">✏️</a>
+                                <a href="<?= base_url('pages/timeline/edit.php?id=' . $t['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit" data-modal-event data-judul="Edit Timeline">✏️</a>
                                 <a
                                     href="<?= base_url('pages/timeline/hapus.php?id=' . $t['id'] . '&event_id=' . $event_id) ?>"
                                     class="btn-delete"
@@ -106,5 +107,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
     </div>
 
 <?php endif; ?>
-
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
+<script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
+<script src="<?= base_url('assets/js/modal-event.js') ?>"></script>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

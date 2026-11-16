@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $judul = trim($_POST['judul'] ?? '');
     $tanggal = trim($_POST['tanggal'] ?? '');
     $waktu = trim($_POST['waktu'] ?? '');
-    $deskripsi = trim($_POST['deskripsi'] ?? '');
+    $deskripsi = bersihkan_html_rich(trim($_POST['deskripsi'] ?? ''));
 
     if ($judul === '' || $tanggal === '' || $waktu === '') {
     $error = 'Judul, tanggal, dan waktu wajib diisi.';
@@ -85,7 +85,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 
         <div class="form-group">
             <label for="deskripsi">Deskripsi</label>
-            <textarea id="deskripsi" name="deskripsi" rows="3"><?= h($deskripsi) ?></textarea>
+            <textarea id="deskripsi" name="deskripsi" rows="3" class="rich-field"><?= h(tampilkan_rich($deskripsi)) ?></textarea>
         </div>
 
         <div class="form-actions">
@@ -95,4 +95,6 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
     </form>
 </div>
 
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
+<script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

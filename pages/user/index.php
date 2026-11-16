@@ -48,9 +48,8 @@ $active_menu = 'user';
 
 require_once __DIR__ . '/../../includes/admin_layout_top.php';
 ?>
-
 <div style="display:flex; justify-content:flex-end; margin-bottom:16px;">
-    <a href="<?= base_url('pages/user/tambah.php') ?>" class="btn-add">+ Tambah User</a>
+    <<a href="<?= base_url('pages/user/tambah.php') ?>" class="btn-add" data-modal-event>+ Tambah User</a>
 </div>
 
 <div class="table-card">
@@ -63,7 +62,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                 <option value="admin" <?= $role === 'admin' ? 'selected' : '' ?>>Admin</option>
             </select>
         </div>
-
+        
         <div class="filter-group">
             <label for="q">&nbsp;</label>
             <input type="text" name="q" id="q" placeholder="Cari nama atau email" value="<?= h($search) ?>">
@@ -79,7 +78,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 
     <?php else: ?>
 
-        <table class="data-table">
+        <table class="data-table table-grid">
             <thead>
                 <tr>
                     <th style="width: 50px;">NO</th>
@@ -111,7 +110,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                         <td><?= (int) $u['jumlah_event'] ?></td>
                         <td><?= date('d M Y', strtotime($u['created_at'])) ?></td>
                         <td class="action-buttons">
-                            <a href="<?= base_url('pages/user/edit.php?id=' . (int) $u['id']) ?>" class="btn-edit" title="Edit">✏️</a>
+                            <<a href="<?= base_url('pages/user/edit.php?id=' . (int) $u['id']) ?>" class="btn-edit" title="Edit" data-modal-event data-judul="Edit User">✏️</a>
 
                             <?php if ($u['role'] === 'peserta' && !$is_self): ?>
                                 <form method="POST" action="<?= base_url('pages/user/hapus.php') ?>" style="display:inline;">
@@ -127,7 +126,9 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
             </tbody>
         </table>
 
-    <?php endif; ?>
-</div>
-
+        <?php endif; ?>
+    </div>
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
+<script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
+<script src="<?= base_url('assets/js/modal-event.js') ?>"></script>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

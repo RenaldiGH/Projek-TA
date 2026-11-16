@@ -639,3 +639,61 @@ table td {
     background-color: #e60000;
     color: #ffffff;
 }
+
+/* Tabel dengan garis pemisah antar kolom (dipakai di halaman Event) */
+.data-table.table-grid {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.data-table.table-grid th,
+.data-table.table-grid td {
+    border-right: 1px solid #cbd5e1;
+    border-bottom: 1px solid #cbd5e1;
+}
+
+.data-table.table-grid th:last-child,
+.data-table.table-grid td:last-child {
+    border-right: none;
+}
+
+.data-table.table-grid tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table.table-grid th {
+    background: #f8fafc;
+    border-bottom: 2px solid #cbd5e1;
+}
+
+.data-table.table-grid td.col-deskripsi {
+    width: 260px;
+    max-width: 260px;
+    vertical-align: top;
+    word-break: break-word;
+}
+
+.data-table.table-grid td.col-deskripsi .rich-content {
+    max-height: 96px;
+    overflow: auto;
+    line-height: 1.5;
+}
+
+.data-table.table-grid td.col-deskripsi .rich-content > :first-child { margin-top: 0; }
+.data-table.table-grid td.col-deskripsi .rich-content > :last-child { margin-bottom: 0; }
+
+/* Penanda daftar (bulat / lingkaran / kotak / angka) di teks berformat.
+   Reset "* { margin:0; padding:0 }" menghilangkan ruang penanda, dan
+   overflow pada sel tabel memotongnya, jadi penanda perlu ruang sendiri. */
+.rich-content ul,
+.rich-content ol {
+    margin: 4px 0;
+    padding-left: 22px;
+    list-style-position: outside;
+}
+.rich-content ul { list-style-type: disc; }
+.rich-content ol { list-style-type: decimal; }
+.rich-content li { display: list-item; }

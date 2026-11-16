@@ -12,7 +12,7 @@ $search = trim($_GET['q'] ?? '');
 $wishlist_list = [];
 
 if ($event_id) {
-    $sql = "SELECT w.id, w.nama_barang, w.kategori, w.estimasi_harga, w.status, p.nama AS peserta_nama
+    $sql = "SELECT w.id, w.nama_barang, w.kategori, w.estimasi_harga, w.deskripsi, w.status, p.nama AS peserta_nama
             FROM wishlist w
             JOIN peserta p ON p.id = w.peserta_id
             WHERE p.event_id = ?";
@@ -49,7 +49,6 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 ?>
 
 <?php if (!$events): ?>
-
     <div class="table-card">
         <div class="empty-state">
             <h3>Belum Ada Event</h3>
@@ -60,7 +59,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 <?php else: ?>
 
     <div style="display:flex; justify-content:flex-end; margin-bottom:16px;">
-        <a href="<?= base_url('pages/wishlist/tambah.php?event_id=' . $event_id) ?>" class="btn-add">+ Tambah Wishlist</a>
+        <a href="<?= base_url('pages/wishlist/tambah.php?event_id=' . $event_id) ?>" class="btn-add" data-modal-event>+ Tambah Wishlist</a>
     </div>
 
     <div class="table-card">
@@ -82,7 +81,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
     <p>Wishlist akan muncul setelah peserta mengisi, atau tambahkan manual di sini.</p>
 </div>
         <?php else: ?>
-            <table class="data-table">
+            <table class="data-table table-grid">
                 <thead>
                     <tr>
                         <th style="width: 50px;">NO</th>
@@ -90,6 +89,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                         <th>Nama Barang</th>
                         <th>Kategori</th>
                         <th>Estimasi</th>
+                        <th>Deskripsi</th>
                         <th>Status</th>
                         <th style="text-align:center;">Aksi</th>
                     </tr>
@@ -102,9 +102,12 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                             <td><?= h($w['nama_barang']) ?></td>
                             <td><?= h($w['kategori']) ?></td>
                             <td>Rp<?= number_format((float) $w['estimasi_harga'], 0, ',', '.') ?></td>
+                            <td class="col-deskripsi">
+                                <?= trim((string) $w['deskripsi']) !== '' ? '<div class="rich-content">' . rich_ringkas_html($w['deskripsi']) . '</div>' : '-' ?>
+                            </td>
                             <td><?= h(str_replace('_', ' ', ucfirst($w['status']))) ?></td>
                             <td class="action-buttons">
-                                <a href="<?= base_url('pages/wishlist/edit.php?id=' . $w['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit">✏️</a>
+                                <a href="<?= base_url('pages/wishlist/edit.php?id=' . $w['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit" data-modal-event data-judul="Edit Wishlist">✏️</a>
                                 <a
                                     href="<?= base_url('pages/wishlist/hapus.php?id=' . $w['id'] . '&event_id=' . $event_id) ?>"
                                     class="btn-delete"
@@ -120,5 +123,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
     </div>
 
 <?php endif; ?>
-
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
+<script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
+<script src="<?= base_url('assets/js/modal-event.js') ?>"></script>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

@@ -47,20 +47,18 @@ $active_menu = 'peserta';
 
 require_once __DIR__ . '/../../includes/admin_layout_top.php';
 ?>
-
 <?php if (!$events): ?>
-
     <div class="table-card">
         <div class="empty-state">
             <h3>Belum Ada Event</h3>
             <p>Buat event terlebih dahulu di menu Event sebelum menambahkan peserta.</p>
         </div>
     </div>
-
+    
 <?php else: ?>
 
     <div style="display:flex; justify-content:flex-end; margin-bottom:16px;">
-        <a href="<?= base_url('pages/peserta/tambah.php?event_id=' . $event_id) ?>" class="btn-add">+ Tambah Peserta</a>
+        <a href="<?= base_url('pages/peserta/tambah.php?event_id=' . $event_id) ?>" class="btn-add" data-modal-event>+ Tambah Peserta</a>
     </div>
 
     <div class="table-card">
@@ -80,7 +78,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 </div>
 
         <?php else: ?>
-            <table class="data-table">
+            <table class="data-table table-grid">
                 <thead>
                     <tr>
                         <th style="width: 50px;">NO</th>
@@ -105,7 +103,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                             </td>
                             <td class="action-buttons">
                                 <a href="<?= base_url('pages/peserta/detail.php?id=' . $p['id'] . '&event_id=' . $event_id) ?>" title="Detail">👁️</a>
-                                <a href="<?= base_url('pages/peserta/edit.php?id=' . $p['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit">✏️</a>
+                                <a href="<?= base_url('pages/peserta/edit.php?id=' . $p['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit" data-modal-event data-judul="Edit Peserta">✏️</a>
                                 <a href="<?= base_url('pages/peserta/hapus.php?id=' . $p['id'] . '&event_id=' . $event_id) ?>"
                                     class="btn-delete"
                                     title="Hapus"
@@ -118,7 +116,9 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
             </table>
         <?php endif; ?>
     </div>
-
+    
 <?php endif; ?>
-
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
+<script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
+<script src="<?= base_url('assets/js/modal-event.js') ?>"></script>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

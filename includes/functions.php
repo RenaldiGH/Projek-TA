@@ -79,7 +79,7 @@ function get_max_peserta(mysqli $conn): int
 function get_events_for_user(mysqli $conn, int $user_id): array
 {
     $stmt = $conn->prepare(
-        "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.biaya_pendaftaran, e.tanggal_event, e.status,
+        "SELECT e.id, e.nama_event, e.deskripsi, e.tema, e.gambar, e.budget, e.biaya_pendaftaran, e.tanggal_event, e.status,
                 (SELECT COUNT(*) FROM peserta px WHERE px.event_id = e.id AND px.status = 'aktif') AS jumlah,
                 (SELECT px.id FROM peserta px WHERE px.event_id = e.id AND px.user_id = ? LIMIT 1) AS peserta_id
          FROM events e
@@ -97,7 +97,7 @@ function get_events_for_user(mysqli $conn, int $user_id): array
 function get_user_events(mysqli $conn, int $user_id): array
 {
     $stmt = $conn->prepare(
-        "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.tanggal_event, e.status,
+        "SELECT e.id, e.nama_event, e.deskripsi, e.tema, e.aturan_kado, e.gambar, e.budget, e.tanggal_event, e.status,
                 p.id AS peserta_id, p.created_at AS tanggal_ikut
          FROM peserta p
          JOIN events e ON e.id = p.event_id
@@ -118,6 +118,81 @@ function event_palette(int $id): string
 
     return $palettes[$id % count($palettes)];
 }
+
+// URL foto event (null kalau event belum punya foto atau filenya hilang)
+function event_gambar_url(?string $nama): ?string
+{
+    $nama = basename((string) $nama);
+
+    if ($nama === '' || !is_file(__DIR__ . '/../uploads/event/' . $nama)) {
+        return null;
+    }
+
+    return base_url('uploads/event/' . rawurlencode($nama));
+}
+
+// Simpan foto event dari $_FILES. Mengembalikan nama file, atau null + pesan di $error
+function simpan_gambar_event(array $f, string &$error): ?string
+{
+    $maks = 2 * 1024 * 1024;
+    $kode = $f['error'] ?? UPLOAD_ERR_NO_FILE;
+
+    if ($kode === UPLOAD_ERR_INI_SIZE || $kode === UPLOAD_ERR_FORM_SIZE) {
+        $error = 'Ukuran foto maksimal 2 MB.';
+        return null;
+    }
+
+    if ($kode !== UPLOAD_ERR_OK) {
+        $error = 'Upload foto gagal, silakan coba lagi.';
+        return null;
+    }
+
+    if ($f['size'] > $maks) {
+        $error = 'Ukuran foto maksimal 2 MB.';
+        return null;
+    }
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime  = $finfo->file($f['tmp_name']);
+    $boleh = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+
+    if (!isset($boleh[$mime]) || @getimagesize($f['tmp_name']) === false) {
+        $error = 'Format foto harus JPG, PNG, atau WEBP.';
+        return null;
+    }
+
+    $dir = __DIR__ . '/../uploads/event/';
+
+    if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
+        $error = 'Folder penyimpanan foto tidak bisa dibuat.';
+        return null;
+    }
+
+    $nama = 'event_' . bin2hex(random_bytes(8)) . '.' . $boleh[$mime];
+
+    if (!move_uploaded_file($f['tmp_name'], $dir . $nama)) {
+        $error = 'Gagal menyimpan foto.';
+        return null;
+    }
+
+    return $nama;
+}
+
+function hapus_gambar_event(?string $nama): void
+{
+    $nama = basename((string) $nama);
+
+    if ($nama === '') {
+        return;
+    }
+
+    $path = __DIR__ . '/../uploads/event/' . $nama;
+
+    if (is_file($path)) {
+        @unlink($path);
+    }
+}
+
 function validasi_user(mysqli $conn, string $nama, string $email, string $password, string $role, int $ignore_id = 0, bool $password_wajib = true): string
 {
     if ($nama === '' || $email === '') {

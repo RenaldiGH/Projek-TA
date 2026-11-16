@@ -127,7 +127,7 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
                     <h3><?= h($j['judul']) ?></h3>
 
                     <?php if (!empty($j['deskripsi'])): ?>
-                        <p><?= h($j['deskripsi']) ?></p>
+                        <div class="rich-content"><?= tampilkan_rich($j['deskripsi']) ?></div>
                     <?php endif; ?>
 
                     <div class="tl-meta">
@@ -146,4 +146,5 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
 <?php endif; ?>
 
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
 <?php require_once __DIR__ . '/../../includes/user_layout_bottom.php'; ?>

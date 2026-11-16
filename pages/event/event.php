@@ -59,7 +59,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
             <p>Silahkan tambahkan event terlebih dahulu.</p>
         </div>
     <?php else: ?>
-        <table class="data-table">
+        <table class="data-table table-grid">
             <thead>
                 <tr>
                     <th style="width: 50px;">NO</th>
@@ -79,9 +79,8 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                         <td><?= h($e['nama_event']) ?></td>
                         <td><?= $e['tanggal_event'] ? date('d M Y', strtotime($e['tanggal_event'])) : '-' ?></td>
                         <td>Rp<?= number_format((float) $e['budget'], 0, ',', '.') ?></td>
-                        <td>
-                             <div class="rich-content" style="max-width:260px;"><?= tampilkan_rich($e['deskripsi']) ?></div>
-                             </div>
+                        <td class="col-deskripsi">
+                            <div class="rich-content"><?= tampilkan_rich($e['deskripsi']) ?></div>
                         </td>
                         <td>
                             <span class="<?= $e['status'] === 'aktif' ? 'badge-active' : ($e['status'] === 'selesai' ? 'badge-done' : '') ?>">

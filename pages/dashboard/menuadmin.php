@@ -54,6 +54,7 @@ $pengundian_terbaru = $conn->query(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/style_admin.css') ?>">
 </head>
 
@@ -61,28 +62,52 @@ $pengundian_terbaru = $conn->query(
 
     <div class="dashboard-container">
 
-        <aside>
-            <div class="brand">
-                <h2>SKARIGA SECRET SANTA</h2>
-            </div>
-            <nav>
-                <ul>
-                    <li class="active"><a href="<?= base_url('pages/dashboard/menuadmin.php') ?>">Dashboard</a></li>
-                    <li><a href="<?= base_url('pages/event/event.php') ?>">Event</a></li>
-                    <li><a href="<?= base_url('pages/peserta/index.php') ?>">Peserta</a></li>
-                    <li><a href="<?= base_url('pages/wishlist/index.php') ?>">Wishlist</a></li>
-                    <li><a href="<?= base_url('pages/timeline/index.php') ?>">Timeline</a></li>
-                    <li><a href="<?= base_url('pages/pengundian/index.php') ?>">Pengundian</a></li>
-                    <li><a href="<?= base_url('pages/pemberi/index.php') ?>">Pemberi</a></li>
-                    <li><a href="<?= base_url('pages/penerima/index.php') ?>">Penerima</a></li>
-                    <li><a href="<?= base_url('pages/laporan/index.php') ?>">Laporan</a></li>
-                    <li><a href="<?= base_url('pages/riwayat/index.php') ?>">Riwayat</a></li>
-                    <li><a href="<?= base_url('pages/user/index.php') ?>">User</a></li>
-                    <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>">Pengaturan</a></li>
-                    <li><a href="<?= base_url('logout.php') ?>">Keluar</a></li>
-                </ul>
-            </nav>
-        </aside>
+        <aside class="admin-sidebar">
+
+    <div class="brand">
+        <h2>SKARIGA SECRET SANTA</h2>
+    </div>
+
+    <nav class="admin-menu">
+
+        <div class="admin-menu-group">
+            <span class="admin-menu-heading">MAIN</span>
+            <ul>
+                <li class="active"><a href="<?= base_url('pages/dashboard/menuadmin.php') ?>"><i class="fa-solid fa-house admin-icon"></i><span>Dashboard</span></a></li>
+            </ul>
+        </div>
+
+        <div class="admin-menu-group">
+            <span class="admin-menu-heading">MANAGEMENT</span>
+            <ul>
+                <li><a href="<?= base_url('pages/event/event.php') ?>"><i class="fa-solid fa-calendar-days admin-icon"></i><span>Event</span></a></li>
+                <li><a href="<?= base_url('pages/peserta/index.php') ?>"><i class="fa-solid fa-users admin-icon"></i><span>Peserta</span></a></li>
+                <li><a href="<?= base_url('pages/wishlist/index.php') ?>"><i class="fa-solid fa-heart admin-icon"></i><span>Wishlist</span></a></li>
+                <li><a href="<?= base_url('pages/timeline/index.php') ?>"><i class="fa-solid fa-clock admin-icon"></i><span>Timeline</span></a></li>
+                <li><a href="<?= base_url('pages/pengundian/index.php') ?>"><i class="fa-solid fa-shuffle admin-icon"></i><span>Pengundian</span></a></li>
+                <li><a href="<?= base_url('pages/pemberi/index.php') ?>"><i class="fa-solid fa-gift admin-icon"></i><span>Pemberi</span></a></li>
+                <li><a href="<?= base_url('pages/penerima/index.php') ?>"><i class="fa-solid fa-user-check admin-icon"></i><span>Penerima</span></a></li>
+            </ul>
+        </div>
+
+        <div class="admin-menu-group">
+            <span class="admin-menu-heading">TOOLS</span>
+            <ul>
+                <li><a href="<?= base_url('pages/laporan/index.php') ?>"><i class="fa-solid fa-file-lines admin-icon"></i><span>Laporan</span></a></li>
+                <li><a href="<?= base_url('pages/riwayat/index.php') ?>"><i class="fa-solid fa-clock-rotate-left admin-icon"></i><span>Riwayat</span></a></li>
+                <li><a href="<?= base_url('pages/user/index.php') ?>"><i class="fa-solid fa-user admin-icon"></i><span>User</span></a></li>
+                <li><a href="<?= base_url('pages/adminpengaturan/index.php') ?>"><i class="fa-solid fa-gear admin-icon"></i><span>Pengaturan</span></a></li>
+            </ul>
+        </div>
+
+    </nav>
+
+    <div class="admin-sidebar-bottom">
+        <div class="admin-sidebar-divider"></div>
+        <a href="<?= base_url('logout.php') ?>"><i class="fa-solid fa-right-from-bracket admin-icon"></i><span>Keluar</span></a>
+    </div>
+
+</aside>
 
 
         <main>

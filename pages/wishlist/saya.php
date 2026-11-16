@@ -83,7 +83,7 @@ if ($peserta_id && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'nama_barang'    => trim($_POST['nama_barang'] ?? ''),
             'kategori'       => trim($_POST['kategori'] ?? ''),
             'estimasi_harga' => trim($_POST['estimasi_harga'] ?? ''),
-            'deskripsi'      => trim($_POST['deskripsi'] ?? ''),
+            'deskripsi'      => bersihkan_html_rich(trim($_POST['deskripsi'] ?? '')),
             'link_referensi' => trim($_POST['link_referensi'] ?? ''),
         ];
 
@@ -215,8 +215,25 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
         </select>
     </form>
 
+    <nav class="wl-tabs">
+        <a href="<?= h(base_url('pages/wishlist/saya.php?event_id=' . $event_id)) ?>" class="active">Wishlist Saya</a>
+        <a href="<?= h(base_url('pages/wishlist/semua.php?event_id=' . $event_id)) ?>">Wishlist Semua Peserta</a>
+    </nav>
+
     <?php if ($error !== ''): ?>
         <div class="alert alert-error"><?= h($error) ?></div>
+    <?php endif; ?>
+
+    <?php if (!empty($picked['tema']) || !empty($picked['aturan_kado'])): ?>
+        <section class="panel rv-rules">
+            <?php if (!empty($picked['tema'])): ?>
+                <div class="rv-rules-tema"><span>Tema Kado</span> <?= h($picked['tema']) ?></div>
+            <?php endif; ?>
+            <?php if (!empty($picked['aturan_kado'])): ?>
+                <div class="rv-rules-title">Aturan Kado</div>
+                <div class="rich-content"><?= tampilkan_rich($picked['aturan_kado']) ?></div>
+            <?php endif; ?>
+        </section>
     <?php endif; ?>
 
     <section class="panel">
@@ -250,7 +267,7 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
                 <div class="form-group full">
                     <label for="deskripsi">Deskripsi</label>
-                    <textarea id="deskripsi" name="deskripsi" rows="3"><?= h($form['deskripsi']) ?></textarea>
+                    <textarea id="deskripsi" name="deskripsi" rows="3" class="rich-field"><?= h(tampilkan_rich($form['deskripsi'])) ?></textarea>
                 </div>
             </div>
 
@@ -295,7 +312,7 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
                                 <td>
                                     <strong><?= h($w['nama_barang']) ?></strong>
                                     <?php if (!empty($w['deskripsi'])): ?>
-                                        <br><small style="color:#6b7280;"><?= h($w['deskripsi']) ?></small>
+                                        <br><small style="color:#6b7280;"><?= h(rich_ringkas($w['deskripsi'], 80)) ?></small>
                                     <?php endif; ?>
                                     <?php if (!empty($w['link_referensi']) && preg_match('#^https?://#i', $w['link_referensi'])): ?>
                                         <br><a href="<?= h($w['link_referensi']) ?>" target="_blank" rel="noopener noreferrer" style="font-size:12px;">Lihat referensi</a>
@@ -335,4 +352,6 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
 <?php endif; ?>
 
+<link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
+<script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
 <?php require_once __DIR__ . '/../../includes/user_layout_bottom.php'; ?>

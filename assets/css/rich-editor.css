@@ -138,3 +138,16 @@ body.me-lock { overflow: hidden; }
 
 @keyframes me-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes me-pop { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+
+/* Penanda daftar (bulat / lingkaran / kotak / angka) di teks berformat.
+   Reset "* { margin:0; padding:0 }" menghilangkan ruang penanda, dan
+   overflow pada sel tabel memotongnya, jadi penanda perlu ruang sendiri. */
+.rich-content ul,
+.rich-content ol {
+    margin: 4px 0;
+    padding-left: 22px;
+    list-style-position: outside;
+}
+.rich-content ul { list-style-type: disc; }
+.rich-content ol { list-style-type: decimal; }
+.rich-content li { display: list-item; }

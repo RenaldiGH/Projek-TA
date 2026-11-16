@@ -54,7 +54,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
     <?php if ($wishlist_result->num_rows === 0): ?>
         <p style="color:#666;">Peserta ini belum mengisi wishlist.</p>
     <?php else: ?>
-        <table class="data-table">
+        <table class="data-table table-grid">
             <thead>
                 <tr>
                     <th>Nama Barang</th>

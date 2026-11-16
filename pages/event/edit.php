@@ -26,14 +26,20 @@ if (!$event) {
 $error = '';
 $nama_event = $event['nama_event'];
 $deskripsi = $event['deskripsi'];
+$tema = $event['tema'] ?? '';
+$aturan_kado = $event['aturan_kado'] ?? '';
 $budget = $event['budget'];
 $biaya_pendaftaran = $event['biaya_pendaftaran'] ?? '0';
 $tanggal_event = $event['tanggal_event'];
 $status = $event['status'];
+$gambar_lama = $event['gambar'] ?? '';
+$gambar_url = event_gambar_url($gambar_lama);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_event = trim($_POST['nama_event'] ?? '');
     $deskripsi = bersihkan_html_rich(trim($_POST['deskripsi'] ?? ''));
+    $tema = trim($_POST['tema'] ?? '');
+    $aturan_kado = bersihkan_html_rich(trim($_POST['aturan_kado'] ?? ''));
     $budget = trim($_POST['budget'] ?? '0');
     $biaya_pendaftaran = trim($_POST['biaya_pendaftaran'] ?? '');
 if ($biaya_pendaftaran === '') {
@@ -55,20 +61,49 @@ if ($biaya_pendaftaran === '') {
     } else {
         $status = $status_baru;
 
-        $update = $conn->prepare(
-    "UPDATE events SET nama_event = ?, deskripsi = ?, budget = ?, biaya_pendaftaran = ?, tanggal_event = ?, status = ? WHERE id = ?"
-);
-$update->bind_param('ssddssi', $nama_event, $deskripsi, $budget, $biaya_pendaftaran, $tanggal_event, $status, $id);
+        // Foto event: ganti atau hapus (opsional)
+        $gambar_baru    = $gambar_lama;
+        $gambar_diganti = false;
 
-        if ($update->execute()) {
-            set_flash('success', 'Event berhasil diperbarui.');
-            header('Location: ' . base_url('pages/event/event.php'));
-            exit;
-        } else {
-            $error = 'Gagal memperbarui event.';
+        if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] !== UPLOAD_ERR_NO_FILE) {
+            $err_foto = '';
+            $hasil_foto = simpan_gambar_event($_FILES['gambar'], $err_foto);
+
+            if ($hasil_foto === null) {
+                $error = $err_foto;
+            } else {
+                $gambar_baru    = $hasil_foto;
+                $gambar_diganti = true;
+            }
+        } elseif (!empty($_POST['hapus_gambar'])) {
+            $gambar_baru    = '';
+            $gambar_diganti = true;
         }
 
-        $update->close();
+        if ($error === '') {
+            $gambar_db = $gambar_baru !== '' ? $gambar_baru : null;
+
+            $update = $conn->prepare(
+                "UPDATE events SET nama_event = ?, deskripsi = ?, tema = ?, aturan_kado = ?, gambar = ?, budget = ?, biaya_pendaftaran = ?, tanggal_event = ?, status = ? WHERE id = ?"
+            );
+            $update->bind_param('sssssddssi', $nama_event, $deskripsi, $tema, $aturan_kado, $gambar_db, $budget, $biaya_pendaftaran, $tanggal_event, $status, $id);
+
+            if ($update->execute()) {
+                if ($gambar_diganti) {
+                    hapus_gambar_event($gambar_lama);
+                }
+                set_flash('success', 'Event berhasil diperbarui.');
+                header('Location: ' . base_url('pages/event/event.php'));
+                exit;
+            }
+
+            $error = 'Gagal memperbarui event.';
+            $update->close();
+
+            if ($gambar_diganti && $gambar_baru !== '') {
+                hapus_gambar_event($gambar_baru);
+            }
+        }
     }
 }
 
@@ -85,7 +120,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 <?php endif; ?>
 
 <div class="form-card">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?= $id ?>">
 
         <div class="form-group">
@@ -94,8 +129,31 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
         </div>
 
         <div class="form-group">
+            <label for="foto">Foto Event</label>
+            <img id="fotoPreview" alt="Foto event" <?php if (!empty($gambar_url)): ?>src="<?= h($gambar_url) ?>"<?php endif; ?>
+                 style="display:<?= !empty($gambar_url) ? 'block' : 'none' ?>; width:100%; max-height:170px; object-fit:cover; border-radius:10px; margin-bottom:8px;">
+            <input type="file" id="foto" name="gambar" accept="image/jpeg,image/png,image/webp">
+            <small style="color:#888;">JPG, PNG, atau WEBP, maksimal 2 MB. Kosongkan jika tidak ingin mengubah foto.</small>
+            <?php if (!empty($gambar_url)): ?>
+                <label style="display:flex; align-items:center; gap:6px; margin-top:8px; font-weight:400;">
+                    <input type="checkbox" name="hapus_gambar" value="1"> Hapus foto (kembali ke gambar bawaan)
+                </label>
+            <?php endif; ?>
+        </div>
+
+        <div class="form-group">
             <label for="deskripsi">Deskripsi</label>
            <textarea id="deskripsi" name="deskripsi" rows="3" class="rich-field"><?= h(tampilkan_rich($deskripsi)) ?></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tema">Tema Kado</label>
+            <input type="text" id="tema" name="tema" value="<?= h($tema) ?>" maxlength="150" placeholder="Contoh: Alat tulis lucu, Cozy night, Jajanan daerah">
+        </div>
+
+        <div class="form-group">
+            <label for="aturan_kado">Aturan Kado</label>
+            <textarea id="aturan_kado" name="aturan_kado" rows="3" class="rich-field"><?= h(tampilkan_rich($aturan_kado)) ?></textarea>
         </div>
 
         <div class="form-group">

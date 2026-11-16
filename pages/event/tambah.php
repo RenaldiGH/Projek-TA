@@ -8,14 +8,19 @@ require_admin();
 $error = '';
 $nama_event = '';
 $deskripsi = '';
+$tema = '';
+$aturan_kado = '';
 $budget = '';
 $biaya_pendaftaran = '';
 $tanggal_event = '';
 $status = 'draft';
+$gambar_url = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_event = trim($_POST['nama_event'] ?? '');
     $deskripsi = bersihkan_html_rich(trim($_POST['deskripsi'] ?? ''));
+    $tema = trim($_POST['tema'] ?? '');
+    $aturan_kado = bersihkan_html_rich(trim($_POST['aturan_kado'] ?? ''));
     $budget = trim($_POST['budget'] ?? '0');
     $biaya_pendaftaran = trim($_POST['biaya_pendaftaran'] ?? '');
 if ($biaya_pendaftaran === '') {
@@ -36,21 +41,38 @@ if ($biaya_pendaftaran === '') {
     } else {
         $user_id = (int) $_SESSION['user_id'];
 
-       $insert = $conn->prepare(
-    "INSERT INTO events (user_id, nama_event, deskripsi, budget, biaya_pendaftaran, tanggal_event, status)
-     VALUES (?, ?, ?, ?, ?, ?, ?)"
-);
-$insert->bind_param('issddss', $user_id, $nama_event, $deskripsi, $budget, $biaya_pendaftaran, $tanggal_event, $status);
+        // Foto event (opsional)
+        $gambar_baru = '';
+        if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] !== UPLOAD_ERR_NO_FILE) {
+            $err_foto = '';
+            $hasil_foto = simpan_gambar_event($_FILES['gambar'], $err_foto);
 
-        if ($insert->execute()) {
-            set_flash('success', 'Event berhasil ditambahkan.');
-            header('Location: ' . base_url('pages/event/event.php'));
-            exit;
-        } else {
-            $error = 'Gagal menyimpan event.';
+            if ($hasil_foto === null) {
+                $error = $err_foto;
+            } else {
+                $gambar_baru = $hasil_foto;
+            }
         }
 
-        $insert->close();
+        if ($error === '') {
+            $gambar_db = $gambar_baru !== '' ? $gambar_baru : null;
+
+            $insert = $conn->prepare(
+                "INSERT INTO events (user_id, nama_event, deskripsi, tema, aturan_kado, gambar, budget, biaya_pendaftaran, tanggal_event, status)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+            $insert->bind_param('isssssddss', $user_id, $nama_event, $deskripsi, $tema, $aturan_kado, $gambar_db, $budget, $biaya_pendaftaran, $tanggal_event, $status);
+
+            if ($insert->execute()) {
+                set_flash('success', 'Event berhasil ditambahkan.');
+                header('Location: ' . base_url('pages/event/event.php'));
+                exit;
+            }
+
+            $error = 'Gagal menyimpan event.';
+            $insert->close();
+            hapus_gambar_event($gambar_baru);
+        }
     }
 }
 
@@ -66,15 +88,33 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 <?php endif; ?>
 
 <div class="form-card">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="nama_event">Nama Event</label>
             <input type="text" id="nama_event" name="nama_event" value="<?= h($nama_event) ?>" required>
         </div>
 
         <div class="form-group">
+            <label for="foto">Foto Event</label>
+            <img id="fotoPreview" alt="Foto event" <?php if (!empty($gambar_url)): ?>src="<?= h($gambar_url) ?>"<?php endif; ?>
+                 style="display:<?= !empty($gambar_url) ? 'block' : 'none' ?>; width:100%; max-height:170px; object-fit:cover; border-radius:10px; margin-bottom:8px;">
+            <input type="file" id="foto" name="gambar" accept="image/jpeg,image/png,image/webp">
+            <small style="color:#888;">JPG, PNG, atau WEBP, maksimal 2 MB.</small>
+        </div>
+
+        <div class="form-group">
             <label for="deskripsi">Deskripsi</label>
            <textarea id="deskripsi" name="deskripsi" rows="3" class="rich-field"><?= h($deskripsi) ?></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tema">Tema Kado</label>
+            <input type="text" id="tema" name="tema" value="<?= h($tema) ?>" maxlength="150" placeholder="Contoh: Alat tulis lucu, Cozy night, Jajanan daerah">
+        </div>
+
+        <div class="form-group">
+            <label for="aturan_kado">Aturan Kado</label>
+            <textarea id="aturan_kado" name="aturan_kado" rows="3" class="rich-field"><?= h($aturan_kado) ?></textarea>
         </div>
 
         <div class="form-group">

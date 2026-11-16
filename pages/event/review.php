@@ -12,7 +12,7 @@ $back     = base_url('pages/dashboard/dashboarduser.php');
 
 /* ---------- Data event (draft tidak boleh dilihat peserta) ---------- */
 $stmt = $conn->prepare(
-    "SELECT e.id, e.nama_event, e.deskripsi, e.budget, e.biaya_pendaftaran, e.tanggal_event, e.status, u.nama AS penyelenggara
+    "SELECT e.id, e.nama_event, e.deskripsi, e.tema, e.aturan_kado, e.gambar, e.budget, e.biaya_pendaftaran, e.tanggal_event, e.status, u.nama AS penyelenggara
      FROM events e
      LEFT JOIN users u ON u.id = e.user_id
      WHERE e.id = ? AND e.status <> 'draft'"
@@ -108,7 +108,8 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 <p class="rv-back"><a href="<?= $back ?>">&larr; Kembali ke daftar event</a></p>
 
 <section class="rv-hero">
-    <div class="rv-cover <?= event_palette((int) $event['id']) ?>">
+    <?php $cover_url = event_gambar_url($event['gambar'] ?? null); ?>
+    <div class="rv-cover <?= event_palette((int) $event['id']) ?><?= $cover_url ? ' has-foto' : '' ?>"<?= $cover_url ? ' style="background-image:url(\'' . h($cover_url) . '\')"' : '' ?>>
         <span class="event-badge <?= $label_status[1] ?>"><?= h($label_status[0]) ?></span>
         <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
             <path d="M50 30 C40 10, 15 10, 22 25 C27 34, 42 32, 50 30 C58 32, 73 34, 78 25 C85 10, 60 10, 50 30 Z"/>
@@ -151,6 +152,18 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
         <?php if (!empty($event['deskripsi'])): ?>
             <div class="rv-desc rich-content"><?= tampilkan_rich($event['deskripsi']) ?></div>
+        <?php endif; ?>
+
+        <?php if (!empty($event['tema']) || !empty($event['aturan_kado'])): ?>
+            <div class="rv-rules">
+                <?php if (!empty($event['tema'])): ?>
+                    <div class="rv-rules-tema"><span>Tema Kado</span> <?= h($event['tema']) ?></div>
+                <?php endif; ?>
+                <?php if (!empty($event['aturan_kado'])): ?>
+                    <div class="rv-rules-title">Aturan Kado</div>
+                    <div class="rich-content"><?= tampilkan_rich($event['aturan_kado']) ?></div>
+                <?php endif; ?>
+            </div>
         <?php endif; ?>
 
         <div class="rv-quota">

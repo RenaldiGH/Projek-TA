@@ -1,5 +1,3 @@
-
-
 * {
     margin: 0;
     padding: 0;
@@ -1477,4 +1475,139 @@ a {
         min-width: 17px;
     }
 
+}
+
+
+/* ===== Tema & Aturan Kado ===== */
+.rv-rules {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.rv-rules-tema {
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.rv-rules-tema span {
+    display: inline-block;
+    margin-right: 6px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: #ffedd5;
+    color: #c2410c;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.rv-rules-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    color: #c2410c;
+    margin: 6px 0 2px;
+}
+
+.event-tema {
+    margin: 2px 0 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #c2410c;
+}
+
+
+/* ===== Wishlist peserta: tab & daftar ===== */
+.wl-tabs {
+    display: flex;
+    gap: 6px;
+    margin: 0 0 18px;
+    padding: 4px;
+    width: fit-content;
+    max-width: 100%;
+    background: #eef0f6;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.wl-tabs a {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    text-decoration: none;
+}
+
+.wl-tabs a.active {
+    background: #fff;
+    color: #111827;
+    box-shadow: 0 1px 4px rgba(17, 21, 47, 0.12);
+}
+
+.wl-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.wl-summary {
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.wl-search {
+    width: 260px;
+    max-width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.wl-peserta h2 {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.wl-count {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.wl-kelola {
+    margin-left: auto;
+}
+
+.wl-kosong {
+    margin: 0;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+
+/* ===== Foto event sebagai cover ===== */
+.event-cover.has-foto,
+.rv-cover.has-foto {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.event-cover.has-foto svg,
+.rv-cover.has-foto svg {
+    display: none;
 }
