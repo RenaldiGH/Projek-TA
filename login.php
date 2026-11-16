@@ -73,28 +73,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="stylesheet" href="<?= base_url('assets/css/review.css') ?>">
 
 <div class="login-wrapper">
-    <div class="login-container">
-        <div class="login-image"></div>
-        
-        <div class="login-box">
-            <p class="login-sub">Buat Akun Baru</p>
-            <h1>Login</h1>
-            <form method="POST" action="<?= base_url('login.php') ?>">
-                <div class="input-group">
-                    <input type="email" name="email" placeholder="Email" required>
-                </div>
 
-            
+    <?php $auth_tombol = ['Daftar', 'register.php']; include __DIR__ . '/includes/auth_bg.php'; ?>
 
-                <div class="input-group">
-                    <input type="password" name="password" placeholder="Password" required>
-                </div>
+    <!-- Kartu login (efek kaca) -->
+    <div class="login-card">
+        <a href="<?= base_url() ?>" class="login-close" aria-label="Tutup">&times;</a>
 
-                <div class="input-login">
-                    <button type="submit">Login</button>
-                    
-                </div>
-            </form>
+        <div class="login-hat" aria-hidden="true">
+            <svg viewBox="0 0 64 48" width="64" height="48">
+                <path d="M6 40C8 18 26 6 46 8c-8 4-10 12-8 20z" fill="#d90032"/>
+                <path d="M4 38c14 6 40 6 56 0l-2 8c-14 5-38 5-52 0z" fill="#fff"/>
+                <circle cx="48" cy="8" r="6" fill="#fff"/>
+            </svg>
         </div>
+        <h1>Login</h1>
+        <p class="login-greet">Ho ho ho! Masuk untuk mulai tukar kado.</p>
+
+        <?php if (isset($_GET['reset'])): ?>
+            <div class="login-ok">Password berhasil diubah. Silakan login.</div>
+        <?php endif; ?>
+
+        <?php if ($error !== ''): ?>
+            <div class="login-error"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
+
+        <form method="POST" action="<?= base_url('login.php') ?>">
+            <div class="login-field">
+                <input type="email" name="email" placeholder="Email"
+                       value="<?= htmlspecialchars($email ?? '') ?>" required>
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7L4.5 7v.1L12 13l7.5-5.9V7z"/></svg>
+            </div>
+
+            <div class="login-field">
+                <input type="password" name="password" id="loginPassword" placeholder="Password" required>
+                <button type="button" class="login-eye" id="togglePassword" aria-label="Tampilkan password">
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 5C6 5 2 12 2 12s4 7 10 7 10-7 10-7-4-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+                </button>
+            </div>
+
+            <div class="login-forgot"><a href="<?= base_url('lupa_password.php') ?>">Lupa password?</a></div>
+
+            <button type="submit" class="login-submit">Login</button>
+        </form>
+
+        <p class="login-foot">Belum punya akun? <a href="<?= base_url('register.php') ?>">Daftar</a></p>
     </div>
 </div>
+
+<script>
+    // Tampilkan / sembunyikan password
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        var input = document.getElementById('loginPassword');
+        input.type = input.type === 'password' ? 'text' : 'password';
+    });
+</script>
