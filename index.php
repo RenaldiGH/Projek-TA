@@ -1,50 +1,59 @@
 
 <?php
+ob_start();
 
 require_once __DIR__ . '/config/config.php';
 
-// Memulai session
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Menyiapkan penyimpanan review
-if (!isset($_SESSION['user_reviews'])) {
-    $_SESSION['user_reviews'] = [];
-}
-
-// Memproses review dari pengguna
+// Memproses review dari form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['kirim_review'])) {
-
     $nama = trim($_POST['nama'] ?? '');
     $pesan = trim($_POST['pesan'] ?? '');
     $rating = (int) ($_POST['rating'] ?? 0);
 
     if ($nama === '' || $pesan === '' || $rating < 1 || $rating > 5) {
-
-        $_SESSION['review_message'] = 'Semua kolom wajib diisi!';
-
+        $_SESSION['review_message'] = 'Semua kolom wajib diisi dan rating harus dipilih!';
     } else {
+        $stmt = $conn->prepare(
+            "INSERT INTO reviews (nama, rating, pesan) VALUES (?, ?, ?)"
+        );
 
-        $_SESSION['user_reviews'][] = [
-            'nama' => $nama,
-            'pesan' => $pesan,
-            'rating' => $rating
-        ];
+        if ($stmt) {
+            $stmt->bind_param("sis", $nama, $rating, $pesan);
 
-        $_SESSION['review_message'] = 'Review berhasil dikirim. Terima kasih!';
+            if ($stmt->execute()) {
+                $_SESSION['review_message'] = 'Review berhasil dikirim. Terima kasih!';
+            } else {
+                $_SESSION['review_message'] = 'Review gagal dikirim: ' . $stmt->error;
+            }
+
+            $stmt->close();
+        } else {
+            $_SESSION['review_message'] = 'Query database bermasalah: ' . $conn->error;
+        }
     }
 
     header('Location: ' . base_url('index.php') . '#pesan-kesan');
     exit;
 }
 
+// Mengambil pesan pemberitahuan
 $review_message = $_SESSION['review_message'] ?? '';
 unset($_SESSION['review_message']);
 
+// Mengambil semua review dari database
+$reviews = [];
+$query_review = $conn->query("SELECT * FROM reviews ORDER BY id DESC");
+
+if ($query_review) {
+    while ($row = $query_review->fetch_assoc()) {
+        $reviews[] = $row;
+    }
+} else {
+    $review_message = 'Review belum bisa ditampilkan: ' . $conn->error;
+}
+
 include __DIR__ . '/includes/header.php';
 include __DIR__ . '/includes/navbar.php';
-
 ?>
 
 
@@ -294,11 +303,6 @@ include __DIR__ . '/includes/navbar.php';
 
 <!-- SECTION PESAN DAN KESAN -->
 
-<?php
-// Mengambil review dari session pengguna
-$reviews = $_SESSION['user_reviews'] ?? [];
-?>
-
 <section class="review-section" id="pesan-kesan">
 
     <div class="review-heading">
@@ -331,6 +335,8 @@ $reviews = $_SESSION['user_reviews'] ?? [];
 
 
         <form method="POST" action="<?= base_url('index.php#pesan-kesan') ?>">
+
+            <input type="hidden" name="kirim_review" value="1">
 
             <div class="review-name">
 
@@ -388,7 +394,7 @@ $reviews = $_SESSION['user_reviews'] ?? [];
             </div>
 
 
-            <button type="submit" name="kirim_review">
+            <button type="submit">
                 Kirim Review
             </button>
 
@@ -408,7 +414,7 @@ $reviews = $_SESSION['user_reviews'] ?? [];
                 <div class="review-top">
 
                     <div class="review-avatar">
-                        <?= strtoupper(substr($review['nama'], 0, 1)) ?>
+                        <?= htmlspecialchars(strtoupper(substr($review['nama'], 0, 1))) ?>
                     </div>
 
                     <div class="review-user">
@@ -426,7 +432,7 @@ $reviews = $_SESSION['user_reviews'] ?? [];
 
                 <div class="review-stars">
 
-                    <?php for ($i = 0; $i < $review['rating']; $i++): ?>
+                    <?php for ($i = 0; $i < (int) $review['rating']; $i++): ?>
                         <span>★</span>
                     <?php endfor; ?>
 

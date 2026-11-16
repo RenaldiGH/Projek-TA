@@ -1,104 +1,226 @@
-
+/* ===== Halaman Login: video latar + kartu kaca bertema Santa ===== */
 .login-wrapper {
     position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #031341;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+.login-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.login-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(3, 19, 65, .55), rgba(3, 19, 65, .25) 45%, rgba(3, 19, 65, .6));
+}
+
+/* ----- Bar atas ----- */
+.login-topbar {
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, #031341, #031446);
+    right: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    z-index: 9999; /* Memastikan berada di paling depan melewati elemen header */
+    padding: 18px 6vw;
+    z-index: 2;
 }
 
-
-.login-container {
-    width: 90%;
-    max-width: 900px;
-    height: 550px;
-    display: flex;
-    background: white;
-    overflow: hidden;
-    border-radius: 5px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.login-image {
-    width: 50%;
-    height: 100%; /* Mengikuti tinggi kontainer (550px) */
-    background-image: url('../img/login.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.login-box {
-    width: 50%;
-    height: 100%;
-    background: white;
+.login-brand {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
+    line-height: 1.1;
+    color: #fff;
+    text-decoration: none;
+}
+.login-brand span   { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #ffb3c1; }
+.login-brand strong { font-size: 18px; font-weight: 900; letter-spacing: 1px; }
+
+.login-links { display: flex; align-items: center; gap: 28px; }
+.login-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+.login-links a:hover { color: #ffb3c1; }
+.login-links .login-links-btn {
+    padding: 8px 22px;
+    border: 2px solid #fff;
+    border-radius: 8px;
+}
+.login-links .login-links-btn:hover { background: #d90032; border-color: #d90032; color: #fff; }
+
+/* ----- Kartu kaca ----- */
+.login-card {
+    position: relative;
+    z-index: 2;
+    width: 92%;
+    max-width: 380px;
+    padding: 34px 36px 30px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .16);
+    border: 1px solid rgba(255, 255, 255, .45);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .35);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    color: #fff;
+    text-align: center;
     box-sizing: border-box;
 }
 
-.login-box h1 {
+.login-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #d90032;
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    text-decoration: none;
+    border-radius: 0 22px 0 18px;
+}
+.login-close:hover { background: #b0002a; }
+
+.login-hat { margin: -4px 0 4px; line-height: 0; }
+.login-card h1 {
+    margin: 0 0 6px;
     font-size: 30px;
     font-weight: 900;
-    color: #050029;
-    margin: 0 0 20px 0; /* Diperbaiki jaraknya */
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+}
+.login-greet {
+    margin: 0 0 22px;
+    font-size: 13px;
+    color: #ffe3e8;
 }
 
-.login-sub {
-    font-size: 12px;
-    color: #050029;
-    margin: 0 0 5px 0;
-    text-align: center;
+.login-error {
+    margin-bottom: 16px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: rgba(217, 0, 50, .85);
+    color: #fff;
+    font-size: 13px;
 }
 
-.login-box form { 
-    width: 100%;
-    max-width: 330px;
-}
-
-.input-group {
-    width: 100%; /* Diperbaiki dari yang sebelumnya angka 8 */
-    margin-bottom: 15px;
+/* ----- Input garis bawah ----- */
+.login-field {
+    position: relative;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, .85);
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
-
-.input-group input {
-    width: 100%;
-    height: 44px;
-    padding: 0 15px;
-    border: 1px solid #d5d5d5;
-    border-radius: 7px;
-    outline: none;
-    font-size: 14px;
-    color: #333;
-    background: white;
-    box-sizing: border-box;
-}
-
-.input-login {
-    width: 100%;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-.input-login button {
-    width: 100%;
-    height: 44px;
-    background: #d90032;
-    color: white;
+.login-field input {
+    flex: 1;
+    min-width: 0;
+    height: 42px;
+    padding: 0 28px 0 2px;
     border: none;
-    border-radius: 7px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 900;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-size: 15px;
 }
+.login-field input::placeholder { color: rgba(255, 255, 255, .85); }
+.login-field input:-webkit-autofill {
+    -webkit-text-fill-color: #fff;
+    transition: background-color 9999s ease-out;
+}
+.login-field svg { position: absolute; right: 2px; color: #fff; pointer-events: none; }
+.login-eye {
+    position: absolute;
+    right: 0;
+    background: none;
+    border: none;
+    padding: 4px;
+    color: #fff;
+    cursor: pointer;
+    line-height: 0;
+}
+.login-eye svg { position: static; pointer-events: none; }
+
+.login-submit {
+    width: 100%;
+    height: 46px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 10px;
+    background: #d90032;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(217, 0, 50, .45);
+    transition: background .2s, transform .1s;
+}
+.login-submit:hover  { background: #b0002a; }
+.login-submit:active { transform: translateY(1px); }
+
+.login-foot { margin: 20px 0 0; font-size: 13px; color: #fff; }
+.login-foot a { color: #fff; font-weight: 900; text-decoration: underline; }
+.login-foot a:hover { color: #ffb3c1; }
+
+@media (max-width: 640px) {
+    .login-links a:not(.login-links-btn) { display: none; }
+    .login-card { padding: 30px 26px 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-video { display: none; }
+    .login-wrapper { background: #031341 url('../img/pohonnatal.png') center/cover no-repeat; }
+}
+
+/* ----- Tambahan: lupa password, register, pesan ----- */
+.login-card { max-height: 92vh; overflow-y: auto; }
+.login-forgot { margin: -8px 0 16px; text-align: right; }
+.login-forgot a { color: #fff; font-size: 13px; text-decoration: none; }
+.login-forgot a:hover { color: #ffb3c1; text-decoration: underline; }
+
+.login-ok {
+    margin-bottom: 16px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: rgba(25, 135, 84, .85);
+    color: #fff;
+    font-size: 13px;
+}
+
+.login-note {
+    margin: 0 0 18px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #ffe3e8;
+}
+
+.login-linkbox {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, .35);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: left;
+    word-break: break-all;
+}
+.login-linkbox strong { display: block; margin-bottom: 4px; color: #ffb3c1; }
+.login-linkbox a { color: #fff; }
