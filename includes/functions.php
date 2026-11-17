@@ -397,4 +397,86 @@ function rich_ringkas_html(?string $teks): string
     return preg_replace('/<br\s*\/?>/i', ' ', $html);
 }
 
+/* ---------- Progres kado (status + checklist) ---------- */
+
+function status_kado_daftar(): array
+{
+    return [
+        'belum_dibeli'    => 'Belum dibeli',
+        'sudah_dibeli'    => 'Sudah dibeli',
+        'sudah_dibungkus' => 'Sudah dibungkus',
+        'diserahkan'      => 'Sudah diserahkan',
+    ];
+}
+
+function status_kado_label(?string $status): string
+{
+    $daftar = status_kado_daftar();
+    return $daftar[$status ?? ''] ?? $daftar['belum_dibeli'];
+}
+
+// Lencana berwarna; gayanya inline supaya bisa dipakai di halaman admin maupun user
+function status_kado_badge(?string $status): string
+{
+    $warna = [
+        'belum_dibeli'    => ['#fee2e2', '#b91c1c'],
+        'sudah_dibeli'    => ['#fef3c7', '#b45309'],
+        'sudah_dibungkus' => ['#dbeafe', '#1d4ed8'],
+        'diserahkan'      => ['#dcfce7', '#15803d'],
+    ];
+    $kunci = isset($warna[$status ?? '']) ? $status : 'belum_dibeli';
+    [$bg, $fg] = $warna[$kunci];
+
+    return '<span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;'
+        . 'background:' . $bg . ';color:' . $fg . ';">' . h(status_kado_label($kunci)) . '</span>';
+}
+
+// Kado baru boleh ditandai "dibungkus"/"diserahkan" bila ketiga checklist terpenuhi
+function status_kado_butuh_checklist(string $status): bool
+{
+    return in_array($status, ['sudah_dibungkus', 'diserahkan'], true);
+}
+
+/**
+ * Cek apakah sebuah data sudah ada (untuk validasi "data sama").
+ * Contoh: data_sudah_ada($conn, "SELECT id FROM events WHERE nama_event = ? AND id <> ?", 'si', $nama, $id)
+ */
+function data_sudah_ada(mysqli $conn, string $sql, string $types, ...$params): bool
+{
+    $stmt = $conn->prepare($sql . ' LIMIT 1');
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $ada = $stmt->get_result()->num_rows > 0;
+    $stmt->close();
+    return $ada;
+}
+
+/**
+ * Script kecil: link hapus (data-hapus) dikirim sebagai form POST setelah konfirmasi.
+ */
+function script_hapus_post(): string
+{
+    return <<<'HTML'
+<script>
+document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-hapus]');
+    if (!a) return;
+    e.preventDefault();
+    if (!confirm(a.getAttribute('data-pesan') || 'Yakin ingin menghapus data ini?')) return;
+    var f = document.createElement('form');
+    f.method = 'POST';
+    f.action = a.getAttribute('data-hapus');
+    [['id', a.getAttribute('data-id')], ['event_id', a.getAttribute('data-event')]].forEach(function (p) {
+        if (p[1] === null) return;
+        var i = document.createElement('input');
+        i.type = 'hidden'; i.name = p[0]; i.value = p[1];
+        f.appendChild(i);
+    });
+    document.body.appendChild(f);
+    f.submit();
+});
+</script>
+HTML;
+}
+
 ?>

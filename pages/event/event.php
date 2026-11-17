@@ -91,11 +91,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                         <td class="action-buttons">
                             <a href="<?= base_url('pages/peserta/index.php?event_id=' . $e['id']) ?>" title="Lihat Peserta">👁️</a>
                             <a href="<?= base_url('pages/event/edit.php?id=' . $e['id']) ?>" class="btn-edit" title="Edit" data-modal-event data-judul="Edit Event">✏️</a>
-                            <a href="<?= base_url('pages/event/hapus.php?id=' . $e['id']) ?>"
-                                class="btn-delete"
-                                title="Hapus"
-                                onclick="return confirm('Yakin ingin menghapus event ini?');"
-                            >🗑️</a>
+                            <a href="#" class="btn-delete" title="Hapus" data-hapus="<?= base_url('pages/event/hapus.php') ?>" data-id="<?= (int) $e['id'] ?>" data-pesan="Yakin ingin menghapus event ini?">🗑️</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -105,4 +101,5 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 </div>
 <script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
 <script src="<?= base_url('assets/js/modal-event.js') ?>"></script>
+<?= script_hapus_post() ?>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

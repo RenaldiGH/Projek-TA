@@ -15,7 +15,7 @@ $C_USER_ID  = 'id';
 $C_PASSWORD = 'password';
 
 // Set true saat development agar pesan error asli tampil. Ubah ke false di server asli.
-$debug = true;
+$debug = false;
 
 $user_id = (int) ($_SESSION['user_id'] ?? 0);
 

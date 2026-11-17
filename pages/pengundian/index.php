@@ -38,7 +38,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $event_id) {
     }
     $stmt->close();
 
-    if (count($ids) < 2) {
+    // Aturan undian: event harus aktif, dan undi ulang tidak boleh menghapus progres kado
+    $st = $conn->prepare("SELECT status FROM events WHERE id = ?");
+    $st->bind_param('i', $event_id);
+    $st->execute();
+    $status_event = $st->get_result()->fetch_assoc()['status'] ?? '';
+    $st->close();
+
+    $sudah_ada_progres = data_sudah_ada(
+        $conn,
+        "SELECT id FROM pengundian WHERE event_id = ? AND (status_kado <> 'belum_dibeli' OR cek_tema = 1 OR cek_budget = 1 OR cek_bungkus = 1)",
+        'i',
+        $event_id
+    );
+
+    if ($status_event !== 'aktif') {
+        $pesan = 'Pengundian hanya bisa dilakukan pada event yang berstatus aktif.';
+        $tipe_pesan = 'error';
+    } elseif ($sudah_ada_progres) {
+        $pesan = 'Undi ulang diblokir: pemberi sudah mengisi progres kado. Mengundi ulang akan menghapus progres tersebut.';
+        $tipe_pesan = 'error';
+    } elseif (count($ids) < 2) {
         $pesan = 'Peserta minimal 2 orang untuk melakukan pengundian.';
         $tipe_pesan = 'error';
     } else {
@@ -81,19 +101,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $event_id) {
     exit;
 }
 
+$search = trim($_GET['q'] ?? '');
 $hasil = [];
+$sudah_diundi = false;
 $nama_peserta = [];
 
 if ($event_id) {
-    $stmt = $conn->prepare(
-        "SELECT pg.id, pb.nama AS pemberi_nama, pn.nama AS penerima_nama
+    $sql_hasil = "SELECT pg.id, pb.nama AS pemberi_nama, pn.nama AS penerima_nama
          FROM pengundian pg
          JOIN peserta pb ON pb.id = pg.pemberi_id
          JOIN peserta pn ON pn.id = pg.penerima_id
-         WHERE pg.event_id = ?
-         ORDER BY pb.nama ASC"
-    );
-    $stmt->bind_param('i', $event_id);
+         WHERE pg.event_id = ?";
+    if ($search !== '') {
+        $stmt = $conn->prepare($sql_hasil . " AND (pb.nama LIKE ? OR pn.nama LIKE ?) ORDER BY pb.nama ASC");
+        $like = '%' . $search . '%';
+        $stmt->bind_param('iss', $event_id, $like, $like);
+    } else {
+        $stmt = $conn->prepare($sql_hasil . " ORDER BY pb.nama ASC");
+        $stmt->bind_param('i', $event_id);
+    }
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -101,6 +127,11 @@ if ($event_id) {
         $hasil[] = $row;
     }
     $stmt->close();
+
+    // Sudah pernah diundi? (tetap benar walau hasil pencarian kosong)
+    $sudah_diundi = $hasil
+        ? true
+        : data_sudah_ada($conn, "SELECT id FROM pengundian WHERE event_id = ?", 'i', $event_id);
 
     // Nama peserta untuk animasi pengacakan
     $stmt = $conn->prepare("SELECT nama FROM peserta WHERE event_id = ? ORDER BY nama ASC");
@@ -337,7 +368,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
         <form method="POST" id="form-undi">
             <input type="hidden" name="event_id" value="<?= (int) $event_id ?>">
             <button type="submit" id="btn-undi" class="btn-add btn-undi">
-                <?= $hasil ? '↻ Undi Ulang' : '+ Mulai Pengundian' ?>
+                <?= $sudah_diundi ? '↻ Undi Ulang' : '+ Mulai Pengundian' ?>
             </button>
         </form>
     </div>
@@ -353,6 +384,10 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                         </option>
                     <?php endforeach; ?>
                 </select>
+            </div>
+            <div class="filter-group">
+                <label for="q">&nbsp;</label>
+                <input type="text" name="q" id="q" placeholder="Cari nama pemberi atau penerima" value="<?= h($search) ?>">
             </div>
         </form>
 
@@ -379,6 +414,11 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                 </tbody>
             </table>
 
+        <?php elseif ($sudah_diundi && $search !== ''): ?>
+            <div class="empty-state">
+                <h3>Tidak Ditemukan</h3>
+                <p>Tidak ada pemberi atau penerima yang cocok dengan "<?= h($search) ?>".</p>
+            </div>
         <?php else: ?>
             <!-- Empty State -->
             <div class="empty-state">
@@ -416,7 +456,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
     <script>
         (function () {
             var names      = <?= json_encode($nama_peserta, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
-            var sudahAda   = <?= $hasil ? 'true' : 'false' ?>;
+            var sudahAda   = <?= $sudah_diundi ? 'true' : 'false' ?>;
             var autoMulai  = <?= $auto_mulai ? 'true' : 'false' ?>;
             var barusaja   = <?= $baru_diundi ? 'true' : 'false' ?>;
 

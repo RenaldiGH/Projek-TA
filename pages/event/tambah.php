@@ -38,6 +38,12 @@ if ($biaya_pendaftaran === '') {
         $error = 'Status tidak valid.';
         } elseif (!is_numeric($biaya_pendaftaran) || $biaya_pendaftaran < 0) {
     $error = 'Biaya pendaftaran harus berupa angka dan tidak boleh minus.';
+    } elseif (mb_strlen($nama_event) > 150) {
+        $error = 'Nama event maksimal 150 karakter.';
+    } elseif (!($d = DateTime::createFromFormat('Y-m-d', $tanggal_event)) || $d->format('Y-m-d') !== $tanggal_event) {
+        $error = 'Format tanggal event tidak valid.';
+    } elseif (data_sudah_ada($conn, "SELECT id FROM events WHERE nama_event = ?", 's', $nama_event)) {
+        $error = 'Event dengan nama "' . $nama_event . '" sudah ada. Gunakan nama lain.';
     } else {
         $user_id = (int) $_SESSION['user_id'];
 

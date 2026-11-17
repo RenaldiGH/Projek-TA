@@ -12,7 +12,8 @@ $pemberi_list = [];
 
 if ($event_id) {
     $stmt = $conn->prepare(
-        "SELECT pg.id, p.nama AS pemberi_nama
+        "SELECT pg.id, p.nama AS pemberi_nama, pg.status_kado,
+                pg.cek_tema, pg.cek_budget, pg.cek_bungkus
          FROM pengundian pg
          JOIN peserta p ON p.id = pg.pemberi_id
          WHERE pg.event_id = ?
@@ -72,11 +73,33 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                 <p>Lakukan pengundian terlebih dahulu.</p>
             </div>
         <?php else: ?>
+            <?php
+            $siap = 0;
+            foreach ($pemberi_list as $pb) {
+                if (in_array($pb['status_kado'], ['sudah_dibungkus', 'diserahkan'], true)) {
+                    $siap++;
+                }
+            }
+            $total = count($pemberi_list);
+            $persen = $total > 0 ? (int) round($siap / $total * 100) : 0;
+            ?>
+            <div style="margin:0 0 18px;">
+                <div style="display:flex; justify-content:space-between; font-size:13px; color:#475569; margin-bottom:6px;">
+                    <span>Kado siap (sudah dibungkus / diserahkan)</span>
+                    <strong><?= $siap ?> dari <?= $total ?> (<?= $persen ?>%)</strong>
+                </div>
+                <div style="height:10px; background:#e2e8f0; border-radius:999px; overflow:hidden;">
+                    <div style="height:100%; width:<?= $persen ?>%; background:#e00000;"></div>
+                </div>
+            </div>
+
             <table class="data-table table-grid">
                 <thead>
                     <tr>
                         <th style="width: 50px;">NO</th>
                         <th>Nama Pemberi</th>
+                        <th>Status Kado</th>
+                        <th>Checklist</th>
                         <th style="text-align:center;">Aksi</th>
                     </tr>
                 </thead>
@@ -85,6 +108,8 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                         <tr>
                             <td><?= $i + 1 ?>.</td>
                             <td><?= h($pb['pemberi_nama']) ?></td>
+                            <td><?= status_kado_badge($pb['status_kado']) ?></td>
+                            <td><?= (int) $pb['cek_tema'] + (int) $pb['cek_budget'] + (int) $pb['cek_bungkus'] ?>/3</td>
                             <td class="action-buttons">
                                 <a href="<?= base_url('pages/laporan/index.php?event_id=' . (int) $event_id) ?>" title="Lihat Laporan">👁️</a>
                             </td>

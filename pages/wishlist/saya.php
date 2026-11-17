@@ -93,6 +93,8 @@ if ($peserta_id && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Estimasi harga harus berupa angka dan tidak boleh nol.';
         } elseif ($form['link_referensi'] !== '' && !preg_match('#^https?://#i', $form['link_referensi'])) {
             $error = 'Link referensi harus diawali http:// atau https://';
+        } elseif (data_sudah_ada($conn, "SELECT id FROM wishlist WHERE peserta_id = ? AND nama_barang = ? AND id <> ?", 'isi', $peserta_id, $form['nama_barang'], $id)) {
+            $error = 'Barang "' . $form['nama_barang'] . '" sudah ada di wishlist kamu.';
         } elseif ($aksi === 'tambah') {
 
             $stmt = $conn->prepare(

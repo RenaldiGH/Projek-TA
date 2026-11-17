@@ -108,12 +108,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                             <td><?= h(str_replace('_', ' ', ucfirst($w['status']))) ?></td>
                             <td class="action-buttons">
                                 <a href="<?= base_url('pages/wishlist/edit.php?id=' . $w['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit" data-modal-event data-judul="Edit Wishlist">✏️</a>
-                                <a
-                                    href="<?= base_url('pages/wishlist/hapus.php?id=' . $w['id'] . '&event_id=' . $event_id) ?>"
-                                    class="btn-delete"
-                                    title="Hapus"
-                                    onclick="return confirm('Yakin ingin menghapus wishlist ini?');"
-                                >🗑️</a>
+                                <a href="#" class="btn-delete" title="Hapus" data-hapus="<?= base_url('pages/wishlist/hapus.php') ?>" data-id="<?= (int) $w['id'] ?>" data-event="<?= (int) $event_id ?>" data-pesan="Yakin ingin menghapus wishlist ini?">🗑️</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -126,4 +121,5 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 <link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
 <script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
 <script src="<?= base_url('assets/js/modal-event.js') ?>"></script>
+<?= script_hapus_post() ?>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

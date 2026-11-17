@@ -7,12 +7,62 @@ require_login();
 
 $user_id = (int) ($_SESSION['user_id'] ?? 0);
 
+/*
+|--------------------------------------------------------------------------
+| SIMPAN PROGRES KADO (status + checklist) oleh pemberi
+|--------------------------------------------------------------------------
+*/
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user_id > 0) {
+    $undian_id = (int) ($_POST['undian_id'] ?? 0);
+    $status    = (string) ($_POST['status_kado'] ?? '');
+    $cek_tema    = isset($_POST['cek_tema']) ? 1 : 0;
+    $cek_budget  = isset($_POST['cek_budget']) ? 1 : 0;
+    $cek_bungkus = isset($_POST['cek_bungkus']) ? 1 : 0;
+
+    if (!array_key_exists($status, status_kado_daftar())) {
+        set_flash('error', 'Status kado tidak valid.');
+    } elseif (status_kado_butuh_checklist($status) && !($cek_tema && $cek_budget && $cek_bungkus)) {
+        set_flash('error', 'Centang ketiga checklist dulu sebelum memilih "Sudah dibungkus" atau "Sudah diserahkan".');
+    } else {
+        // pastikan undian ini memang milik user yang sedang login (sebagai pemberi)
+        $cek = $conn->prepare(
+            "SELECT u.event_id
+             FROM pengundian u
+             INNER JOIN peserta me ON me.id = u.pemberi_id
+             WHERE u.id = ? AND me.user_id = ?"
+        );
+        $cek->bind_param('ii', $undian_id, $user_id);
+        $cek->execute();
+        $baris = $cek->get_result()->fetch_assoc();
+        $cek->close();
+
+        if (!$baris) {
+            set_flash('error', 'Data pengundian tidak ditemukan.');
+        } else {
+            $upd = $conn->prepare(
+                "UPDATE pengundian
+                 SET status_kado = ?, cek_tema = ?, cek_budget = ?, cek_bungkus = ?
+                 WHERE id = ?"
+            );
+            $upd->bind_param('siiii', $status, $cek_tema, $cek_budget, $cek_bungkus, $undian_id);
+            $upd->execute();
+            $upd->close();
+
+            catat_riwayat($conn, 'pengundian', 'ubah', 'Status kado: ' . status_kado_label($status), (int) $baris['event_id']);
+            set_flash('success', 'Progres kado disimpan.');
+        }
+    }
+
+    header('Location: ' . base_url('pages/hasilundian/hasil_undian.php'));
+    exit;
+}
+
 $hasil = [];
 $jumlah_event_diikuti = 0;
 $error_message = '';
 
-// Set true saat development agar pesan error asli tampil. Ubah ke false di server asli.
-$debug = true;
+// Set true hanya saat development. Biarkan false saat demo / server asli.
+$debug = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +94,15 @@ try {
                 u.$C_UNDIAN_EVENT AS event_id,
                 e.$C_EVENT_NAMA AS nama_event,
                 pn.id AS penerima_id,
-                pn.nama AS penerima_nama
+                pn.nama AS penerima_nama,
+                e.tema AS tema,
+                e.aturan_kado AS aturan_kado,
+                e.budget AS budget,
+                e.tanggal_event AS tanggal_event,
+                u.status_kado AS status_kado,
+                u.cek_tema AS cek_tema,
+                u.cek_budget AS cek_budget,
+                u.cek_bungkus AS cek_bungkus
 
             FROM $T_PESERTA me
 
@@ -185,6 +243,39 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
     .us-result h3 { margin: 0 0 4px; font-size: 18px; font-weight: 700; color: #11152f; }
     .us-result p  { margin: 0 0 16px; color: #6b7280; }
     .us-result p strong { color: #11152f; }
+
+    /* Info acara */
+    .us-info {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin: 0 0 22px;
+    }
+    .us-info-grid { display: flex; flex-wrap: wrap; gap: 12px 36px; }
+    .us-info-item small { display: block; color: #6b7280; font-size: 12px; margin-bottom: 2px; }
+    .us-info-item span { font-weight: 700; color: #11152f; }
+    .us-aturan { margin-top: 14px; padding-top: 14px; border-top: 1px dashed #cbd5e1; }
+    .us-aturan > small { display: block; color: #6b7280; font-size: 12px; margin-bottom: 4px; }
+
+    /* Progres kado */
+    .us-progress { margin-top: 26px; padding-top: 22px; border-top: 1px solid #e5e7eb; }
+    .us-progress h4 { margin: 0 0 10px; }
+    .us-progress select {
+        padding: 9px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: inherit;
+        background: #fff;
+        margin: 4px 0 14px;
+    }
+    .us-progress label.us-lbl { display: block; font-size: 13px; color: #6b7280; }
+    .us-check { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .us-check label { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: #11152f; cursor: pointer; }
+    .us-check input { margin-top: 3px; accent-color: #e00000; }
+    .us-progress .us-hint { font-size: 12px; color: #6b7280; margin: 0 0 14px; }
+    button.us-btn { border: none; cursor: pointer; font-family: inherit; }
 </style>
 
 <?php if ($error_message): ?>
@@ -217,7 +308,35 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
 
 <?php else: ?>
 
-    <?php foreach ($hasil as $h): ?>
+    <?php
+    $cari = trim($_GET['q'] ?? '');
+    $tampil = $hasil;
+    if ($cari !== '') {
+        $tampil = array_values(array_filter($hasil, function ($row) use ($cari) {
+            return stripos($row['nama_event'], $cari) !== false
+                || stripos($row['penerima_nama'], $cari) !== false;
+        }));
+    }
+    ?>
+
+    <?php if (count($hasil) > 1 || $cari !== ''): ?>
+        <form method="GET" class="us-card" style="display:flex; gap:10px; align-items:center; margin-bottom:16px;">
+            <input type="text" name="q" value="<?= h($cari) ?>" placeholder="Cari nama event atau penerima"
+                   style="flex:1; padding:10px 12px; border:1px solid #d1d5db; border-radius:8px; font-family:inherit;">
+            <button type="submit" class="us-btn" style="border:none; cursor:pointer;">Cari</button>
+        </form>
+    <?php endif; ?>
+
+    <?php if (!$tampil): ?>
+        <div class="us-card us-empty">
+            <div>
+                <h3>Tidak Ditemukan</h3>
+                <p>Tidak ada hasil undian yang cocok dengan "<?= h($cari) ?>".</p>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php foreach ($tampil as $h): ?>
 
         <div class="us-card us-result">
 
@@ -229,6 +348,25 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
                 Kamu memberi hadiah kepada:
                 <strong><?= h($h['penerima_nama']) ?></strong>
             </p>
+
+            <!-- Info acara -->
+            <div class="us-info">
+                <div class="us-info-grid">
+                    <?php if (!empty($h['tema'])): ?>
+                        <div class="us-info-item"><small>Tema</small><span><?= h($h['tema']) ?></span></div>
+                    <?php endif; ?>
+                    <div class="us-info-item"><small>Budget kado</small><span><?= h(rupiah($h['budget'])) ?></span></div>
+                    <?php if (!empty($h['tanggal_event'])): ?>
+                        <div class="us-info-item"><small>Tanggal tukar kado</small><span><?= h(tanggal_id($h['tanggal_event'])) ?></span></div>
+                    <?php endif; ?>
+                </div>
+                <?php if (trim((string) $h['aturan_kado']) !== ''): ?>
+                    <div class="us-aturan">
+                        <small>Aturan kado</small>
+                        <div class="rich-content"><?= tampilkan_rich($h['aturan_kado']) ?></div>
+                    </div>
+                <?php endif; ?>
+            </div>
 
             <h4 style="margin-bottom:12px;">
                 Wishlist Penerima
@@ -287,6 +425,38 @@ require_once __DIR__ . '/../../includes/user_layout_top.php';
                 </div>
 
             <?php endif; ?>
+
+            <!-- Progres kado -->
+            <form method="POST" class="us-progress">
+                <input type="hidden" name="undian_id" value="<?= (int) $h['id'] ?>">
+                <h4>Progres Kado Kamu</h4>
+                <p style="margin-bottom:12px;">Status saat ini: <?= status_kado_badge($h['status_kado']) ?></p>
+
+                <div class="us-check">
+                    <label>
+                        <input type="checkbox" name="cek_tema" value="1" <?= !empty($h['cek_tema']) ? 'checked' : '' ?>>
+                        <span>Kado sesuai tema<?= !empty($h['tema']) ? ' (' . h($h['tema']) . ')' : '' ?></span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cek_budget" value="1" <?= !empty($h['cek_budget']) ? 'checked' : '' ?>>
+                        <span>Harga kado tidak melebihi budget (<?= h(rupiah($h['budget'])) ?>)</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cek_bungkus" value="1" <?= !empty($h['cek_bungkus']) ? 'checked' : '' ?>>
+                        <span>Kado sudah dibungkus rapi</span>
+                    </label>
+                </div>
+
+                <label class="us-lbl" for="status_kado_<?= (int) $h['id'] ?>">Ubah status</label>
+                <select name="status_kado" id="status_kado_<?= (int) $h['id'] ?>">
+                    <?php foreach (status_kado_daftar() as $kode => $label): ?>
+                        <option value="<?= h($kode) ?>" <?= $h['status_kado'] === $kode ? 'selected' : '' ?>><?= h($label) ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <p class="us-hint">Ketiga checklist harus dicentang sebelum memilih "Sudah dibungkus" atau "Sudah diserahkan".</p>
+                <button type="submit" class="us-btn">Simpan Progres</button>
+            </form>
 
         </div>
 

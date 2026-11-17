@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($judul === '' || $tanggal === '' || $waktu === '') {
     $error = 'Judul, tanggal, dan waktu wajib diisi.';
+} elseif (data_sudah_ada($conn, "SELECT id FROM timeline WHERE event_id = ? AND judul = ? AND tanggal = ?", 'iss', $event_id, $judul, $tanggal)) {
+    $error = 'Timeline "' . $judul . '" pada tanggal tersebut sudah ada di event ini.';
 } else {
     $insert = $conn->prepare(
         "INSERT INTO timeline (event_id, judul, tanggal, waktu, deskripsi)

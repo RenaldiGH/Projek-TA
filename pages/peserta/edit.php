@@ -44,6 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error = 'Nomor HP harus berupa angka, 9-15 digit.';
     } elseif (!in_array($status, ['aktif', 'nonaktif'], true)) {
         $error = 'Status tidak valid.';
+    } elseif (data_sudah_ada($conn, "SELECT id FROM peserta WHERE event_id = ? AND email = ? AND id <> ?", 'isi', (int) $peserta['event_id'], $email, $id)) {
+        $error = 'Peserta dengan email ini sudah terdaftar di event ini.';
     } else {
         $update = $conn->prepare(
             "UPDATE peserta SET nama = ?, email = ?, no_hp = ?, status = ? WHERE id = ?"

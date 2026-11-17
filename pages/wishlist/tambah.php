@@ -43,6 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Peserta dan nama barang wajib diisi.';
     } elseif (!is_numeric($estimasi_harga) || $estimasi_harga <= 0) {
         $error = 'Estimasi harga harus berupa angka dan tidak boleh nol.';
+    } elseif ($link_referensi !== '' && !preg_match('#^https?://#i', $link_referensi)) {
+        $error = 'Link referensi harus diawali http:// atau https://';
+    } elseif (!data_sudah_ada($conn, "SELECT id FROM peserta WHERE id = ? AND event_id = ?", 'ii', $peserta_id, $event_id)) {
+        $error = 'Peserta tidak terdaftar di event ini.';
+    } elseif (data_sudah_ada($conn, "SELECT id FROM wishlist WHERE peserta_id = ? AND nama_barang = ?", 'is', $peserta_id, $nama_barang)) {
+        $error = 'Barang "' . $nama_barang . '" sudah ada di wishlist peserta ini.';
     } else {
         $insert = $conn->prepare(
             "INSERT INTO wishlist (peserta_id, nama_barang, kategori, estimasi_harga, deskripsi, link_referensi)

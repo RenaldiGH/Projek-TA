@@ -5,8 +5,15 @@ require_once __DIR__ . '/../../includes/functions.php';
 
 require_admin();
 
-$id = (int) ($_GET['id'] ?? 0);
-$event_id = (int) ($_GET['event_id'] ?? 0);
+// Hapus hanya lewat POST (tidak boleh lewat link biasa)
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    set_flash('error', 'Permintaan hapus tidak valid.');
+    header('Location: ' . base_url('pages/timeline/index.php'));
+    exit;
+}
+
+$id = (int) ($_POST['id'] ?? 0);
+$event_id = (int) ($_POST['event_id'] ?? 0);
 
 if ($id) {
         // ambil datanya dulu, karena setelah dihapus sudah tidak bisa dibaca

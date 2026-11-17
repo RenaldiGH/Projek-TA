@@ -58,6 +58,12 @@ if ($biaya_pendaftaran === '') {
         $error = 'Status tidak valid.';
     } elseif ($status === 'selesai' && $status_baru !== 'selesai') {
         $error = 'Event yang sudah selesai tidak bisa dikembalikan statusnya.';
+    } elseif (mb_strlen($nama_event) > 150) {
+        $error = 'Nama event maksimal 150 karakter.';
+    } elseif (!($d = DateTime::createFromFormat('Y-m-d', $tanggal_event)) || $d->format('Y-m-d') !== $tanggal_event) {
+        $error = 'Format tanggal event tidak valid.';
+    } elseif (data_sudah_ada($conn, "SELECT id FROM events WHERE nama_event = ? AND id <> ?", 'si', $nama_event, $id)) {
+        $error = 'Event dengan nama "' . $nama_event . '" sudah ada. Gunakan nama lain.';
     } else {
         $status = $status_baru;
 

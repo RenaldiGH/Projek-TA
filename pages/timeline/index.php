@@ -8,16 +8,28 @@ require_admin();
 $events = get_events($conn);
 $event_id = resolve_event_id($conn, $_GET['event_id'] ?? null);
 
+$search = trim($_GET['q'] ?? '');
 $timeline_list = [];
 
 if ($event_id) {
-    $stmt = $conn->prepare(
-        "SELECT id, judul, tanggal, waktu, deskripsi
-         FROM timeline
-         WHERE event_id = ?
-         ORDER BY tanggal ASC, waktu ASC"
-    );
-    $stmt->bind_param('i', $event_id);
+    if ($search !== '') {
+        $stmt = $conn->prepare(
+            "SELECT id, judul, tanggal, waktu, deskripsi
+             FROM timeline
+             WHERE event_id = ? AND (judul LIKE ? OR deskripsi LIKE ?)
+             ORDER BY tanggal ASC, waktu ASC"
+        );
+        $like = '%' . $search . '%';
+        $stmt->bind_param('iss', $event_id, $like, $like);
+    } else {
+        $stmt = $conn->prepare(
+            "SELECT id, judul, tanggal, waktu, deskripsi
+             FROM timeline
+             WHERE event_id = ?
+             ORDER BY tanggal ASC, waktu ASC"
+        );
+        $stmt->bind_param('i', $event_id);
+    }
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -61,12 +73,21 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                     <?php endforeach; ?>
                 </select>
             </div>
+            <div class="filter-group">
+                <label for="q">&nbsp;</label>
+                <input type="text" name="q" id="q" placeholder="Cari judul timeline" value="<?= h($search) ?>">
+            </div>
         </form>
 
         <?php if (!$timeline_list): ?>
             <div class="empty-state">
+                <?php if ($search !== ''): ?>
+                    <h3>Tidak Ditemukan</h3>
+                    <p>Tidak ada timeline yang cocok dengan "<?= h($search) ?>".</p>
+                <?php else: ?>
                 <h3>Belum Ada Timeline</h3>
                 <p>Silahkan tambahkan timeline untuk event ini.</p>
+                <?php endif; ?>
             </div>
         <?php else: ?>
             <table class="data-table table-grid">
@@ -92,12 +113,7 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
                             </td>
                             <td class="action-buttons">
                                 <a href="<?= base_url('pages/timeline/edit.php?id=' . $t['id'] . '&event_id=' . $event_id) ?>" class="btn-edit" title="Edit" data-modal-event data-judul="Edit Timeline">✏️</a>
-                                <a
-                                    href="<?= base_url('pages/timeline/hapus.php?id=' . $t['id'] . '&event_id=' . $event_id) ?>"
-                                    class="btn-delete"
-                                    title="Hapus"
-                                    onclick="return confirm('Yakin ingin menghapus timeline ini?');"
-                                >🗑️</a>
+                                <a href="#" class="btn-delete" title="Hapus" data-hapus="<?= base_url('pages/timeline/hapus.php') ?>" data-id="<?= (int) $t['id'] ?>" data-event="<?= (int) $event_id ?>" data-pesan="Yakin ingin menghapus timeline ini?">🗑️</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -110,4 +126,5 @@ require_once __DIR__ . '/../../includes/admin_layout_top.php';
 <link rel="stylesheet" href="<?= base_url('assets/css/rich-editor.css') ?>">
 <script src="<?= base_url('assets/js/rich-editor.js') ?>"></script>
 <script src="<?= base_url('assets/js/modal-event.js') ?>"></script>
+<?= script_hapus_post() ?>
 <?php require_once __DIR__ . '/../../includes/admin_layout_bottom.php'; ?>

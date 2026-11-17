@@ -33,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($judul === '' || $tanggal === '' || $waktu === '') {
     $error = 'Judul, tanggal, dan waktu wajib diisi.';
+} elseif (data_sudah_ada($conn, "SELECT id FROM timeline WHERE event_id = ? AND judul = ? AND tanggal = ? AND id <> ?", 'issi', (int) $timeline['event_id'], $judul, $tanggal, $id)) {
+    $error = 'Timeline "' . $judul . '" pada tanggal tersebut sudah ada di event ini.';
 } else {
     $update = $conn->prepare(
         "UPDATE timeline SET judul = ?, tanggal = ?, waktu = ?, deskripsi = ? WHERE id = ?"

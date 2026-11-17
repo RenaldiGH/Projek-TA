@@ -5,7 +5,14 @@ require_once __DIR__ . '/../../includes/functions.php';
 
 require_admin();
 
-$id = (int) ($_GET['id'] ?? 0);
+// Hapus hanya lewat POST (tidak boleh lewat link biasa)
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    set_flash('error', 'Permintaan hapus tidak valid.');
+    header('Location: ' . base_url('pages/event/event.php'));
+    exit;
+}
+
+$id = (int) ($_POST['id'] ?? 0);
 
 if ($id) {
     $cek = $conn->prepare("SELECT COUNT(*) AS total FROM peserta WHERE event_id = ?");
